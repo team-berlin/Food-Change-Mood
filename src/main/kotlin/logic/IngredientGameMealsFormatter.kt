@@ -16,7 +16,7 @@ class IngredientGameMealsFormatter(
                 val allMealsIngredientsExceptCurrentMeal=
                     allMealsIngredients.filterNot { it in fullMeal.ingredients }.shuffled()
 
-                val correctIngredientIndex=(0..fullMeal.nIngredients).random()
+                val correctIngredientIndex=(0..<fullMeal.nIngredients).random()
 
                 MealForIngredientGame(
                     mealName = fullMeal.name,

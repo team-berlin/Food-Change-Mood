@@ -38,7 +38,7 @@ class FoodChangeMoodUI(
             println(" 1 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[0]}")
             println(" 2 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[1]}")
             println(" 3 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[2]}")
-            println("Choose The Number Of Correct Ingredient")
+            print("Choose The Number Of Correct Ingredient")
             val input=getUserInput()
             when(input){
                 1->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[0])
@@ -47,7 +47,7 @@ class FoodChangeMoodUI(
             }
         }
         when(ingredientGame.getState()){
-            GameState.WON-> println("You Won")
+            GameState.WON-> println("You Won your Score Is : ${ingredientGame.getScore()}")
             GameState.LOST-> println("You Lost your Score Is : ${ingredientGame.getScore()}")
             else -> {}
         }
