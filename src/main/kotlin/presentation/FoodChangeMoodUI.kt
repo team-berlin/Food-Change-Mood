@@ -1,4 +1,4 @@
-package org.example.presentation
+package org.berlin.presentation
 
 class FoodChangeMoodUI() {
 

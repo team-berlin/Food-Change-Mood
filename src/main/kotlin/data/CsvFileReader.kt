@@ -1,4 +1,4 @@
-package org.example.data
+package com.berlin.data
 
 import com.opencsv.CSVReader
 import java.io.File
@@ -10,7 +10,7 @@ class CsvFileReader(
     fun readLinesFromFile(): List<Array<String>> {
         CSVReader(FileReader(csvFile)).use { reader ->
             val allRows = reader.readAll()
-            val dataRows = allRows.drop(1).take(100)
+            val dataRows = allRows.drop(1)
             return dataRows
         }
     }

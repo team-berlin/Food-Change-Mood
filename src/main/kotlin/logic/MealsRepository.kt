@@ -1,6 +1,6 @@
-package org.example.logic
+package org.berlin.logic
 
-import org.example.model.Meal
+import org.berlin.model.Meal
 
 interface MealsRepository {
 

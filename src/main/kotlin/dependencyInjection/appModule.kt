@@ -1,9 +1,9 @@
 package dependencyInjection;
 
-import org.example.data.CsvFileReader
-import org.example.data.CsvMealsRepository
-import org.example.data.MealsCsvParser
-import org.example.logic.MealsRepository
+import com.berlin.data.CsvFileReader
+import com.berlin.data.CsvMealsRepository
+import com.berlin.data.MealsCsvParser
+import org.berlin.logic.MealsRepository
 import org.koin.dsl.module
 import java.io.File
 

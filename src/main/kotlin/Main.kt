@@ -1,4 +1,4 @@
-package org.example
+package org.berlin
 
 import dependencyInjection.appModule
 import org.koin.core.context.startKoin

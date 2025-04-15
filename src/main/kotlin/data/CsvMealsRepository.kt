@@ -1,7 +1,7 @@
-package org.example.data
+package com.berlin.data
 
-import org.example.logic.MealsRepository
-import org.example.model.Meal
+import org.berlin.logic.MealsRepository
+import org.berlin.model.Meal
 
 class CsvMealsRepository(
     private val csvFileReader: CsvFileReader,

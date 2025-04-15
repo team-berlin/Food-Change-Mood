@@ -1,13 +1,13 @@
-package org.example.model
+package org.berlin.model
 
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 data class Meal(
     val name: String,
     val id: Int,
     val minutes: Int,
     val contributorId: Int,
-    val submitted: LocalDate,
+    val submissionDate: LocalDate,
     val tags: List<String>,
     val nutrition: Nutrition,
     val nSteps: Int,

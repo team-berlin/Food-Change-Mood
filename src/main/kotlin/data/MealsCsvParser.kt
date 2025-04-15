@@ -1,20 +1,17 @@
-package org.example.data
+package com.berlin.data
 
-import org.example.model.Meal
-import org.example.model.Nutrition
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import org.berlin.model.Meal
+import org.berlin.model.Nutrition
+import kotlinx.datetime.LocalDate
 
 class MealsCsvParser {
-
-        private val DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
          fun parseColumnsToMeal(line: Array<String>): Meal {
             val name = line[ColumnIndex.NAME].trim()
             val id = line[ColumnIndex.ID].trim().toIntOrNull() ?: -1
             val minutes = line[ColumnIndex.MINUTES].trim().toIntOrNull() ?: -1
             val contributorId = line[ColumnIndex.CONTRIBUTOR_ID].trim().toIntOrNull() ?: -1
-            val submittedRaw = line[ColumnIndex.SUBMITTED].trim()
+            val submittedRaw = line[ColumnIndex.SUBMISSION_DATE].trim()
             val tagsRaw = line[ColumnIndex.TAGS].trim()
             val nutritionRaw = line[ColumnIndex.NUTRITION].trim()
             val nSteps = line[ColumnIndex.N_STEPS].trim().toIntOrNull() ?: 0
@@ -23,7 +20,7 @@ class MealsCsvParser {
             val ingredientsRaw = line[ColumnIndex.INGREDIENTS].trim()
             val nIngredients = line[ColumnIndex.N_INGREDIENTS].trim().toIntOrNull() ?: 0
 
-            val submittedDate = LocalDate.parse(submittedRaw, DATE_FORMATTER)
+            val submittedDate = LocalDate.parse(submittedRaw)
 
             val tags = parseStringList(tagsRaw)
             val steps = parseStringList(stepsRaw)
@@ -36,7 +33,7 @@ class MealsCsvParser {
                 id = id,
                 minutes = minutes,
                 contributorId = contributorId,
-                submitted = submittedDate,
+                submissionDate= submittedDate,
                 tags = tags,
                 nutrition = nutrition,
                 nSteps = nSteps,
