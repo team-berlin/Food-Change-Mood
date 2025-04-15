@@ -1,6 +1,12 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.IngredientGame
+import org.berlin.model.GameState
+import org.berlin.model.MealForIngredientGame
+
+class FoodChangeMoodUI(
+    private val ingredientGame: IngredientGame
+) {
 
     fun start() {
         showWelcome()
@@ -21,6 +27,31 @@ class FoodChangeMoodUI() {
 
     private fun printFakeUseCase() {
         println("UseCase successfully done...!")
+    }
+
+    private fun ingredientGameUseCase() {
+        while (ingredientGame.getState()==GameState.RUNNING){
+            val gameCurrentMeal:MealForIngredientGame= ingredientGame.getMeal()!!
+
+            println("Meal Name : ${gameCurrentMeal.mealName}")
+            println("Ingredients")
+            println(" 1 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[0]}")
+            println(" 2 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[1]}")
+            println(" 3 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[2]}")
+            println("Choose The Number Of Correct Ingredient")
+            val input=getUserInput()
+            when(input){
+                1->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[0])
+                2->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[1])
+                3->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[2])
+            }
+        }
+        when(ingredientGame.getState()){
+            GameState.WON-> println("You Won")
+            GameState.LOST-> println("You Lost your Score Is : ${ingredientGame.getScore()}")
+            else -> {}
+        }
+
     }
 
     private fun showWelcome() {
