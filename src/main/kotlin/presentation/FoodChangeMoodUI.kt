@@ -1,6 +1,10 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.ConsoleRunner
+
+class FoodChangeMoodUI(
+    private val fakeFeatureConsoleRunner: ConsoleRunner
+) {
 
     fun start() {
         showWelcome()
@@ -20,7 +24,7 @@ class FoodChangeMoodUI() {
     }
 
     private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
+        fakeFeatureConsoleRunner.run()
     }
 
     private fun showWelcome() {
