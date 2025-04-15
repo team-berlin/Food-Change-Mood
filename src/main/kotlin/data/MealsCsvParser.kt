@@ -63,21 +63,21 @@ class MealsCsvParser {
             val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
             val parts = trimmed.split(",").map { it.trim().toDoubleOrNull() ?: 0.0 }
 
-            val calories      = parts[NutritionIndex.CALORIES]
-            val totalFat      = parts[NutritionIndex.TOTAL_FAT]
-            val sugar         = parts[NutritionIndex.SUGAR]
-            val sodium        = parts[NutritionIndex.SODIUM]
-            val protein       = parts[NutritionIndex.PROTEIN]
-            val saturatedFat  = parts[NutritionIndex.SATURATED_FAT]
+            val calories = parts[NutritionIndex.CALORIES]
+            val totalFat = parts[NutritionIndex.TOTAL_FAT]
+            val sugar = parts[NutritionIndex.SUGAR]
+            val sodium = parts[NutritionIndex.SODIUM]
+            val protein = parts[NutritionIndex.PROTEIN]
+            val saturatedFat = parts[NutritionIndex.SATURATED_FAT]
             val carbohydrates = parts[NutritionIndex.CARBOHYDRATES]
 
             return Nutrition(
-                calories      = calories,
-                totalFat      = totalFat,
-                sugar         = sugar,
-                sodium        = sodium,
-                protein       = protein,
-                saturatedFat  = saturatedFat,
+                calories = calories,
+                totalFat = totalFat,
+                sugar = sugar,
+                sodium = sodium,
+                protein = protein,
+                saturatedFat = saturatedFat,
                 carbohydrates = carbohydrates
             )
         }
