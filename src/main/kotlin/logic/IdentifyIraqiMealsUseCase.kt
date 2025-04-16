@@ -8,9 +8,14 @@ class IdentifyIraqiMealsUseCase(
 
     fun identifyIraqiMeals(): List<Meal> {
         return repository.getAllMeals().filter {
-            it.tags.any { tag -> tag.equals("iraqi", ignoreCase = true) } ||
-            it.description?.contains("iraqi", ignoreCase = true) == true
+            it.tags.any { tag -> tag.equals(IRAQI_TAG, ignoreCase = true) } ||
+            it.description?.contains(IRAQI_TAG, ignoreCase = true) == true
         }
     }
+
+    companion object {
+        const val IRAQI_TAG = "iraqi"
+    }
+
 
 }

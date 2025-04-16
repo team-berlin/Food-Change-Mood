@@ -21,9 +21,15 @@ class SuggestEggFreeSweetUseCase(
     }
 
     private fun isEggFreeSweet(meal: Meal): Boolean {
-        return meal.tags.any { tag -> tag.contains("sweet", ignoreCase = true)
-                && meal.ingredients.none { ingredient -> ingredient.equals("egg", ignoreCase = true) }
+        return meal.tags.any { tag -> tag.contains(SWEET_TAG, ignoreCase = true)
+                && meal.ingredients.none { ingredient -> ingredient.equals(EGG_INGREDIENT, ignoreCase = true) }
                 && !suggestedSweets.contains(meal.name)
         }
+    }
+
+
+    companion object {
+        private const val SWEET_TAG = "sweet"
+        private const val EGG_INGREDIENT = "egg"
     }
 }
