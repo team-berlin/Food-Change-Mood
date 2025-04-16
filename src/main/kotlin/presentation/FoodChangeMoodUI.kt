@@ -29,27 +29,22 @@ class FoodChangeMoodUI(
     }
 
     private fun easyFoodSuggestion() {
-        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
-        println("Easy Food Meals:")
-        meals.forEach { meal ->
-            println(
-                "${meal.name} - ${meal.minutes} - ${meal.nIngredients} - ${meal.nSteps}"
-            )
-        }
+        val meal = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+        meal.forEach { println(it) }
+
+    }
+    private fun showWelcome() {
+        println("Welcome to cost of living app")
     }
 
-        private fun showWelcome() {
-            println("Welcome to cost of living app")
-        }
-
-        private fun showOptions() {
-            println("\n\n=== Please enter one of the following numbers ===")
-            println("1 - Get fake UseCase for testing")
-            println("2 - Get easy food suggestion")
-            print("Here: ")
-        }
-
-        private fun getUserInput(): Int? {
-            return readLine()?.toIntOrNull()
-        }
+    private fun showOptions() {
+        println("\n\n=== Please enter one of the following numbers ===")
+        println("1 - Get fake UseCase for testing")
+        println("2 - Get easy food suggestion")
+        print("Here: ")
     }
+
+    private fun getUserInput(): Int? {
+        return readLine()?.toIntOrNull()
+    }
+}
