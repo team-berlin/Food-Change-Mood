@@ -6,24 +6,25 @@ class IngredientGameMealsFormatter(
     private val mealsRepository: MealsRepository
 ) {
     fun getFormatedMeals(): List<MealForIngredientGame> {
-        val allMealsIngredients=mealsRepository.getAllMeals()
-            .map { meal->meal.ingredients }
+        val allMealsIngredients = mealsRepository.getAllMeals()
+            .map { meal -> meal.ingredients }
             .flatten()
             .shuffled()
         return mealsRepository.getAllMeals()
-            .map { fullMeal ->
+            .map { currentFullMeal ->
 
-                val allMealsIngredientsExceptCurrentMeal=
-                    allMealsIngredients.filterNot { it in fullMeal.ingredients }.shuffled()
+                val allMealsIngredientsExceptCurrentMeal = allMealsIngredients
+                    .filterNot { ingredient -> ingredient in currentFullMeal.ingredients }
+                    .shuffled()
 
-                val correctIngredientIndex=(0..<fullMeal.nIngredients).random()
+                val correctIngredientIndex = (0..<currentFullMeal.nIngredients).random()
 
                 MealForIngredientGame(
-                    mealName = fullMeal.name,
-                    correctIngredient = fullMeal.ingredients[correctIngredientIndex],
+                    mealName = currentFullMeal.name,
+                    correctIngredient = currentFullMeal.ingredients[correctIngredientIndex],
                     threeIngredientOnlyOneCorrect =
                         allMealsIngredientsExceptCurrentMeal
-                        .take(2).plus(fullMeal.ingredients[correctIngredientIndex]).shuffled(),
+                            .take(2).plus(currentFullMeal.ingredients[correctIngredientIndex]).shuffled(),
                 )
             }
     }

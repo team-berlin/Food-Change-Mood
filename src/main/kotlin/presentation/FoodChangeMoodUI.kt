@@ -58,7 +58,7 @@ class FoodChangeMoodUI(
             }
 
             else -> {
-                ingredientGame.reset()
+                return
             }
         }
 
