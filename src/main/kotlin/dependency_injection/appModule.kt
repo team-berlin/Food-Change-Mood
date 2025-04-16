@@ -4,7 +4,7 @@ import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
 import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
-import org.berlin.logic.usecase.QuickHealthyMeals
+import org.berlin.logic.usecase.QuickHealthyMealsUseCase
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
@@ -17,7 +17,7 @@ val appModule = module {
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
 
         // Logic Layer
-        single { QuickHealthyMeals(get()) }
+        single { QuickHealthyMealsUseCase(get()) }
 
         // Presentation Layer
         single { FoodChangeMoodUI(get()) }

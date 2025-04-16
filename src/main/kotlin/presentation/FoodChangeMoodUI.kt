@@ -1,8 +1,8 @@
 package org.berlin.presentation
 
-import org.berlin.logic.usecase.QuickHealthyMeals
+import org.berlin.logic.usecase.QuickHealthyMealsUseCase
 
-class FoodChangeMoodUI(private val quickHealthyMeals: QuickHealthyMeals) {
+class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase) {
 
     fun start() {
         showWelcome()
@@ -21,14 +21,10 @@ class FoodChangeMoodUI(private val quickHealthyMeals: QuickHealthyMeals) {
         presentFeatures()
     }
 
-    private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
-    }
-
     private fun displayQuickHealthyMeals() {
         println("\n=== Quick & Healthy Meals ===")
 
-        val meals = quickHealthyMeals.getQuickHealthyMeals()
+        val meals = quickHealthyMealsUseCase.getQuickHealthyMeals()
 
         if (meals.isEmpty()) {
             println("No quick and healthy meals found.")
@@ -65,6 +61,6 @@ class FoodChangeMoodUI(private val quickHealthyMeals: QuickHealthyMeals) {
     }
 
     private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
+        return readlnOrNull()?.toIntOrNull()
     }
 }

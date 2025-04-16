@@ -3,7 +3,7 @@ package org.berlin.logic.usecase
 import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 
-class QuickHealthyMeals(private val mealsRepository: MealsRepository) {
+class QuickHealthyMealsUseCase(private val mealsRepository: MealsRepository) {
     fun getQuickHealthyMeals(): List<Meal> {
         return mealsRepository.getAllMeals()
             .filter { meal ->
