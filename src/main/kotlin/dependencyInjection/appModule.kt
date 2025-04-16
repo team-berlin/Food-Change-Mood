@@ -3,7 +3,9 @@ package dependencyInjection;
 import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
 import com.berlin.data.MealsCsvParser
+import org.berlin.logic.IdentifyIraqiMealsUseCase
 import org.berlin.logic.MealsRepository
+import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
 
@@ -13,4 +15,6 @@ val appModule = module {
         single { MealsCsvParser() }
 
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
+        single { FoodChangeMoodUI(get()) }
+        single { IdentifyIraqiMealsUseCase(get()) }
 }
