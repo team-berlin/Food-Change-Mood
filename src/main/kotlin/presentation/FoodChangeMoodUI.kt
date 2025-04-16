@@ -1,9 +1,9 @@
 package org.berlin.presentation
 
-import org.berlin.logic.usecase.HighCalorieMeals
+import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.berlin.model.Meal
 
-class FoodChangeMoodUI(private val highCalorieMeals: HighCalorieMeals) {
+class FoodChangeMoodUI(private val highCalorieMealsUseCase: HighCalorieMealsUseCase) {
 
     fun start() {
         showWelcome()
@@ -25,7 +25,7 @@ class FoodChangeMoodUI(private val highCalorieMeals: HighCalorieMeals) {
     private fun suggestHighCalorieMeal() {
         println("\n=== High Calorie Meal Suggestion ===")
 
-        highCalorieMeals.suggestHighCalorieMeal()
+        highCalorieMealsUseCase.suggestHighCalorieMeal()
             .fold(
                 onSuccess = { meal ->
                     println("\nSuggested high-calorie meal:")

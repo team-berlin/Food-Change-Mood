@@ -4,7 +4,7 @@ import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 import kotlin.random.Random
 
-class HighCalorieMeals (private val mealsRepository: MealsRepository){
+class HighCalorieMealsUseCase (private val mealsRepository: MealsRepository){
     private fun getHighCalorieMeals(calorieThreshold: Double = 700.0): List<Meal> {
         return mealsRepository.getAllMeals()
             .filter { meal -> meal.nutrition.calories > calorieThreshold }
