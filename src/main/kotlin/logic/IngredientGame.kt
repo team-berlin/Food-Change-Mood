@@ -4,7 +4,7 @@ import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGame(
-    private val mealsFormatedForGame:List<MealForIngredientGame>
+    private var mealsFormatedForGame:List<MealForIngredientGame>
 ) {
     private var indexOfMeal=0
     private var score=0
@@ -26,6 +26,13 @@ class IngredientGame(
             indexOfMeal++
             if (score==15000)state=GameState.WON
         }else state=GameState.LOST
+    }
+
+     fun reset(){
+        indexOfMeal=0
+        score=0
+        state=GameState.RUNNING
+        mealsFormatedForGame=mealsFormatedForGame.shuffled()
     }
 
 

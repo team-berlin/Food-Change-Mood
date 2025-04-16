@@ -30,8 +30,8 @@ class FoodChangeMoodUI(
     }
 
     private fun ingredientGameUseCase() {
-        while (ingredientGame.getState()==GameState.RUNNING){
-            val gameCurrentMeal:MealForIngredientGame= ingredientGame.getMeal()!!
+        while (ingredientGame.getState() == GameState.RUNNING) {
+            val gameCurrentMeal: MealForIngredientGame = ingredientGame.getMeal()!!
 
             println("Meal Name : ${gameCurrentMeal.mealName}")
             println("Ingredients")
@@ -39,17 +39,27 @@ class FoodChangeMoodUI(
             println(" 2 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[1]}")
             println(" 3 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[2]}")
             print("Choose The Number Of Correct Ingredient")
-            val input=getUserInput()
-            when(input){
-                1->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[0])
-                2->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[1])
-                3->ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[2])
+            val input = getUserInput()?:return
+            when (input) {
+                1 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[0])
+                2 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[1])
+                3 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[2])
             }
         }
-        when(ingredientGame.getState()){
-            GameState.WON-> println("You Won your Score Is : ${ingredientGame.getScore()}")
-            GameState.LOST-> println("You Lost your Score Is : ${ingredientGame.getScore()}")
-            else -> {}
+        when (ingredientGame.getState()) {
+            GameState.WON -> {
+                println("You Won your Score Is : ${ingredientGame.getScore()}")
+                ingredientGame.reset()
+            }
+
+            GameState.LOST -> {
+                println("You Lost your Score Is : ${ingredientGame.getScore()}")
+                ingredientGame.reset()
+            }
+
+            else -> {
+                ingredientGame.reset()
+            }
         }
 
     }
