@@ -8,13 +8,17 @@ class GetMealsContainsPotatoUseCase(
 
     fun getMealsContainsPotato (): List<String>{
         return mealsRepository.getAllMeals()
-            .filter(::onlyMealsWithPotato)
+            .filter(::containsPotatoIngredient)
             .shuffled()
-            .take(10)
+            .take(RANDOM_N)
             .map { it.name }
     }
 
-    private fun onlyMealsWithPotato(input: Meal): Boolean{
-        return input.ingredients.any{ it.lowercase().removeSuffix("es") == "potato" }
+    private fun containsPotatoIngredient(meal: Meal): Boolean{
+        return meal.ingredients.any{ it.lowercase().removeSuffix("es") == "potato" }
+    }
+
+    companion object{
+        const val RANDOM_N = 10
     }
 }

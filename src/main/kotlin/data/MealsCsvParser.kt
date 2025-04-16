@@ -7,6 +7,12 @@ import kotlinx.datetime.LocalDate
 class MealsCsvParser {
 
          fun parseColumnsToMeal(line: Array<String>): Meal {
+
+             if (line.size < 12) {
+                 throw IllegalArgumentException(
+                     "Malformed CSV row, expected 12 columns but got ${line.size}: ${line.joinToString()}"
+                 )
+             }
             val name = line[ColumnIndex.NAME].trim()
             val id = line[ColumnIndex.ID].trim().toIntOrNull() ?: -1
             val minutes = line[ColumnIndex.MINUTES].trim().toIntOrNull() ?: -1
