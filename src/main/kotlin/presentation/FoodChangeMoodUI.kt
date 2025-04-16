@@ -1,6 +1,10 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.usecase.EasyFoodSuggestionRepository
+
+class FoodChangeMoodUI(
+    private val easyFoodSuggestionRepository: EasyFoodSuggestionRepository
+) {
 
     fun start() {
         showWelcome()
@@ -13,6 +17,7 @@ class FoodChangeMoodUI() {
 
         when (input) {
             1 -> printFakeUseCase()
+            2 -> easyFoodSuggestion()
             else -> println("Invalid Input")
         }
 
@@ -23,17 +28,28 @@ class FoodChangeMoodUI() {
         println("UseCase successfully done...!")
     }
 
-    private fun showWelcome() {
-        println("Welcome to cost of living app")
+    private fun easyFoodSuggestion() {
+        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+        println("Easy Food Meals:")
+        meals.forEach { meal ->
+            println(
+                "${meal.name} - ${meal.minutes} - ${meal.nIngredients} - ${meal.nSteps}"
+            )
+        }
     }
 
-    private fun showOptions() {
-        println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
-        print("Here: ")
-    }
+        private fun showWelcome() {
+            println("Welcome to cost of living app")
+        }
 
-    private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
+        private fun showOptions() {
+            println("\n\n=== Please enter one of the following numbers ===")
+            println("1 - Get fake UseCase for testing")
+            println("2 - Get easy food suggestion")
+            print("Here: ")
+        }
+
+        private fun getUserInput(): Int? {
+            return readLine()?.toIntOrNull()
+        }
     }
-}

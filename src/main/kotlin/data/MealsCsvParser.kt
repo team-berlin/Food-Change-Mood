@@ -1,4 +1,4 @@
-package com.berlin.data
+package data
 
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition
@@ -6,7 +6,10 @@ import kotlinx.datetime.LocalDate
 
 class MealsCsvParser {
 
-         fun parseColumnsToMeal(line: Array<String>): Meal {
+    fun parseColumnsToMeal(line: Array<String>): Meal {
+        if (line.size < 12) {
+            throw IllegalArgumentException("Invalid number of columns in line: ${line.joinToString()}")
+        } else {
             val name = line[ColumnIndex.NAME].trim()
             val id = line[ColumnIndex.ID].trim().toIntOrNull() ?: -1
             val minutes = line[ColumnIndex.MINUTES].trim().toIntOrNull() ?: -1
@@ -26,14 +29,14 @@ class MealsCsvParser {
             val steps = parseStringList(stepsRaw)
             val ingredients = parseStringList(ingredientsRaw)
 
-            val nutrition   = parseNutrition(nutritionRaw)
+            val nutrition = parseNutrition(nutritionRaw)
 
             return Meal(
                 name = name,
                 id = id,
                 minutes = minutes,
                 contributorId = contributorId,
-                submissionDate= submittedDate,
+                submissionDate = submittedDate,
                 tags = tags,
                 nutrition = nutrition,
                 nSteps = nSteps,
@@ -44,7 +47,7 @@ class MealsCsvParser {
             )
         }
 
-
+    }
         private fun parseStringList(raw: String): List<String> {
             val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
             if (trimmed.isEmpty()) {
@@ -79,4 +82,4 @@ class MealsCsvParser {
             )
         }
 
-}
+    }
