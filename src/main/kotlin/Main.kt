@@ -1,6 +1,6 @@
 package org.berlin
 
-import dependencyInjection.appModule
+import org.berlin.dependency_injection.appModule
 import org.koin.core.context.startKoin
 
 
