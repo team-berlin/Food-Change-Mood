@@ -4,11 +4,16 @@ import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 
 class QuickHealthyMealsUseCase(private val mealsRepository: MealsRepository) {
+    companion object {
+        const val MAX_MINUTES: Int = 15
+        const val HEALTHY_TAG: String = "healthy"
+    }
+
     fun getQuickHealthyMeals(): List<Meal> {
         return mealsRepository.getAllMeals()
             .filter { meal ->
-                meal.minutes <= 15 &&
-                meal.tags.any { tag -> tag.contains("healthy", ignoreCase = true) }
+                meal.minutes <= MAX_MINUTES &&
+                meal.tags.any { tag -> tag.contains(HEALTHY_TAG, ignoreCase = true) }
             }.let { findLowFatAndCarbsMeals(it) }
     }
 
