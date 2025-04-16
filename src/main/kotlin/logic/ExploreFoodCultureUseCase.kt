@@ -8,7 +8,6 @@ class ExploreFoodCultureUseCase(
 
     fun exploreFoodByCountry(country: String): List<Meal> {
         val filterMeals = mealsRepository.getAllMeals()
-          //  .also { println("Total meals loaded: ${it.size}") }
             .filter { containsCountryInTagsOrDescription(it, country)
             }
             return filterMeals
@@ -17,7 +16,6 @@ class ExploreFoodCultureUseCase(
             ?.take(20)
             ?: emptyList()
     }
-
     private fun containsCountryInTagsOrDescription(meal: Meal, country: String): Boolean {
         return meal.tags.any { it.contains(country, ignoreCase = true) }||
         meal.description?.contains(country, ignoreCase = true) ?: false

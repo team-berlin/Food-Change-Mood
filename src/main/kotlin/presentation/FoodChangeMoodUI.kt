@@ -1,5 +1,4 @@
 package org.berlin.presentation
-
 import org.berlin.logic.ExploreFoodCultureUseCase
 
 
@@ -42,7 +41,6 @@ class FoodChangeMoodUI(
 
     private fun handleExploreFoodCulture() {
         print("Enter Country name:")
-
         readlnOrNull()?.takeIf { it.isNotBlank() }?.let { countryName ->
             try {
                 val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = "")
