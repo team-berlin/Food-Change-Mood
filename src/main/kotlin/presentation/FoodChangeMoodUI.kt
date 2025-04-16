@@ -1,6 +1,10 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.GetSeafoodMealsUseCase
+
+class FoodChangeMoodUI(
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
+) {
 
     fun start() {
         showWelcome()
@@ -12,15 +16,17 @@ class FoodChangeMoodUI() {
         val input = getUserInput()
 
         when (input) {
-            1 -> printFakeUseCase()
+            1 -> launchSeafoodMealsUseCase()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
     }
 
-    private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
+    private fun launchSeafoodMealsUseCase() {
+       getSeafoodMealsUseCase.getSeafoodMeals().forEach {seafoodMeal->
+           println(seafoodMeal)
+       }
     }
 
     private fun showWelcome() {
@@ -29,7 +35,7 @@ class FoodChangeMoodUI() {
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
+        println("1 - Get a list of all seafood meals")
         print("Here: ")
     }
 
