@@ -1,11 +1,10 @@
 package org.berlin.presentation
 
-import org.berlin.logic.usecase.EasyFoodSuggestionRepository
+import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
 
 class FoodChangeMoodUI(
-    private val easyFoodSuggestionRepository: EasyFoodSuggestionRepository
+    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase
 ) {
-
     fun start() {
         showWelcome()
         presentFeatures()
