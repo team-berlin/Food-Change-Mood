@@ -2,9 +2,10 @@ package org.berlin.dependency_injection
 
 import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
-import com.berlin.data.MealsCsvParser
+import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
 import org.berlin.logic.usecase.QuickHealthyMeals
+import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
 
@@ -17,4 +18,7 @@ val appModule = module {
 
         // Logic Layer
         single { QuickHealthyMeals(get()) }
+
+        // Presentation Layer
+        single { FoodChangeMoodUI(get()) }
 }

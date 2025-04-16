@@ -1,5 +1,7 @@
-package com.berlin.data
+package data
 
+import com.berlin.data.ColumnIndex
+import com.berlin.data.NutritionIndex
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition
 import kotlinx.datetime.LocalDate
@@ -16,7 +18,7 @@ class MealsCsvParser {
             val nutritionRaw = line[ColumnIndex.NUTRITION].trim()
             val nSteps = line[ColumnIndex.N_STEPS].trim().toIntOrNull() ?: 0
             val stepsRaw = line[ColumnIndex.STEPS].trim()
-            val description = line[ColumnIndex.DESCRIPTION].trim() ?: null
+            val description = line[ColumnIndex.DESCRIPTION].trim()
             val ingredientsRaw = line[ColumnIndex.INGREDIENTS].trim()
             val nIngredients = line[ColumnIndex.N_INGREDIENTS].trim().toIntOrNull() ?: 0
 

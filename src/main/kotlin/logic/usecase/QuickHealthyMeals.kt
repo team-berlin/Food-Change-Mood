@@ -9,7 +9,7 @@ class QuickHealthyMeals(private val mealsRepository: MealsRepository) {
             .filter { meal ->
                 meal.minutes <= 15 &&
                 meal.tags.any { tag -> tag.contains("healthy", ignoreCase = true) }
-            }.also { findLowFatAndCarbsMeals(it) }
+            }.let { findLowFatAndCarbsMeals(it) }
     }
 
     private fun findLowFatAndCarbsMeals (meals: List<Meal>): List<Meal> {
