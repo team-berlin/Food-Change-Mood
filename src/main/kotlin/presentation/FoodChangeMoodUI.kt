@@ -40,16 +40,23 @@ class FoodChangeMoodUI(
         print("Here: ")
     }
 
+    private fun removeAllSpaces(input: String): String {
+        return input.replace(ALL_SPACES_VALUE, " ")
+    }
+
     private fun getItalianMealsForLargeGroup() {
 
         val meals = suggestItalianFoodForLargeGroupUseCase
             .suggestItalianMealsForLargeGroup()
-        meals.forEach {
-            println("Italian Meal Name: ${it.name}\n")
+        meals.forEachIndexed { index, meal ->
+            println("${index + 1}. Meal Name: " +
+                    "${removeAllSpaces(meal.name)}\n")
         }
     }
 
-
+    private companion object {
+        val ALL_SPACES_VALUE = "\\s+".toRegex()
+    }
 
     private fun getUserInput(): Int? {
         return readLine()?.toIntOrNull()
