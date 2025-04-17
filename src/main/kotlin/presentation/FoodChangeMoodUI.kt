@@ -1,10 +1,9 @@
 package org.berlin.presentation
 
-import org.berlin.logic.ingredient_game.IngredientGameUseCase
 import org.berlin.logic.ingredient_game.InvalidInputForIngredientGameException
 
 class FoodChangeMoodUI(
-    private val ingredientGameUseCase: IngredientGameUseCase
+    private val ingredientGame: IngredientGameInteractor
 ) {
 
     fun start() {
@@ -18,7 +17,7 @@ class FoodChangeMoodUI(
 
         when (input) {
             1 -> printFakeUseCase()
-            11-> ingredientGameUseCase()
+            11 -> ingredientGameUseCase()
             else -> println("Invalid Input")
         }
 
@@ -30,20 +29,20 @@ class FoodChangeMoodUI(
     }
 
     private fun ingredientGameUseCase() {
-        try{ingredientGameUseCase.run()
-        while (ingredientGameUseCase.isRunning()) {
-            println("Meal Name : ${ingredientGameUseCase.getCurrentMealName()}")
-            println("Ingredients")
-            ingredientGameUseCase.getCurrentMealIngredients()
-                .forEachIndexed{i,ingredient-> println("${i+1}--> $ingredient") }
-            print("Choose The Number Of Correct Ingredient")
-            ingredientGameUseCase.submitInput(getUserInput()?:return)
-        }
-        println(ingredientGameUseCase.getTurnResult())}
-        catch (e:InvalidInputForIngredientGameException) {
+        try {
+            ingredientGame.run()
+            while (ingredientGame.isRunning()) {
+                println("Meal Name : ${ingredientGame.getCurrentMealName()}")
+                println("Ingredients")
+                ingredientGame.getCurrentIngredients()
+                    .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
+                print("Choose The Number Of Correct Ingredient")
+                ingredientGame.submitAnswer(getUserInput() ?: return)
+            }
+            println(ingredientGame.getTurnResult())
+        } catch (e: InvalidInputForIngredientGameException) {
             println(e.message)
-        }
-        catch (e:Exception){
+        } catch (e: Exception) {
             println(e.message)
         }
 
