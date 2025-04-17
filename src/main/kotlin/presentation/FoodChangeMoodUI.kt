@@ -1,6 +1,8 @@
 package org.berlin.presentation
 
 import org.berlin.logic.GymHelperUseCase
+import org.berlin.model.CaloriesAndProteinTolerance
+import org.berlin.model.GymHelperInput
 
 class FoodChangeMoodUI(
     private val gymHelperUseCase: GymHelperUseCase
@@ -28,11 +30,15 @@ class FoodChangeMoodUI(
         println("UseCase successfully done...!")
     }
 
-    private fun launchGymHelper () {
+    private fun launchGymHelper() {
         println("Please enter the number of calories:")
-        val caloriesInput = readLine()?.toDoubleOrNull()
+        val caloriesInput = readlnOrNull()?.toDoubleOrNull()
         println("Please enter the amount of protein:")
-        val proteinInput = readLine()?.toDoubleOrNull()
+        val proteinInput = readlnOrNull()?.toDoubleOrNull()
+        println("Enter calories tolerance if you want:")
+        val caloriesToleranceInput = readlnOrNull()?.toIntOrNull()
+        println("Enter protein tolerance if you want:")
+        val proteinToleranceInput = readlnOrNull()?.toIntOrNull()
 
         if (caloriesInput == null || proteinInput == null) {
             println("Invalid input. Please enter numeric values.")
@@ -40,8 +46,11 @@ class FoodChangeMoodUI(
         }
 
         val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(
-            calories = caloriesInput,
-            protein = proteinInput
+            calorieAndProteinValues = GymHelperInput(
+                calories = caloriesInput,
+                protein = proteinInput,
+                caloriesAndProteinTolerance = CaloriesAndProteinTolerance(caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10)
+            ),
         )
 
         if (meals.isEmpty()) {
