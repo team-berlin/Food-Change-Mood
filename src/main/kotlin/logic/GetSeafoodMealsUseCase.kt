@@ -5,8 +5,7 @@ import org.berlin.model.Meal
 class GetSeafoodMealsUseCase(private val mealsRepository: MealsRepository) {
     fun getSeafoodMeals(): List<Pair<Int, Pair< String, Double>>> {
         val seafoodMeals = mealsRepository.getAllMeals()
-            .filter(::validateMealDescription)
-            .filter { it.tags.contains("seafood") }
+            .filter(::validateMealTags)
             .sortedByDescending { it.nutrition.protein }
             .map {seafoodMeal->
                 seafoodMeal.name to seafoodMeal.nutrition.protein }
@@ -14,7 +13,7 @@ class GetSeafoodMealsUseCase(private val mealsRepository: MealsRepository) {
         val rank = 1..seafoodMeals.size
         return rank.zip(seafoodMeals)
     }
-    private fun validateMealDescription(input: Meal): Boolean {
-        return input.tags.isNotEmpty()
+    private fun validateMealTags(input: Meal): Boolean {
+        return input.tags.isNotEmpty()&& input.tags.contains("seafood")
     }
 }

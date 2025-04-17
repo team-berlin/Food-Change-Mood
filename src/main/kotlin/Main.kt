@@ -1,8 +1,6 @@
 package org.berlin
 
-import dependencyInjection.appModule
 import org.berlin.presentation.FoodChangeMoodUI
-import com.berlin.data.CsvMealsRepository
 import dependency_injection.appModule
 import org.berlin.dependency_injection.useCaseModule
 import org.berlin.logic.MealsRepository
