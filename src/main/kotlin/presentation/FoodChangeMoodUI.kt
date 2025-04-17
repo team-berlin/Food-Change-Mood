@@ -1,6 +1,11 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
+
+class FoodChangeMoodUI(
+    private val suggestItalianFoodForLargeGroupUseCase:
+    SuggestItalianFoodForLargeGroupUseCase
+) {
 
     fun start() {
         showWelcome()
@@ -10,9 +15,10 @@ class FoodChangeMoodUI() {
     private fun presentFeatures() {
         showOptions()
         val input = getUserInput()
-
+        println()
         when (input) {
             1 -> printFakeUseCase()
+            15 -> getItalianMealsForLargeGroup()
             else -> println("Invalid Input")
         }
 
@@ -30,8 +36,20 @@ class FoodChangeMoodUI() {
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
+        println("15 - Get Italian Meals For Large Group")
         print("Here: ")
     }
+
+    private fun getItalianMealsForLargeGroup() {
+
+        val meals = suggestItalianFoodForLargeGroupUseCase
+            .suggestItalianMealsForLargeGroup()
+        meals.forEach {
+            println("Name: ${it.name}\n")
+        }
+    }
+
+
 
     private fun getUserInput(): Int? {
         return readLine()?.toIntOrNull()
