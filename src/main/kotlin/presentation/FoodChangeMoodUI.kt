@@ -16,16 +16,11 @@ class FoodChangeMoodUI(
         val input = getUserInput()
 
         when (input) {
-            1 -> printFakeUseCase()
-            2 ->handleExploreFoodCulture()
+            10 ->handleExploreFoodCulture()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
-    }
-
-    private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
     }
 
     private fun showWelcome() {
@@ -34,8 +29,7 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
-        println("2 - Explore food culture by country")
+        println("10 - Explore food culture by country")
         print("Here: ")
     }
 
