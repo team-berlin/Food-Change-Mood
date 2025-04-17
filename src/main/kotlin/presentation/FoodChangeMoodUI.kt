@@ -1,6 +1,10 @@
 package org.berlin.presentation
 
-class FoodChangeMoodUI() {
+import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
+
+class FoodChangeMoodUI(
+    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase
+) {
 
     fun start() {
         showWelcome()
@@ -13,10 +17,30 @@ class FoodChangeMoodUI() {
 
         when (input) {
             1 -> printFakeUseCase()
+            4 -> easyFoodSuggestion()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
+    }
+    private fun easyFoodSuggestion() {
+        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+        meals.onSuccess {
+            it.forEach { meal ->
+                println(
+                    """
+                        ${meal.name}
+                        Time: ${meal.minutes} minutes
+                        Ingredients: ${meal.nIngredients}
+                        Steps: ${meal.nSteps}
+                        ---------------------
+                    """.trimIndent()
+                )
+            }
+        }
+        meals.onFailure {
+            println("No meals found")
+        }
     }
 
     private fun printFakeUseCase() {
@@ -30,6 +54,7 @@ class FoodChangeMoodUI() {
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
+        println("4 - Get easy food suggestion")
         print("Here: ")
     }
 
