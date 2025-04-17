@@ -26,9 +26,14 @@ class FoodChangeMoodUI(
     }
 
     private fun suggestionKetoMeal() {
-        val excludedMealIds: MutableSet<Int> = mutableSetOf()
+        val excludedMealIds = mutableSetOf<Int>()
         while (true) {
             val selectedMeal = suggestKetoMealUseCase.suggestMeal(excludedMealIds)
+            if (selectedMeal == null) {
+                println("No more keto‑friendly meals available. Goodbye!")
+                break
+            }
+
             excludedMealIds.add(selectedMeal.id)
             println("\n---  Keto Meal Suggestion: ---")
             println("Name: ${selectedMeal.name}")
@@ -36,8 +41,7 @@ class FoodChangeMoodUI(
             println("---------------------------")
             println("Like it? (type 'y' for show all details or 'n' for suggest another meal or 'e' for exit)")
 
-            val input = getStringUserInput().toString().lowercase()
-            when (input) {
+            when (getStringUserInput().toString().lowercase()) {
                 "y" -> {
                     showMealDetails(selectedMeal)
                     break

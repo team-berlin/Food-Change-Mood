@@ -9,16 +9,17 @@ class SuggestKetoMealUseCase(
 
     fun suggestMeal(
         excludedMealIds: MutableSet<Int>
-    ): Meal {
+    ): Meal? {
         return mealsRepository.getAllMeals()
-            .filter (::isKetoFriendly)
-            .filter { meal -> meal.id !in excludedMealIds }
-            .shuffled()
-            .first()
+            .filter {isKetoFriendly(it, excludedMealIds)}
+            .takeIf { it.isNotEmpty() }
+            ?.shuffled()
+            ?.first()
     }
 
-    private fun isKetoFriendly(meal: Meal): Boolean {
-        return meal.nutrition.carbohydrates <= CARB_THRESHOLD &&
+    private fun isKetoFriendly(meal: Meal, excludedMealIds: MutableSet<Int>): Boolean {
+        return  meal.id !in excludedMealIds &&
+                meal.nutrition.carbohydrates <= CARB_THRESHOLD &&
                 (meal.nutrition.protein == 0.0 ||
                         (meal.nutrition.totalFat * 9) / (meal.nutrition.protein * 4) >= FAT_PROTEIN_RATIO_THRESHOLD)
     }
