@@ -14,7 +14,7 @@ class IngredientGameInteractor(
     private var state = GameState.RUNNING
 
     fun run() {
-        meals = ingredientGame.getFiveteenMeals()
+        meals = ingredientGame.getFifteenMeals()
         currentIndex = 0
         score = 0
         state = GameState.RUNNING

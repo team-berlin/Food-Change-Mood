@@ -1,13 +1,17 @@
 package org.berlin.logic.ingredient_game
 
+import org.berlin.logic.MealsRepository
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGame(
-    private val mealsFormatedForGame: List<MealForIngredientGame>
+    private val repository: MealsRepository,
+    private val ingredientGameMealsMapper: IngredientGameMealsMapper
 ) {
 
-    fun getFiveteenMeals(): List<MealForIngredientGame> {
-        return mealsFormatedForGame.shuffled().take(MAX_QUESTIONS)
+    fun getFifteenMeals(): List<MealForIngredientGame> {
+        return ingredientGameMealsMapper.map(
+            repository.getAllMeals()
+        ).shuffled().take(MAX_QUESTIONS)
     }
 
     private companion object Constants {
