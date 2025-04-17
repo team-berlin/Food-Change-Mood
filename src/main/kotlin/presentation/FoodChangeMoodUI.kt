@@ -45,7 +45,7 @@ class FoodChangeMoodUI(
         val meals = suggestItalianFoodForLargeGroupUseCase
             .suggestItalianMealsForLargeGroup()
         meals.forEach {
-            println("Name: ${it.name}\n")
+            println("Italian Meal Name: ${it.name}\n")
         }
     }
 
