@@ -16,7 +16,7 @@ class FoodChangeMoodUI(
         val input = getUserInput()
 
         when (input) {
-            1 -> launchSeafoodMealsUseCase()
+            14 -> launchSeafoodMealsUseCase()
             else -> println("Invalid Input")
         }
 
@@ -24,9 +24,9 @@ class FoodChangeMoodUI(
     }
 
     private fun launchSeafoodMealsUseCase() {
-       getSeafoodMealsUseCase.getSeafoodMeals().forEach {seafoodMeal->
-           println(seafoodMeal)
-       }
+        getSeafoodMealsUseCase.getSeafoodMeals().forEachIndexed { index, seafoodMeal ->
+            println("${index + 1} ,Name:${seafoodMeal.name}, has protein value:${seafoodMeal.protein}")
+        }
     }
 
     private fun showWelcome() {
@@ -35,7 +35,7 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get a list of all seafood meals")
+        println("14 - Get a list of all seafood meals")
         print("Here: ")
     }
 
