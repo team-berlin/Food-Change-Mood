@@ -3,7 +3,7 @@ package org.berlin.logic.ingredient_game
 import org.berlin.logic.MealsRepository
 import org.berlin.model.MealForIngredientGame
 
-class IngredientGame(
+class IngredientGameUseCase(
     private val repository: MealsRepository,
     private val ingredientGameMealsMapper: IngredientGameMealsMapper
 ) {

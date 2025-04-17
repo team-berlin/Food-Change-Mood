@@ -1,12 +1,12 @@
 package org.berlin.presentation
 
-import org.berlin.logic.ingredient_game.IngredientGame
+import org.berlin.logic.ingredient_game.IngredientGameUseCase
 import org.berlin.logic.ingredient_game.InvalidInputForIngredientGameException
 import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameInteractor(
-    private val ingredientGame: IngredientGame
+    private val ingredientGame: IngredientGameUseCase
 ) {
     private var meals: List<MealForIngredientGame> = emptyList()
     private var currentIndex = 0
