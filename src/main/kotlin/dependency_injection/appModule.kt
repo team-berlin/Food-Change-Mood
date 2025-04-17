@@ -1,4 +1,4 @@
-package dependencyInjection;
+package dependency_injection;
 
 import data.CsvFileReader
 import data.CsvMealsRepository

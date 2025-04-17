@@ -1,4 +1,4 @@
-package data
+package com.berlin.data
 
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition
@@ -6,10 +6,14 @@ import kotlinx.datetime.LocalDate
 
 class MealsCsvParser {
 
-    fun parseColumnsToMeal(line: Array<String>): Meal {
-        if (line.size < 12) {
-            throw IllegalArgumentException("Invalid number of columns in line: ${line.joinToString()}")
-        } else {
+         fun parseColumnsToMeal(line: Array<String>): Meal {
+
+             if (line.size < 12) {
+                 throw IllegalArgumentException(
+                     "Malformed CSV row, expected 12 columns but got ${line.size}: ${line.joinToString()}"
+                 )
+             }
+
             val name = line[ColumnIndex.NAME].trim()
             val id = line[ColumnIndex.ID].trim().toIntOrNull() ?: -1
             val minutes = line[ColumnIndex.MINUTES].trim().toIntOrNull() ?: -1
@@ -19,7 +23,7 @@ class MealsCsvParser {
             val nutritionRaw = line[ColumnIndex.NUTRITION].trim()
             val nSteps = line[ColumnIndex.N_STEPS].trim().toIntOrNull() ?: 0
             val stepsRaw = line[ColumnIndex.STEPS].trim()
-            val description = line[ColumnIndex.DESCRIPTION].trim() ?: null
+            val description = line.getOrNull(ColumnIndex.DESCRIPTION)?.trim()?.takeIf { it.isNotBlank() }
             val ingredientsRaw = line[ColumnIndex.INGREDIENTS].trim()
             val nIngredients = line[ColumnIndex.N_INGREDIENTS].trim().toIntOrNull() ?: 0
 
@@ -29,14 +33,14 @@ class MealsCsvParser {
             val steps = parseStringList(stepsRaw)
             val ingredients = parseStringList(ingredientsRaw)
 
-            val nutrition = parseNutrition(nutritionRaw)
+            val nutrition   = parseNutrition(nutritionRaw)
 
             return Meal(
                 name = name,
                 id = id,
                 minutes = minutes,
                 contributorId = contributorId,
-                submissionDate = submittedDate,
+                submissionDate= submittedDate,
                 tags = tags,
                 nutrition = nutrition,
                 nSteps = nSteps,
@@ -47,7 +51,7 @@ class MealsCsvParser {
             )
         }
 
-    }
+
         private fun parseStringList(raw: String): List<String> {
             val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
             if (trimmed.isEmpty()) {
@@ -82,4 +86,4 @@ class MealsCsvParser {
             )
         }
 
-    }
+}
