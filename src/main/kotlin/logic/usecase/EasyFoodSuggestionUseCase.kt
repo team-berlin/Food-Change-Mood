@@ -6,12 +6,18 @@ import org.berlin.model.Meal
 class EasyFoodSuggestionUseCase(
     private val mealsRepository: MealsRepository
 ) {
-     fun getEasyFoodSuggestion(): List<Meal> {
-         val filteredList = mealsRepository.getAllMeals().filter { meal ->
-             meal.minutes <= 30 && meal.nIngredients <= 5 && meal.nSteps <= 6
-         }
+     fun getEasyFoodSuggestion(): Result<List<Meal>> {
+         val filteredList = mealsRepository.getAllMeals()
+             .filter { meal ->
+                         meal.minutes <= 30 &&
+                         meal.nIngredients <= 5 &&
+                         meal.nSteps <= 6
+             }
              .shuffled()
              .take(10)
-         return filteredList
+         if (filteredList.isEmpty()){
+             return Result.failure(Exception("No meals found"))
+         }
+         return Result.success(filteredList)
      }
 }

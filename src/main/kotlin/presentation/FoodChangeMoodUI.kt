@@ -28,9 +28,15 @@ class FoodChangeMoodUI(
     }
 
     private fun easyFoodSuggestion() {
-        val meal = easyFoodSuggestionRepository.getEasyFoodSuggestion()
-        meal.forEach { println(it) }
-
+        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+        meals.onSuccess {
+            it.forEach { meal ->
+                println("${meal.name} - ${meal.minutes} minutes - ${meal.nIngredients} ingredients - ${meal.nSteps} steps")
+            }
+        }
+            meals.onFailure {
+                println("No meals found")
+            }
     }
     private fun showWelcome() {
         println("Welcome to cost of living app")
