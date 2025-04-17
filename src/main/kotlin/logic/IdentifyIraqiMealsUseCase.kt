@@ -6,8 +6,9 @@ class IdentifyIraqiMealsUseCase(
     private val repository: MealsRepository
 ) {
 
+    val allMeals by lazy {repository.getAllMeals()}
     fun identifyIraqiMeals(): List<Meal> {
-        return repository.getAllMeals().filter {
+        return allMeals.filter {
             it.tags.any { tag -> tag.contains(IRAQI_TAG, ignoreCase = true) } ||
             it.description?.contains(IRAQI_TAG, ignoreCase = true) == true
         }

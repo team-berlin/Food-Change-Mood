@@ -9,8 +9,9 @@ class SuggestEggFreeSweetUseCase(
 ) {
     private val suggestedSweets = mutableSetOf<String>()
 
+    private val allMeals  by lazy { mealsRepository.getAllMeals() }
     fun suggestEggFreeSweet() : Meal? {
-        val allMeals = mealsRepository.getAllMeals()
+
         val eggFreeSweets = allMeals.filter(::isEggFreeSweet)
 
         if (eggFreeSweets.isEmpty()) return null
@@ -26,7 +27,6 @@ class SuggestEggFreeSweetUseCase(
                 && !suggestedSweets.contains(meal.name)
         }
     }
-
 
     companion object {
         private const val SWEET_TAG = "sweet"
