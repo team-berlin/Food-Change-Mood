@@ -9,9 +9,9 @@ class EasyFoodSuggestionUseCase(
     fun getEasyFoodSuggestion(): Result<List<Meal>> {
         val filteredList = mealsRepository.getAllMeals()
             .filter { meal ->
-                meal.minutes <= 30 &&
-                        meal.nIngredients <= 5 &&
-                        meal.nSteps <= 6
+                meal.minutes <= MAX_PREP_TIME_MINUTES &&
+                        meal.nIngredients <= INGREDIENTS_COUNT &&
+                        meal.nSteps <= STEPS_COUNT
             }
             .shuffled()
             .take(RANDOM_N)
@@ -21,7 +21,10 @@ class EasyFoodSuggestionUseCase(
         return Result.success(filteredList)
     }
     companion object{
-        const val RANDOM_N = 10
+         private const val MAX_PREP_TIME_MINUTES = 30
+         private const val INGREDIENTS_COUNT = 5
+         private const val STEPS_COUNT = 6
+         private const val RANDOM_N = 10
     }
 }
 
