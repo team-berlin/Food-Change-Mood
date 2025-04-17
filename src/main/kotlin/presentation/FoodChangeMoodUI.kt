@@ -16,7 +16,7 @@ class FoodChangeMoodUI(
 
         when (input) {
             1 -> printFakeUseCase()
-            2 -> easyFoodSuggestion()
+            4 -> easyFoodSuggestion()
             else -> println("Invalid Input")
         }
 
@@ -31,7 +31,9 @@ class FoodChangeMoodUI(
         val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
         meals.onSuccess {
             it.forEach { meal ->
-                println("${meal.name} - ${meal.minutes} minutes - ${meal.nIngredients} ingredients - ${meal.nSteps} steps")
+                println(
+                    "${meal.name} - ${meal.minutes} minutes " +
+                            "- ${meal.nIngredients} ingredients - ${meal.nSteps} steps")
             }
         }
             meals.onFailure {
@@ -45,7 +47,7 @@ class FoodChangeMoodUI(
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
-        println("2 - Get easy food suggestion")
+        println("4 - Get easy food suggestion")
         print("Here: ")
     }
 

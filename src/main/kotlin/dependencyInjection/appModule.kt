@@ -4,6 +4,7 @@ import data.CsvFileReader
 import data.CsvMealsRepository
 import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
+import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
 
@@ -13,5 +14,6 @@ val appModule = module {
         single { MealsCsvParser() }
 
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
+        single { FoodChangeMoodUI(get()) }
 
 }
