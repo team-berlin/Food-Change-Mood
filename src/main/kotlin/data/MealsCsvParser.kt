@@ -1,4 +1,4 @@
-package com.berlin.data
+package data
 
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition

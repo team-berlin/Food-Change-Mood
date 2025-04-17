@@ -1,4 +1,4 @@
-package com.berlin.data
+package data
 
 import com.opencsv.CSVParserBuilder
 import com.opencsv.CSVReaderBuilder
