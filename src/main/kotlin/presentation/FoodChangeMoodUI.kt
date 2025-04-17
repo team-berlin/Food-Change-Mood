@@ -19,7 +19,6 @@ class FoodChangeMoodUI(
             10 ->handleExploreFoodCulture()
             else -> println("Invalid Input")
         }
-
         presentFeatures()
     }
 
@@ -37,11 +36,11 @@ class FoodChangeMoodUI(
         print("Enter Country name:")
         readlnOrNull()?.takeIf { it.isNotBlank() }?.let { countryName ->
             try {
-                val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = "")
+                val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = countryName)
                 if (meals.isEmpty()) {
-                    println(" \"$countryName\" is not found in any meal tags or descriptions.")
+                    println(" \"$countryName\" is not found in any meal tags.")
                 } else {
-                    println("\n Found ${meals.size} meals related to \"$countryName\":")
+                    println("\nFound ${meals.size} meals related to \"$countryName\":")
                     meals.forEachIndexed { index, meal ->
                         println("${index + 1}. ${meal.name}")
                     }

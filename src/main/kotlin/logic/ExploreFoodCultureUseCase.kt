@@ -7,17 +7,24 @@ class ExploreFoodCultureUseCase(
 ) {
 
     fun exploreFoodByCountry(country: String): List<Meal> {
-        val filterMeals = mealsRepository.getAllMeals()
-            .filter { containsCountryInTagsOrDescription(it, country)
-            }
-            return filterMeals
+        return mealsRepository.getAllMeals()
+            .filter { containsCountryInTags(it, country) }
             .takeIf { it.isNotEmpty() }
             ?.shuffled()
-            ?.take(20)
+            ?.take(MEALS_NUMBER)
             ?: emptyList()
     }
-    private fun containsCountryInTagsOrDescription(meal: Meal, country: String): Boolean {
-        return meal.tags.any { it.contains(country, ignoreCase = true) }||
-        meal.description?.contains(country, ignoreCase = true) ?: false
+
+    private fun containsCountryInTags(meal: Meal, country: String): Boolean {
+        return meal.tags.any { it
+            .trim()
+            .split(Regex("\\s+"))
+            .filter { it.isNotEmpty() }
+            .any { it.contains(country, ignoreCase = true) }
+        }
+    }
+
+    private companion object {
+        const val MEALS_NUMBER = 20
     }
 }
