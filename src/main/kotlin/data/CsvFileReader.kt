@@ -23,5 +23,5 @@ class CsvFileReader(
                 val dataRows = allRows.drop(1)
                 return dataRows
             }
-      }
+    }
 }
