@@ -1,8 +1,9 @@
-package org.berlin.logic
+package org.berlin.logic.ingredient_game
 
+import org.berlin.logic.MealsRepository
 import org.berlin.model.MealForIngredientGame
 
-class IngredientGameMealsFormatter(
+class IngredientGameMealsMapper(
     private val mealsRepository: MealsRepository
 ) {
     fun getFormatedMeals(): List<MealForIngredientGame> {

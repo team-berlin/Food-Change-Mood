@@ -1,11 +1,9 @@
 package org.berlin.presentation
 
-import org.berlin.logic.IngredientGame
-import org.berlin.model.GameState
-import org.berlin.model.MealForIngredientGame
+import org.berlin.logic.ingredient_game.IngredientGameUseCase
 
 class FoodChangeMoodUI(
-    private val ingredientGame: IngredientGame
+    private val ingredientGameUseCase: IngredientGameUseCase
 ) {
 
     fun start() {
@@ -19,6 +17,7 @@ class FoodChangeMoodUI(
 
         when (input) {
             1 -> printFakeUseCase()
+            11-> ingredientGameUseCase()
             else -> println("Invalid Input")
         }
 
@@ -30,38 +29,16 @@ class FoodChangeMoodUI(
     }
 
     private fun ingredientGameUseCase() {
-        while (ingredientGame.getState() == GameState.RUNNING) {
-            val gameCurrentMeal: MealForIngredientGame = ingredientGame.getMeal()!!
-
-            println("Meal Name : ${gameCurrentMeal.mealName}")
+        ingredientGameUseCase.run()
+        while (ingredientGameUseCase.isRunning()) {
+            println("Meal Name : ${ingredientGameUseCase.getCurrentMealName()}")
             println("Ingredients")
-            println(" 1 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[0]}")
-            println(" 2 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[1]}")
-            println(" 3 --> ${gameCurrentMeal.threeIngredientOnlyOneCorrect[2]}")
+            ingredientGameUseCase.getCurrentMealIngredients()
+                .forEachIndexed{i,ingredient-> println("${i+1}--> $ingredient") }
             print("Choose The Number Of Correct Ingredient")
-            val input = getUserInput()?:return
-            when (input) {
-                1 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[0])
-                2 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[1])
-                3 -> ingredientGame.checkAnswer(gameCurrentMeal.threeIngredientOnlyOneCorrect[2])
-            }
+            ingredientGameUseCase.submitInput(getUserInput()?:return)
         }
-        when (ingredientGame.getState()) {
-            GameState.WON -> {
-                println("You Won your Score Is : ${ingredientGame.getScore()}")
-                ingredientGame.reset()
-            }
-
-            GameState.LOST -> {
-                println("You Lost your Score Is : ${ingredientGame.getScore()}")
-                ingredientGame.reset()
-            }
-
-            else -> {
-                return
-            }
-        }
-
+        println(ingredientGameUseCase.getTurnResult())
     }
 
     private fun showWelcome() {
@@ -71,6 +48,7 @@ class FoodChangeMoodUI(
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
+        println("11 - Ingredient Game")
         print("Here: ")
     }
 
