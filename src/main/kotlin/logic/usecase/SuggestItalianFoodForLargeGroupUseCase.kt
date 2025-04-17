@@ -14,11 +14,16 @@ class SuggestItalianFoodForLargeGroupUseCase(
 
     private fun isItalianFoodForLargeGroup(meal: Meal): Boolean {
         return meal.tags.any { tag ->
-            tag.equals("italian", ignoreCase = true)
+            tag.equals(ITALIAN_FOOD_TAG, ignoreCase = true)
         }
                 && meal.tags.any { tag ->
-            tag.equals("for-large-groups", ignoreCase = true)
+            tag.equals(LARGE_GROUP_TAG, ignoreCase = true)
         }
+    }
+
+    private companion object {
+        const val ITALIAN_FOOD_TAG = "italian"
+        const val LARGE_GROUP_TAG = "for-large-groups"
     }
 
 }
