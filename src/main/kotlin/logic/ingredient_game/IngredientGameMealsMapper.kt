@@ -1,17 +1,15 @@
 package org.berlin.logic.ingredient_game
 
-import org.berlin.logic.MealsRepository
+import org.berlin.model.Meal
 import org.berlin.model.MealForIngredientGame
 
-class IngredientGameMealsMapper(
-    private val mealsRepository: MealsRepository
-) {
-    fun getFormatedMeals(): List<MealForIngredientGame> {
-        val allMeals=mealsRepository.getAllMeals()
-        val allMealsIngredients = allMeals
+class IngredientGameMealsMapper {
+    fun map(meals: List<Meal>): List<MealForIngredientGame> {
+
+        val allMealsIngredients = meals
             .map { meal -> meal.ingredients }
             .flatten()
-        return allMeals
+        return meals
             .map { currentFullMeal ->
 
                 val allMealsIngredientsExceptCurrentMeal = allMealsIngredients
