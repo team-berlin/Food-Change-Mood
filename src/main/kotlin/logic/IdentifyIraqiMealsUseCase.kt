@@ -8,15 +8,15 @@ class IdentifyIraqiMealsUseCase(
 
     val allMeals by lazy {repository.getAllMeals()}
     fun identifyIraqiMeals(): List<Meal> {
-        return allMeals.filter {
-            it.tags.any { tag -> tag.contains(IRAQI_TAG, ignoreCase = true) } ||
-            it.description?.contains(IRAQI_TAG, ignoreCase = true) == true
-        }
+        return allMeals.filter { isIraqiMeal(it) }
+    }
+
+    private fun isIraqiMeal(meal: Meal): Boolean {
+       return meal.tags.any { tag -> tag.contains(IRAQI_TAG, ignoreCase = true) } ||
+               meal.description?.contains(IRAQI_TAG, ignoreCase = true) == true
     }
 
     companion object {
         const val IRAQI_TAG = "iraqi"
     }
-
-
 }
