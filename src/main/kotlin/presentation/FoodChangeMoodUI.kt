@@ -59,17 +59,31 @@ class FoodChangeMoodUI(
         println("\n--- Sweet Details ---")
         println("Name: ${meal.name}")
         println("Description: ${meal.description}")
-        println("Ingredients: ${meal.ingredients?.joinToString(", ")}")
+        println("Ingredients: ${meal.ingredients.joinToString(", ")}")
         meal.steps.let {
             println("Steps:")
-            it?.forEachIndexed { index, step ->
+            it.forEachIndexed { index, step ->
                 println("${index + 1}. $step")
             }
         }
     }
 
     private fun identifyIraqiMeals() {
-        println(identifyIraqiMealsUseCase.identifyIraqiMeals().toString())
+        val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
+        if (iraqiMeals.isNotEmpty()) {
+            println("\n--- Iraqi Meals ---")
+            iraqiMeals.forEach { meal ->
+                println("Name: ${meal.name}")
+                println("ID: ${meal.id}")
+                println("Description: ${meal.description ?: "No description available"}")
+                println("Tags: ${meal.tags.joinToString(", ")}")
+                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+                println("---")
+            }
+            println("--- End of Iraqi Meals ---")
+        } else {
+            println("No Iraqi meals found.")
+        }
     }
 
     private fun showWelcome() {
