@@ -1,6 +1,7 @@
 package org.berlin.presentation
 
 import org.berlin.logic.ingredient_game.IngredientGameUseCase
+import org.berlin.logic.ingredient_game.InvalidInputForIngredientGameException
 
 class FoodChangeMoodUI(
     private val ingredientGameUseCase: IngredientGameUseCase
@@ -29,7 +30,7 @@ class FoodChangeMoodUI(
     }
 
     private fun ingredientGameUseCase() {
-        ingredientGameUseCase.run()
+        try{ingredientGameUseCase.run()
         while (ingredientGameUseCase.isRunning()) {
             println("Meal Name : ${ingredientGameUseCase.getCurrentMealName()}")
             println("Ingredients")
@@ -38,7 +39,14 @@ class FoodChangeMoodUI(
             print("Choose The Number Of Correct Ingredient")
             ingredientGameUseCase.submitInput(getUserInput()?:return)
         }
-        println(ingredientGameUseCase.getTurnResult())
+        println(ingredientGameUseCase.getTurnResult())}
+        catch (e:InvalidInputForIngredientGameException) {
+            println(e.message)
+        }
+        catch (e:Exception){
+            println(e.message)
+        }
+
     }
 
     private fun showWelcome() {
