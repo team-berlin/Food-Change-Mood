@@ -5,15 +5,16 @@ import org.berlin.model.Meal
 
 
 class FoodChangeMoodUI(
-    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
+    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
+    private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
+    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
-    private val suggestItalianFoodForLargeGroupUseCase:
-    SuggestItalianFoodForLargeGroupUseCase
-) {
+
+    ) {
 
     fun start() {
         showWelcome()
@@ -29,8 +30,10 @@ class FoodChangeMoodUI(
             2 -> identifyIraqiMeals()
             3 -> suggestEggFreeSweet()
             4 -> launchEasyFoodSuggestion()
+            5 -> identifyIraqiMeals()
             7 -> launchSuggestionKetoMeal()
             10 ->launchExploreFoodCulture()
+            15 -> getItalianMealsForLargeGroup()
 
             else -> println("Invalid Input")
         }
@@ -38,6 +41,24 @@ class FoodChangeMoodUI(
         presentFeatures()
     }
 
+    private fun searchMealsByName() {
+        println("===Search meals by name===\n")
+        println("please enter meal name or part of it: ")
+        val searchWord = readlnOrNull() ?: ""
+        val meals = searchMealsByNameUseCase.searchMealsByName(searchWord)
+        if (meals.isEmpty()) {
+            println("Search word is empty, please enter something to search.")
+        } else {
+            println("there is ${meals.size} founded for $searchWord: \n")
+            meals.forEach { meal ->
+                println(meal.name)
+            }
+        }
+    }
+
+    private fun printFakeUseCase() {
+        println("UseCase successfully done...!")
+    }
 
     private fun launchExploreFoodCulture() {
         print("Enter Country name:")
@@ -142,7 +163,6 @@ class FoodChangeMoodUI(
     }
 
 
-
     private fun suggestEggFreeSweet() {
         val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
         if (suggestion != null) {
@@ -151,7 +171,7 @@ class FoodChangeMoodUI(
             println("Description: ${suggestion.description}")
             println("---------------------------")
             println("Like it? (yes/no/exit)")
-            when(readlnOrNull()?.lowercase()){
+            when(readLine()?.lowercase()){
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
@@ -160,12 +180,12 @@ class FoodChangeMoodUI(
                 "exit" -> presentFeatures()
                 else -> println("Invalid Input")
             }
-        }else{
+        } else {
             println("No more egg-free sweets to suggest :( ")
         }
     }
 
-    private fun showSweetDetails(meal : Meal) {
+    private fun showSweetDetails(meal: Meal) {
         println("\n--- Sweet Details ---")
         println("Name: ${meal.name}")
         println("Description: ${meal.description}")
