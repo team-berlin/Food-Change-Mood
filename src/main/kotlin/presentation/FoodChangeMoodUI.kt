@@ -26,15 +26,14 @@ class FoodChangeMoodUI(
     }
 
     private fun suggestionKetoMeal() {
-        val excludedMealIds = mutableSetOf<Int>()
-        while (true) {
-            val selectedMeal = suggestKetoMealUseCase.suggestMeal(excludedMealIds)
-            if (selectedMeal == null) {
-                println("No more keto‑friendly meals available. Goodbye!")
-                break
-            }
+        val shuffledMeals = suggestKetoMealUseCase.suggestMeal()
 
-            excludedMealIds.add(selectedMeal.id)
+        if (shuffledMeals.isEmpty()) {
+            println("No keto‑friendly meals available. Goodbye!")
+            return
+        }
+
+        for (selectedMeal in shuffledMeals) {
             println("\n---  Keto Meal Suggestion: ---")
             println("Name: ${selectedMeal.name}")
             println("Description: ${selectedMeal.description}")
@@ -53,9 +52,11 @@ class FoodChangeMoodUI(
                 "e" -> break
                 else -> {
                     println("Invalid input, please try again...")
+                    break
                 }
             }
         }
+        println("No more keto‑friendly meals available. Goodbye!")
     }
 
     private fun showMealDetails(meal: Meal) {
