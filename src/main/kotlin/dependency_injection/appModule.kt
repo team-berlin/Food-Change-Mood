@@ -1,24 +1,27 @@
-package dependency_injection;
-
-import com.berlin.data.CsvFileReader
+package dependency_injection
+import data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
-import com.berlin.data.MealsCsvParser
+import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
-import org.berlin.logic.usecase.HighCalorieMealsUseCase
+import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
+import org.berlin.logic.usecase.QuickHealthyMealsUseCase
+import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
 import org.berlin.presentation.FoodChangeMoodUI
+import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-        // Data Layer
         single { File("food.csv") }
         single { CsvFileReader(get()) }
         single { MealsCsvParser() }
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
-
-        // Logic Layer
+        single { QuickHealthyMealsUseCase(get()) }
+        single { SuggestEggFreeSweetUseCase(get()) }
+        single { IdentifyIraqiMealsUseCase(get()) }
         single { HighCalorieMealsUseCase(get()) }
 
-        // Presentation Layer
-        single { FoodChangeMoodUI(get()) }
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+
+
 }
