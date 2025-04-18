@@ -1,12 +1,13 @@
 package org.berlin.presentation
 
+import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.*
 import org.berlin.model.Meal
 
-
 class FoodChangeMoodUI(
-    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
+    private val ingredientGame: IngredientGameInteractor,
+    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
@@ -33,8 +34,10 @@ class FoodChangeMoodUI(
             "5" -> launchIdentifyIraqiMeals()
             "7" -> launchSuggestionKetoMeal()
             "10" -> launchExploreFoodCulture()
+            "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
             "15" -> launchGetItalianMealsForLargeGroup()
+
             else -> println("Invalid Input")
         }
 
@@ -245,22 +248,41 @@ class FoodChangeMoodUI(
         }
     }
 
+    private fun launchIngredientGameUseCase() {
+        try {
+            ingredientGame.run()
+            while (ingredientGame.isRunning()) {
+                println("Meal Name : ${ingredientGame.getCurrentMealName()}")
+                println("Ingredients : ")
+                ingredientGame.getCurrentIngredients()
+                    .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
+                print("Choose The Number Of Correct Ingredient : ")
+                ingredientGame.submitAnswer(getUserInput() ?: return)
+                println()
+            }
+            println(ingredientGame.getTurnResult())
+        } catch (e: InvalidInputForIngredientGameException) {
+            println(e.message)
+        } catch (e: Exception) { println(e.message) }
+
+    }
+
     private fun showWelcome() {
         println("Welcome to cost of living app")
     }
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("7 - Get friendly keto meal suggestion")
-        println("10 - Explore food culture by country")
         println("1 - Get fake UseCase for testing")
         println("2 - Search meals by name")
         println("3 - Suggest Egg FreeSweet")
         println("4 - Get easy food suggestion")
-        println("15 - Get Italian Meals For Large Group")
         println("5 - Identify Iraqi Meals")
-
+        println("7 - Get friendly keto meal suggestion")
+        println("10 - Explore food culture by country")
+        println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
+        println("15 - Get Italian Meals For Large Group")
         print("Here: ")
     }
 
@@ -286,6 +308,10 @@ class FoodChangeMoodUI(
 
     private fun launchRandomPotatoesMeals(){
         getMealsContainsPotatoUseCase.getMealsContainsPotato().forEach { println(it) }
+    }
+
+    private fun getUserInput(): Int? {
+        return readlnOrNull()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
