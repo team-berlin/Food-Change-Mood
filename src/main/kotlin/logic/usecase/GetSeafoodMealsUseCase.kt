@@ -1,9 +1,14 @@
-package org.berlin.logic
+package logic.usecase
 
+import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 import org.berlin.model.SeafoodMeal
 
 class GetSeafoodMealsUseCase(private val mealsRepository: MealsRepository) {
+    companion object {
+        const val MEAL_NAME = "seafood"
+    }
+
     fun getSeafoodMeals(): List<SeafoodMeal> {
         val seafoodList: MutableList<SeafoodMeal> = mutableListOf()
         mealsRepository.getAllMeals()
@@ -16,6 +21,6 @@ class GetSeafoodMealsUseCase(private val mealsRepository: MealsRepository) {
     }
 
     private fun validateMealTags(input: Meal): Boolean {
-        return input.tags.isNotEmpty() && input.tags.contains("seafood")
+        return input.tags.isNotEmpty() && input.tags.contains(MEAL_NAME)
     }
 }

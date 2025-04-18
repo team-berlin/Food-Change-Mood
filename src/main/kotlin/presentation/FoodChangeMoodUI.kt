@@ -1,6 +1,6 @@
 package org.berlin.presentation
 
-import org.berlin.logic.GetSeafoodMealsUseCase
+import logic.usecase.GetSeafoodMealsUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
