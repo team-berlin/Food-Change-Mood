@@ -1,5 +1,6 @@
 package org.berlin.presentation
 
+import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
 import org.berlin.logic.usecase.SearchMealsByNameUseCase
@@ -10,9 +11,9 @@ import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
 import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.model.Meal
 
-
 class FoodChangeMoodUI(
-    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
+    private val ingredientGame: IngredientGameInteractor,
+    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
@@ -39,6 +40,8 @@ class FoodChangeMoodUI(
             "10" -> launchExploreFoodCulture()
             "15" -> launchGetItalianMealsForLargeGroup()
             "12" -> launchRandomPotatoesMeals()
+            "14"->launchIngredientGameUseCase()
+
             else -> println("Invalid Input")
         }
 
@@ -220,6 +223,25 @@ class FoodChangeMoodUI(
         }
     }
 
+    private fun launchIngredientGameUseCase() {
+        try {
+            ingredientGame.run()
+            while (ingredientGame.isRunning()) {
+                println("Meal Name : ${ingredientGame.getCurrentMealName()}")
+                println("Ingredients : ")
+                ingredientGame.getCurrentIngredients()
+                    .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
+                print("Choose The Number Of Correct Ingredient : ")
+                ingredientGame.submitAnswer(getUserInput() ?: return)
+                println()
+            }
+            println(ingredientGame.getTurnResult())
+        } catch (e: InvalidInputForIngredientGameException) {
+            println(e.message)
+        } catch (e: Exception) { println(e.message) }
+
+    }
+
     private fun showWelcome() {
         println("Welcome to cost of living app")
     }
@@ -236,6 +258,7 @@ class FoodChangeMoodUI(
         println("5 - Identify Iraqi Meals")
 
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
+        println("11 - Ingredient Game")
         print("Here: ")
     }
 
