@@ -16,3 +16,4 @@ fun main() {
     val ui: FoodChangeMoodUI = getKoin().get()
     ui.start()
 }
+
