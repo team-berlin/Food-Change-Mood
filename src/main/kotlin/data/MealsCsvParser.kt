@@ -2,6 +2,7 @@ package data
 
 import com.berlin.data.ColumnIndex
 import com.berlin.data.NutritionIndex
+package com.berlin.data
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition
 import kotlinx.datetime.LocalDate

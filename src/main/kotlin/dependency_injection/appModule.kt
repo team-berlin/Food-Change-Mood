@@ -10,15 +10,15 @@ import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-        // Data Layer
         single { File("food.csv") }
         single { CsvFileReader(get()) }
         single { MealsCsvParser() }
+
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
 
         // Logic Layer
         single { QuickHealthyMealsUseCase(get()) }
 
         // Presentation Layer
-        single { FoodChangeMoodUI(get()) }
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get()) }
 }
