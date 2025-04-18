@@ -40,6 +40,7 @@ class FoodChangeMoodUI(
             "10" -> launchExploreFoodCulture()
             "15" -> launchGetItalianMealsForLargeGroup()
             "12" -> launchRandomPotatoesMeals()
+            "14"->launchIngredientGameUseCase()
 
             else -> println("Invalid Input")
         }
@@ -222,7 +223,7 @@ class FoodChangeMoodUI(
         }
     }
 
-    private fun ingredientGameUseCase() {
+    private fun launchIngredientGameUseCase() {
         try {
             ingredientGame.run()
             while (ingredientGame.isRunning()) {
