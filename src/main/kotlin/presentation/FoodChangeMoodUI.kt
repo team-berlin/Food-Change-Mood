@@ -90,18 +90,7 @@ class FoodChangeMoodUI(
 
         meals.forEachIndexed { index, meal ->
             println("\n[${index + 1}] ${meal.name}")
-            println("    Preparation Time: ${meal.minutes} minutes")
-            println("    Tags: ${meal.tags.joinToString(", ")}")
-            println("    Nutrition:")
-            println("      - Calories: ${meal.nutrition.calories}")
-            println("      - Protein: ${meal.nutrition.protein}g")
-            println("      - Total Fat: ${meal.nutrition.totalFat}g")
-            println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
-            println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
-            println("      - Sugar: ${meal.nutrition.sugar}g")
-            println("      - Sodium: ${meal.nutrition.sodium}mg")
-            println("    Ingredients: ${meal.nIngredients}")
-            println("    Steps: ${meal.nSteps}")
+            displayMeal(meal)
         }
 
         println("\nTotal meals found: ${meals.size}")
@@ -308,7 +297,7 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
+        println("1 - Find fast healthy meals that can be prepared in 15 minutes and under")
         println("2 - Search meals by name")
         println("3 - Identify Iraqi Meals")
         println("4 - Get easy food suggestion")

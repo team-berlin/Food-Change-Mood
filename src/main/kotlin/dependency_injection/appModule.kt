@@ -1,6 +1,6 @@
 package dependency_injection
 import data.CsvFileReader
-import com.berlin.data.CsvMealsRepository
+import data.CsvMealsRepository
 import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
 import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
