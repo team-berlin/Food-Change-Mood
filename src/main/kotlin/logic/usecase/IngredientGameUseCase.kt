@@ -1,7 +1,6 @@
 package org.berlin.logic.usecase
 
 import org.berlin.logic.MealsRepository
-import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameUseCase(

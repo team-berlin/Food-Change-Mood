@@ -1,7 +1,8 @@
 package org.berlin.presentation
 
 import org.berlin.logic.InvalidInputForIngredientGameException
-import org.berlin.logic.GetMealsContainsPotatoUseCase
+import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
+import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.*
 import org.berlin.model.Meal
 
@@ -15,6 +16,7 @@ class FoodChangeMoodUI(
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
+    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase
 ) {
     fun start() {
@@ -29,15 +31,15 @@ class FoodChangeMoodUI(
         when (input) {
             "1" -> launchQuickHealthyMeals()
             "2" -> launchSearchMealsByName()
-            "3" -> launchSuggestEggFreeSweet()
+            "3" -> launchIdentifyIraqiMeals()
             "4" -> launchEasyFoodSuggestion()
-            "5" -> launchIdentifyIraqiMeals()
+            "5" -> launchGuessPreparationTimeGame()
+            "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
             "10" -> launchExploreFoodCulture()
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
             "15" -> launchGetItalianMealsForLargeGroup()
-
             else -> println("Invalid Input")
         }
 
@@ -268,12 +270,13 @@ class FoodChangeMoodUI(
     }
 
     private fun showWelcome() {
-        println("Welcome to cost of living app")
+        println("Welcome to Food Change Mood app")
     }
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
+        println("5 - Guess preparation time game")
         println("2 - Search meals by name")
         println("3 - Suggest Egg FreeSweet")
         println("4 - Get easy food suggestion")
@@ -285,6 +288,35 @@ class FoodChangeMoodUI(
         println("15 - Get Italian Meals For Large Group")
         print("Here: ")
     }
+
+    private fun launchGuessPreparationTimeGame(){
+        var isCorrect = false
+        val meal = guessPreparationTimeGameUseCase.guessPreparationTime()
+        val minutes = meal.minutes
+        val mealName = meal.name
+        println("Guess the preparation time of $mealName meal")
+        var preparationTime: Int?
+        var attempts = 3
+        while (attempts-- > 0){
+            try {
+                preparationTime = getUserInput()
+                if (minutes > preparationTime!!) {
+                    println("too low, try again")
+                } else if (minutes < preparationTime) {
+                    println("too high, try again")
+                } else {
+                    println("Great Job!, it takes $preparationTime minutes")
+                    isCorrect = true
+                    break
+                }
+            }catch (exception: Exception){
+                println("Please enter a valid input")
+            }
+        }
+        if (!isCorrect){
+            println("The time it takes to prepare $mealName meal is $minutes minutes")
+            }
+        }
 
     private fun removeAllSpaces(input: String): String {
         return input.replace(ALL_SPACES_VALUE, " ")
@@ -311,7 +343,7 @@ class FoodChangeMoodUI(
     }
 
     private fun getUserInput(): Int? {
-        return readlnOrNull()?.toIntOrNull()
+        return readLine()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
