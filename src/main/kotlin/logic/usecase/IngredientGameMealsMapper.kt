@@ -1,4 +1,4 @@
-package org.berlin.logic
+package org.berlin.logic.usecase
 
 import org.berlin.model.Meal
 import org.berlin.model.MealForIngredientGame

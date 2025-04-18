@@ -1,5 +1,6 @@
-package org.berlin.logic
+package org.berlin.logic.usecase
 
+import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 
 class GetMealsContainsPotatoUseCase(
