@@ -151,7 +151,7 @@ class FoodChangeMoodUI(
             println("Description: ${suggestion.description}")
             println("---------------------------")
             println("Like it? (yes/no/exit)")
-            when(readLine()?.lowercase()){
+            when(readlnOrNull()?.lowercase()){
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
@@ -199,7 +199,7 @@ class FoodChangeMoodUI(
     }
 
     private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
+        return readlnOrNull()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
