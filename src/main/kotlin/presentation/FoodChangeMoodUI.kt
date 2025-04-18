@@ -1,9 +1,16 @@
 package org.berlin.presentation
 
-import org.berlin.logic.ingredient_game.InvalidInputForIngredientGameException
+import org.berlin.logic.InvalidInputForIngredientGameException
+import org.berlin.logic.usecase.*
+import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
-    private val ingredientGame: IngredientGameInteractor
+    private val ingredientGame: IngredientGameInteractor,
+    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
+    private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
+    private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
+    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
+    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase
 ) {
 
     fun start() {
@@ -16,16 +23,175 @@ class FoodChangeMoodUI(
         val input = getUserInput()
 
         when (input) {
-            1 -> printFakeUseCase()
             11 -> ingredientGameUseCase()
+            2 -> identifyIraqiMeals()
+            3 -> suggestEggFreeSweet()
+            7 -> launchSuggestionKetoMeal()
+            4 -> launchEasyFoodSuggestion()
+            10 ->launchExploreFoodCulture()
+
             else -> println("Invalid Input")
         }
 
         presentFeatures()
     }
 
-    private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
+
+    private fun launchExploreFoodCulture() {
+        print("Enter Country name:")
+        readlnOrNull()?.takeIf { it.isNotBlank() }?.let { countryName ->
+            try {
+                val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = countryName)
+                if (meals.isEmpty()) {
+                    println(" \"$countryName\" is not found in any meal tags.")
+                } else {
+                    println("\nFound ${meals.size} meals related to \"$countryName\":")
+                    meals.forEachIndexed { index, meal ->
+                        println("${index + 1}. ${meal.name}")
+                    }
+                }
+            } catch (e: Exception) {
+                println("️ Something went wrong while searching for \"$countryName\".")
+            }
+        } ?: println(" Please enter a valid country name.")
+    }
+
+    private fun launchEasyFoodSuggestion() {
+        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+
+        if (meals.isEmpty()) {
+            println("No easy food meals")
+        }
+        meals.forEach { meal ->
+            showEasyMealsDetails(meal)
+        }
+    }
+
+    private fun showEasyMealsDetails(meal: Meal) {
+        println(
+            """
+                    ${meal.name}
+                    Time: ${meal.minutes} minutes
+                    Ingredients: ${meal.nIngredients}
+                    Steps: ${meal.nSteps}
+                    ---------------------
+                """.trimIndent()
+        )
+    }
+
+    private fun launchSuggestionKetoMeal() {
+        val shuffledMeals = suggestKetoMealUseCase.suggestKetoMeal()
+
+        if (shuffledMeals.isEmpty()) {
+            println("No keto‑friendly meals available. Goodbye!")
+            return
+        }
+
+        for (selectedMeal in shuffledMeals) {
+            println("\n---  Keto Meal Suggestion: ---")
+            println("Name: ${selectedMeal.name}")
+            println("Description: ${selectedMeal.description}")
+            println("---------------------------")
+            println("Like it? (type 'y' for show all details or 'n' for suggest another meal or 'e' for exit)")
+
+            when (getStringUserInput().toString().lowercase()) {
+                "y" -> {
+                    showMealDetails(selectedMeal)
+                    break
+                }
+                "n" -> {
+                    println("Alright, let's try another meal.")
+                    continue
+                }
+                "e" -> break
+                else -> {
+                    println("Invalid input, please try again...")
+                    break
+                }
+            }
+        }
+        println("No more keto‑friendly meals available. Goodbye!")
+    }
+
+    private fun showMealDetails(meal: Meal) {
+        println("\n--- Sweet Details ---")
+        println("Name: ${meal.name}")
+        println("Description: ${meal.description ?: "No description provided."}")
+        println("Preparation Time (minutes): ${meal.minutes}")
+        println("Tags: ${meal.tags.joinToString(", ")}")
+
+        with(meal.nutrition) {
+            println("Nutrition:")
+            println("  Calories: $calories kcal")
+            println("  Total Fat: $totalFat g")
+            println("  Saturated Fat: $saturatedFat g")
+            println("  Carbohydrates: $carbohydrates g")
+            println("  Sugar: $sugar g")
+            println("  Protein: $protein g")
+            println("  Sodium: $sodium mg")
+        }
+
+        println("Steps:")
+        meal.steps.forEachIndexed { index, step ->
+            println("  ${index + 1}. $step")
+        }
+
+        println("Ingredients (${meal.nIngredients}): ${meal.ingredients.joinToString(", ")}")
+    }
+
+
+
+    private fun suggestEggFreeSweet() {
+        val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
+        if (suggestion != null) {
+            println("\n--- Suggested Free Sweet ---")
+            println("Name: ${suggestion.name}")
+            println("Description: ${suggestion.description}")
+            println("---------------------------")
+            println("Like it? (yes/no/exit)")
+            when(readLine()?.lowercase()){
+                "yes" -> showSweetDetails(suggestion)
+                "no" -> {
+                    println("Disliked. Getting another suggestion.")
+                    suggestEggFreeSweet()
+                }
+                "exit" -> presentFeatures()
+                else -> println("Invalid Input")
+            }
+        }else{
+            println("No more egg-free sweets to suggest :( ")
+        }
+    }
+
+    private fun showSweetDetails(meal : Meal) {
+        println("\n--- Sweet Details ---")
+        println("Name: ${meal.name}")
+        println("Description: ${meal.description}")
+        println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+        meal.steps.let {
+            println("Steps:")
+            it.forEachIndexed { index, step ->
+                println("${index + 1}. $step")
+            }
+        }
+    }
+
+    private fun identifyIraqiMeals() {
+        val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
+        if (iraqiMeals.isNotEmpty()) {
+            println("\n--- Iraqi Meals ---")
+            iraqiMeals.forEach { meal ->
+                println("Name: ${meal.name}")
+                println("ID: ${meal.id}")
+                println("Description: ${meal.description ?: "No description available"}")
+                println("Tags: ${meal.tags.joinToString(", ")}")
+                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+                println("---")
+            }
+            println("--- End of Iraqi Meals ---")
+        } else {
+            println("No Iraqi meals found.")
+        }
     }
 
     private fun ingredientGameUseCase() {
@@ -53,12 +219,21 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
+        println("4 - Get easy food suggestion")
+        println("7 - Get friendly keto meal suggestion")
+        println("10 - Explore food culture by country")
         println("1 - Get fake UseCase for testing")
+        println("2 - Identify Iraqi Meals")
+        println("3 - Suggest Egg FreeSweet")
         println("11 - Ingredient Game")
         print("Here: ")
     }
 
     private fun getUserInput(): Int? {
         return readLine()?.toIntOrNull()
+    }
+
+    private fun getStringUserInput(): String? {
+        return readlnOrNull()
     }
 }

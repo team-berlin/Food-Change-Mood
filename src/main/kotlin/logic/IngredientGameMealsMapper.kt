@@ -1,4 +1,4 @@
-package org.berlin.logic.ingredient_game
+package org.berlin.logic
 
 import org.berlin.model.Meal
 import org.berlin.model.MealForIngredientGame

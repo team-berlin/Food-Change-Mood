@@ -1,7 +1,7 @@
 package org.berlin.presentation
 
-import org.berlin.logic.ingredient_game.IngredientGameUseCase
-import org.berlin.logic.ingredient_game.InvalidInputForIngredientGameException
+import org.berlin.logic.usecase.IngredientGameUseCase
+import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
 
