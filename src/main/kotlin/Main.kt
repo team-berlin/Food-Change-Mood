@@ -14,6 +14,8 @@ fun main() {
         modules(appModule, useCaseModule)
     }
 
+    val ui : FoodChangeMoodUI = getKoin().get()
+    ui.start()
     val mealsRepository: MealsRepository = getKoin().get()
     mealsRepository.getAllMeals().also {
         print(it.size)
