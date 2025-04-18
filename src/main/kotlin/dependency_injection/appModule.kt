@@ -1,4 +1,4 @@
-package dependency_injection;
+package dependency_injection
 
 import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
