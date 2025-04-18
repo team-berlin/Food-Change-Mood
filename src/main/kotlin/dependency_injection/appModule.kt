@@ -1,4 +1,4 @@
-package dependency_injection;
+package dependency_injection
 
 import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
@@ -14,5 +14,7 @@ val appModule = module {
         single { MealsCsvParser() }
 
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
+
         single { FoodChangeMoodUI(get() , get(), get(), get(), get()) }
+
 }
