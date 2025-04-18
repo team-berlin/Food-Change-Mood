@@ -20,12 +20,10 @@ class IngredientGameInteractor(
         state = GameState.RUNNING
     }
 
-    private fun getCurrentMeal() = meals[currentIndex].takeIf { state == GameState.RUNNING }
-    fun getCurrentIngredients() = getCurrentMeal()?.threeIngredientOnlyOneCorrect ?: emptyList()
+    fun getCurrentIngredients() = meals[currentIndex].threeIngredientOnlyOneCorrect
     fun submitAnswer(answer: Int) {
-        val meal = getCurrentMeal() ?: return
+        val meal = meals[currentIndex]
         if (answer !in 1..3) throw InvalidInputForIngredientGameException("Invalid Input Ingredient Only 3")
-
         val ingredientAnswer = getCurrentIngredients()[answer - 1]
         if (ingredientAnswer == meal.correctIngredient) {
             score += QUESTION_SCORE
@@ -53,7 +51,7 @@ class IngredientGameInteractor(
         return state == GameState.RUNNING
     }
 
-    fun getCurrentMealName() = getCurrentMeal()?.mealName ?: throw InvalidInputForIngredientGameException()
+    fun getCurrentMealName() = meals[currentIndex].mealName
 
     private companion object {
         private const val MAX_QUESTIONS = 15
