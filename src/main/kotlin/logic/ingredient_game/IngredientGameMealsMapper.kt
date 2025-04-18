@@ -5,31 +5,38 @@ import org.berlin.model.MealForIngredientGame
 
 class IngredientGameMealsMapper {
     fun map(meals: List<Meal>): List<MealForIngredientGame> {
-        if (meals.isEmpty())throw Exception("list of meals is empty")
+
+        if (meals.isEmpty())
+            throw Exception("list of meals is empty")
+
         val allMealsIngredients = meals
-            .map { meal -> meal.ingredients }
-            .flatten()
-        return meals
-            .map { currentFullMeal ->
-                if (currentFullMeal.nIngredients<1
-                    ||currentFullMeal.ingredients.isEmpty()
-                    )throw Exception("there is invalid meal ingredient")
-                val allMealsIngredientsExceptCurrentMeal = allMealsIngredients
-                    .filterNot { ingredient -> ingredient in currentFullMeal.ingredients }
-                    .shuffled()
+            .flatMap { meal -> meal.ingredients }
+            .toSet()
+            .toList()
 
-                val correctIngredientIndex = (0..<currentFullMeal.nIngredients).random()
+        return meals.map { currentFullMeal ->
+            if (currentFullMeal.nIngredients < 1)
+                throw Exception("there is invalid meal ingredient")
+            val correctIngredientIndex = (0 until currentFullMeal.nIngredients).random()
+            val correctIngredient = currentFullMeal.ingredients[correctIngredientIndex]
+            val currentIngredientSet = currentFullMeal.ingredients.toSet()
 
-                MealForIngredientGame(
-                    mealName = currentFullMeal.name,
-                    correctIngredient = currentFullMeal.ingredients[correctIngredientIndex],
-                    threeIngredientOnlyOneCorrect =
-                        allMealsIngredientsExceptCurrentMeal
-                            .take(2)
-                            .plus(currentFullMeal.ingredients[correctIngredientIndex])
-                            .shuffled(),
-                )
+
+            val wrongIngredients = mutableSetOf<String>()
+            while (wrongIngredients.size < 2) {
+                val randomIngredient = allMealsIngredients.random()
+                if (randomIngredient !in currentIngredientSet) {
+                    wrongIngredients.add(randomIngredient)
+                }
             }
-    }
 
+            val options = (wrongIngredients + correctIngredient).shuffled()
+
+            MealForIngredientGame(
+                mealName = currentFullMeal.name,
+                correctIngredient = correctIngredient,
+                threeIngredientOnlyOneCorrect = options
+            )
+        }
+    }
 }

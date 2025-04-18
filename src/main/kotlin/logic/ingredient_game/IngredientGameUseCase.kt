@@ -9,9 +9,12 @@ class IngredientGameUseCase(
 ) {
 
     fun getFifteenMeals(): List<MealForIngredientGame> {
+
         return ingredientGameMealsMapper.map(
             repository.getAllMeals()
         ).shuffled().take(MAX_QUESTIONS)
+
+
     }
 
     private companion object Constants {
