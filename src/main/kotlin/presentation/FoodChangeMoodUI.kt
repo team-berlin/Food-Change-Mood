@@ -14,6 +14,7 @@ class FoodChangeMoodUI(
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
+    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase
 ) {
     fun start() {
         showWelcome()
@@ -25,6 +26,7 @@ class FoodChangeMoodUI(
         val input = getStringUserInput()
 
         when (input) {
+            "1" -> launchQuickHealthyMeals()
             "2" -> launchSearchMealsByName()
             "3" -> launchSuggestEggFreeSweet()
             "4" -> launchEasyFoodSuggestion()
@@ -52,6 +54,35 @@ class FoodChangeMoodUI(
                 println(meal.name)
             }
         }
+    }
+
+    private fun launchQuickHealthyMeals() {
+        println("\n=== Quick & Healthy Meals ===")
+
+        val meals = quickHealthyMealsUseCase.getQuickHealthyMeals()
+
+        if (meals.isEmpty()) {
+            println("No quick and healthy meals found.")
+            return
+        }
+
+        meals.forEachIndexed { index, meal ->
+            println("\n[${index + 1}] ${meal.name}")
+            println("    Preparation Time: ${meal.minutes} minutes")
+            println("    Tags: ${meal.tags.joinToString(", ")}")
+            println("    Nutrition:")
+            println("      - Calories: ${meal.nutrition.calories}")
+            println("      - Protein: ${meal.nutrition.protein}g")
+            println("      - Total Fat: ${meal.nutrition.totalFat}g")
+            println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
+            println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
+            println("      - Sugar: ${meal.nutrition.sugar}g")
+            println("      - Sodium: ${meal.nutrition.sodium}mg")
+            println("    Ingredients: ${meal.nIngredients}")
+            println("    Steps: ${meal.nSteps}")
+        }
+
+        println("\nTotal meals found: ${meals.size}")
     }
 
     private fun launchExploreFoodCulture() {
@@ -168,7 +199,7 @@ class FoodChangeMoodUI(
             println("Description: ${suggestion.description}")
             println("---------------------------")
             println("Like it? (yes/no/exit)")
-            when(readLine()?.lowercase()){
+            when(readlnOrNull()?.lowercase()){
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
@@ -255,10 +286,6 @@ class FoodChangeMoodUI(
 
     private fun launchRandomPotatoesMeals(){
         getMealsContainsPotatoUseCase.getMealsContainsPotato().forEach { println(it) }
-    }
-
-    private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {

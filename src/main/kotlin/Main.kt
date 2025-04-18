@@ -1,6 +1,6 @@
 package org.berlin
 
-import org.berlin.dependency_injection.appModule
+import dependency_injection.appModule
 import org.berlin.dependency_injection.useCaseModule
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.core.context.startKoin
