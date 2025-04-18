@@ -1,16 +1,21 @@
 package org.berlin.presentation
 
-import org.berlin.logic.usecase.ExploreFoodCultureUseCase
-import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
+import org.berlin.logic.usecase.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
+import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
+import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.model.Meal
 
+
 class FoodChangeMoodUI(
+    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
+    private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase
-
 ) {
+
     fun start() {
         showWelcome()
         presentFeatures()
@@ -21,9 +26,12 @@ class FoodChangeMoodUI(
         val input = getUserInput()
 
         when (input) {
+            2 -> identifyIraqiMeals()
+            3 -> suggestEggFreeSweet()
             7 -> launchSuggestionKetoMeal()
             4 -> launchEasyFoodSuggestion()
             10 ->launchExploreFoodCulture()
+
             else -> println("Invalid Input")
         }
 
@@ -135,6 +143,59 @@ class FoodChangeMoodUI(
 
 
 
+    private fun suggestEggFreeSweet() {
+        val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
+        if (suggestion != null) {
+            println("\n--- Suggested Free Sweet ---")
+            println("Name: ${suggestion.name}")
+            println("Description: ${suggestion.description}")
+            println("---------------------------")
+            println("Like it? (yes/no/exit)")
+            when(readLine()?.lowercase()){
+                "yes" -> showSweetDetails(suggestion)
+                "no" -> {
+                    println("Disliked. Getting another suggestion.")
+                    suggestEggFreeSweet()
+                }
+                "exit" -> presentFeatures()
+                else -> println("Invalid Input")
+            }
+        }else{
+            println("No more egg-free sweets to suggest :( ")
+        }
+    }
+
+    private fun showSweetDetails(meal : Meal) {
+        println("\n--- Sweet Details ---")
+        println("Name: ${meal.name}")
+        println("Description: ${meal.description}")
+        println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+        meal.steps.let {
+            println("Steps:")
+            it.forEachIndexed { index, step ->
+                println("${index + 1}. $step")
+            }
+        }
+    }
+
+    private fun identifyIraqiMeals() {
+        val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
+        if (iraqiMeals.isNotEmpty()) {
+            println("\n--- Iraqi Meals ---")
+            iraqiMeals.forEach { meal ->
+                println("Name: ${meal.name}")
+                println("ID: ${meal.id}")
+                println("Description: ${meal.description ?: "No description available"}")
+                println("Tags: ${meal.tags.joinToString(", ")}")
+                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+                println("---")
+            }
+            println("--- End of Iraqi Meals ---")
+        } else {
+            println("No Iraqi meals found.")
+        }
+    }
+
     private fun showWelcome() {
         println("Welcome to cost of living app")
     }
@@ -144,6 +205,9 @@ class FoodChangeMoodUI(
         println("4 - Get easy food suggestion")
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
+        println("1 - Get fake UseCase for testing")
+        println("2 - Identify Iraqi Meals")
+        println("3 - Suggest Egg FreeSweet")
         print("Here: ")
     }
 
