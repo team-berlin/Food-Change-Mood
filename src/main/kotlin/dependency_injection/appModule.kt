@@ -2,6 +2,7 @@ package dependency_injection
 import data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
 import data.MealsCsvParser
+import org.berlin.logic.GetSeafoodMealsUseCase
 import org.berlin.logic.MealsRepository
 import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.QuickHealthyMealsUseCase
@@ -19,5 +20,5 @@ val appModule = module {
         single { SuggestEggFreeSweetUseCase(get()) }
         single { IdentifyIraqiMealsUseCase(get()) }
 
-        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 }
