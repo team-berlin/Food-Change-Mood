@@ -1,8 +1,8 @@
 package org.berlin.presentation
 
 import org.berlin.logic.InvalidInputForIngredientGameException
-import org.berlin.logic.GetMealsContainsPotatoUseCase
-import org.berlin.logic.GuessPreparationTimeGameUseCase
+import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
+import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
 import org.berlin.logic.usecase.SearchMealsByNameUseCase
 import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
@@ -11,11 +11,6 @@ import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
 import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.model.Meal
-import org.berlin.logic.GuessPreparationTimeGameUseCase
-
-class FoodChangeMoodUI(
-    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase
-) {
 
 class FoodChangeMoodUI(
     private val ingredientGame: IngredientGameInteractor,
@@ -40,17 +35,15 @@ class FoodChangeMoodUI(
 
         when (input) {
             "2" -> launchSearchMealsByName()
-            "5" -> launchIdentifyIraqiMeals()
-            "3" -> launchSuggestEggFreeSweet()
+            "3" -> launchIdentifyIraqiMeals()
+            "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
             "4" -> launchEasyFoodSuggestion()
             "10" -> launchExploreFoodCulture()
             "15" -> launchGetItalianMealsForLargeGroup()
             "12" -> launchRandomPotatoesMeals()
-            "14"->launchIngredientGameUseCase()
-
-            1 -> printFakeUseCase()
-            5 -> launchGuessPreparationTimeGame()
+            "11"->launchIngredientGameUseCase()
+            "5" -> launchGuessPreparationTimeGame()
             else -> println("Invalid Input")
         }
 
@@ -326,7 +319,7 @@ class FoodChangeMoodUI(
     }
 
     private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
+        return readlnOrNull()?.toInt()
     }
 
     private fun getStringUserInput(): String? {
