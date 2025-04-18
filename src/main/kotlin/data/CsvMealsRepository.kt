@@ -1,7 +1,5 @@
-package com.berlin.data
+package data
 
-import data.CsvFileReader
-import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 

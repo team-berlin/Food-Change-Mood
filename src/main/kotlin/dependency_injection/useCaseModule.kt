@@ -1,6 +1,7 @@
 package org.berlin.dependency_injection
 
-import org.berlin.logic.GetSeafoodMealsUseCase
+import logic.usecase.GetSeafoodMealsUseCase
+import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.berlin.logic.usecase.*
 import org.berlin.logic.usecase.IngredientGameMealsMapper
 import org.berlin.logic.usecase.IngredientGameUseCase
@@ -16,6 +17,7 @@ import org.koin.dsl.module
 
 
 val useCaseModule = module {
+    single { HighCalorieMealsUseCase(get()) }
     single { SearchMealsByNameUseCase(get()) }
     single { ExploreFoodCultureUseCase(get()) }
     single { SuggestKetoMealUseCase(get()) }

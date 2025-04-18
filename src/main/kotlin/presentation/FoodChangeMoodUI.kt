@@ -1,6 +1,6 @@
 package org.berlin.presentation
 
-import org.berlin.logic.GetSeafoodMealsUseCase
+import logic.usecase.GetSeafoodMealsUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
@@ -19,7 +19,8 @@ class FoodChangeMoodUI(
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
-    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
+    private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase
 ) {
     fun start() {
         showWelcome()
@@ -41,6 +42,7 @@ class FoodChangeMoodUI(
             "10" -> launchExploreFoodCulture()
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
+            "13" -> launchHighCalorieMeal()
             "14" -> launchSeafoodMealsUseCase()
             "15" -> launchGetItalianMealsForLargeGroup()
             else -> println("Invalid Input")
@@ -53,6 +55,21 @@ class FoodChangeMoodUI(
         getSeafoodMealsUseCase.getSeafoodMeals().forEachIndexed { index, seafoodMeal ->
             println("${index + 1} ,Name:${seafoodMeal.name}, has protein value:${seafoodMeal.protein}")
         }
+    }
+
+    private fun launchHighCalorieMeal() {
+        println("\n=== High Calorie Meal Suggestion ===")
+
+        highCalorieMealsUseCase.suggestHighCalorieMeal()
+            .fold(
+                onSuccess = { meal ->
+                    println("\nSuggested high-calorie meal:")
+                    displayMeal(meal)
+                },
+                onFailure = { error ->
+                    println("Error: ${error.message}")
+                }
+            )
     }
 
     private fun launchSearchMealsByName() {
@@ -82,18 +99,7 @@ class FoodChangeMoodUI(
 
         meals.forEachIndexed { index, meal ->
             println("\n[${index + 1}] ${meal.name}")
-            println("    Preparation Time: ${meal.minutes} minutes")
-            println("    Tags: ${meal.tags.joinToString(", ")}")
-            println("    Nutrition:")
-            println("      - Calories: ${meal.nutrition.calories}")
-            println("      - Protein: ${meal.nutrition.protein}g")
-            println("      - Total Fat: ${meal.nutrition.totalFat}g")
-            println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
-            println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
-            println("      - Sugar: ${meal.nutrition.sugar}g")
-            println("      - Sodium: ${meal.nutrition.sodium}mg")
-            println("    Ingredients: ${meal.nIngredients}")
-            println("    Steps: ${meal.nSteps}")
+            displayMeal(meal)
         }
 
         println("\nTotal meals found: ${meals.size}")
@@ -274,8 +280,24 @@ class FoodChangeMoodUI(
             println(ingredientGame.getTurnResult())
         } catch (e: InvalidInputForIngredientGameException) {
             println(e.message)
-        } catch (e: Exception) { println(e.message) }
-
+        } catch (e: Exception) {
+            println(e.message)
+        }
+    }
+    private fun displayMeal(meal: Meal) {
+        println(meal.name)
+        println("    Preparation Time: ${meal.minutes} minutes")
+        println("    Tags: ${meal.tags.joinToString(", ")}")
+        println("    Nutrition:")
+        println("      - Calories: ${meal.nutrition.calories}")
+        println("      - Protein: ${meal.nutrition.protein}g")
+        println("      - Total Fat: ${meal.nutrition.totalFat}g")
+        println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
+        println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
+        println("      - Sugar: ${meal.nutrition.sugar}g")
+        println("      - Sodium: ${meal.nutrition.sodium}mg")
+        println("    Ingredients: ${meal.nIngredients}")
+        println("    Steps: ${meal.nSteps}")
     }
 
     private fun showWelcome() {
@@ -284,7 +306,7 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
+        println("1 - Find fast healthy meals that can be prepared in 15 minutes and under")
         println("2 - Search meals by name")
         println("3 - Identify Iraqi Meals")
         println("4 - Get easy food suggestion")
@@ -294,6 +316,7 @@ class FoodChangeMoodUI(
         println("10 - Explore food culture by country")
         println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
+        println("13 - Do you want a suggestion for a meal with more than 700 calories")
         println("14 - Get a list of all seafood meals")
         println("15 - Get Italian Meals For Large Group")
         print("Here: ")
