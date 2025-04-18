@@ -1,10 +1,10 @@
 package dependency_injection
-
-import com.berlin.data.CsvFileReader
+import data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
-import com.berlin.data.MealsCsvParser
+import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
 import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
+import org.berlin.logic.usecase.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
@@ -15,8 +15,9 @@ val appModule = module {
         single { CsvFileReader(get()) }
         single { MealsCsvParser() }
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
-
-        single { FoodChangeMoodUI(get() , get(), get(), get(), get(),get(),get(),get(),get(),get()) }
+        single { QuickHealthyMealsUseCase(get()) }
         single { SuggestEggFreeSweetUseCase(get()) }
         single { IdentifyIraqiMealsUseCase(get()) }
+
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 }

@@ -3,13 +3,7 @@ package org.berlin.presentation
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
-import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
-import org.berlin.logic.usecase.SearchMealsByNameUseCase
-import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
-import org.berlin.logic.usecase.ExploreFoodCultureUseCase
-import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
-import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
-import org.berlin.logic.usecase.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.*
 import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
@@ -22,7 +16,8 @@ class FoodChangeMoodUI(
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
-    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase
+    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
+    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase
 ) {
     fun start() {
         showWelcome()
@@ -34,16 +29,17 @@ class FoodChangeMoodUI(
         val input = getStringUserInput()
 
         when (input) {
+            "1" -> launchQuickHealthyMeals()
             "2" -> launchSearchMealsByName()
             "3" -> launchIdentifyIraqiMeals()
+            "4" -> launchEasyFoodSuggestion()
+            "5" -> launchGuessPreparationTimeGame()
             "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
-            "4" -> launchEasyFoodSuggestion()
             "10" -> launchExploreFoodCulture()
-            "15" -> launchGetItalianMealsForLargeGroup()
+            "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
-            "11"->launchIngredientGameUseCase()
-            "5" -> launchGuessPreparationTimeGame()
+            "15" -> launchGetItalianMealsForLargeGroup()
             else -> println("Invalid Input")
         }
 
@@ -63,6 +59,35 @@ class FoodChangeMoodUI(
                 println(meal.name)
             }
         }
+    }
+
+    private fun launchQuickHealthyMeals() {
+        println("\n=== Quick & Healthy Meals ===")
+
+        val meals = quickHealthyMealsUseCase.getQuickHealthyMeals()
+
+        if (meals.isEmpty()) {
+            println("No quick and healthy meals found.")
+            return
+        }
+
+        meals.forEachIndexed { index, meal ->
+            println("\n[${index + 1}] ${meal.name}")
+            println("    Preparation Time: ${meal.minutes} minutes")
+            println("    Tags: ${meal.tags.joinToString(", ")}")
+            println("    Nutrition:")
+            println("      - Calories: ${meal.nutrition.calories}")
+            println("      - Protein: ${meal.nutrition.protein}g")
+            println("      - Total Fat: ${meal.nutrition.totalFat}g")
+            println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
+            println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
+            println("      - Sugar: ${meal.nutrition.sugar}g")
+            println("      - Sodium: ${meal.nutrition.sodium}mg")
+            println("    Ingredients: ${meal.nIngredients}")
+            println("    Steps: ${meal.nSteps}")
+        }
+
+        println("\nTotal meals found: ${meals.size}")
     }
 
     private fun launchExploreFoodCulture() {
@@ -179,7 +204,7 @@ class FoodChangeMoodUI(
             println("Description: ${suggestion.description}")
             println("---------------------------")
             println("Like it? (yes/no/exit)")
-            when (readlnOrNull()?.lowercase()) {
+            when(readlnOrNull()?.lowercase()){
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
@@ -250,18 +275,17 @@ class FoodChangeMoodUI(
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
+        println("1 - Get fake UseCase for testing")
+        println("2 - Search meals by name")
+        println("3 - Identify Iraqi Meals")
+        println("4 - Get easy food suggestion")
+        println("5 - Guess preparation time game")
+        println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
-        println("1 - Get fake UseCase for testing")
-        println("5 - Guess preparation time game")
-        println("2 - Search meals by name")
-        println("3 - Suggest Egg FreeSweet")
-        println("4 - Get easy food suggestion")
-        println("15 - Get Italian Meals For Large Group")
-        println("5 - Identify Iraqi Meals")
-
-        println("12- Get names of 10 meals that contains potatoes in its ingredients")
         println("11 - Ingredient Game")
+        println("12- Get names of 10 meals that contains potatoes in its ingredients")
+        println("15 - Get Italian Meals For Large Group")
         print("Here: ")
     }
 
@@ -319,7 +343,7 @@ class FoodChangeMoodUI(
     }
 
     private fun getUserInput(): Int? {
-        return readlnOrNull()?.toInt()
+        return readlnOrNull()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
