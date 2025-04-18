@@ -3,7 +3,7 @@ package org.berlin.presentation
 import kotlinx.datetime.LocalDate
 import org.berlin.logic.usecase.SearchMealsByDateUseCase
 import logic.usecase.GetSeafoodMealsUseCase
-import org.berlin.logic.GymHelperUseCase
+import org.berlin.logic.usecase.GymHelperUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
@@ -154,12 +154,7 @@ class FoodChangeMoodUI(
             return
         }
 
-        meals.forEachIndexed { index, meal ->
-            println("\n[${index + 1}] ${meal.name}")
-            displayMeal(meal)
-        }
-
-        println("\nTotal meals found: ${meals.size}")
+        displayMeals(meals)
     }
 
     private fun launchExploreFoodCulture() {
@@ -383,10 +378,7 @@ class FoodChangeMoodUI(
         if (meals.isEmpty()) {
             println("No meals found matching meals.")
         } else {
-            println("Found meals: ")
-            meals.forEach { meal ->
-                println(meal)
-            }
+            displayMeals(meals)
         }
     }
 
@@ -457,6 +449,15 @@ class FoodChangeMoodUI(
                         "${removeAllSpaces(meal.name)}\n"
             )
         }
+    }
+
+    private fun displayMeals (meals: List<Meal>) {
+        meals.forEachIndexed { index, meal ->
+            println("\n[${index + 1}] ${meal.name}")
+            displayMeal(meal)
+        }
+
+        println("\nTotal meals found: ${meals.size}")
     }
 
     private companion object {
