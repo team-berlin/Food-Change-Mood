@@ -1,6 +1,7 @@
 package org.berlin.dependency_injection
 
 import logic.usecase.GetSeafoodMealsUseCase
+import org.berlin.logic.usecase.SearchMealsByDateUseCase
 import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.berlin.logic.usecase.*
 import org.berlin.logic.usecase.IngredientGameMealsMapper

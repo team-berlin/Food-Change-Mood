@@ -1,5 +1,7 @@
 package org.berlin.presentation
 
+import kotlinx.datetime.LocalDate
+import org.berlin.logic.usecase.SearchMealsByDateUseCase
 import logic.usecase.GetSeafoodMealsUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
@@ -33,6 +35,7 @@ class FoodChangeMoodUI(
 
         when (input) {
             "1" -> launchQuickHealthyMeals()
+            "1" -> launchSearchMealsByName()
             "2" -> launchSearchMealsByName()
             "3" -> launchIdentifyIraqiMeals()
             "4" -> launchEasyFoodSuggestion()
