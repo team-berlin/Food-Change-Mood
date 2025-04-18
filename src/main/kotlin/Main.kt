@@ -2,10 +2,9 @@ package org.berlin
 
 import org.berlin.dependency_injection.appModule
 import org.berlin.dependency_injection.useCaseModule
-import org.berlin.logic.MealsRepository
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.core.context.startKoin
-import org.koin.mp.KoinPlatform.getKoin
+import org.koin.java.KoinJavaComponent.getKoin
 
 
 fun main() {
@@ -14,11 +13,8 @@ fun main() {
         modules(appModule, useCaseModule)
     }
 
-    val mealsRepository: MealsRepository = getKoin().get()
-    mealsRepository.getAllMeals().also {
-        print(it.size)
-    }
-    val ui: FoodChangeMoodUI = getKoin().get()
+    val ui : FoodChangeMoodUI = getKoin().get()
     ui.start()
+
 }
 

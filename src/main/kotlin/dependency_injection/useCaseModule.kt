@@ -6,6 +6,7 @@ import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
 import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.logic.usecase.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
+import org.berlin.logic.GetMealsContainsPotatoUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -17,5 +18,5 @@ val useCaseModule = module {
     single { IdentifyIraqiMealsUseCase(get()) }
     single { QuickHealthyMealsUseCase(get()) }
     single { SuggestItalianFoodForLargeGroupUseCase(get()) }
-
+    single { GetMealsContainsPotatoUseCase(get()) }
 }
