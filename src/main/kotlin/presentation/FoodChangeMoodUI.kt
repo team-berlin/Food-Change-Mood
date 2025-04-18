@@ -22,7 +22,8 @@ class FoodChangeMoodUI(
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
     private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
-    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
+    private val searchMealsByDateUseCase: SearchMealsByDateUseCase
 ) {
     fun start() {
         showWelcome()
@@ -35,13 +36,13 @@ class FoodChangeMoodUI(
 
         when (input) {
             "1" -> launchQuickHealthyMeals()
-            "1" -> launchSearchMealsByName()
             "2" -> launchSearchMealsByName()
             "3" -> launchIdentifyIraqiMeals()
             "4" -> launchEasyFoodSuggestion()
             "5" -> launchGuessPreparationTimeGame()
             "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
+            "8" -> launchSearchMealsByDate()
             "10" -> launchExploreFoodCulture()
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
@@ -73,6 +74,54 @@ class FoodChangeMoodUI(
                     println("Error: ${error.message}")
                 }
             )
+    }
+
+    private fun launchSearchMealsByDate() {
+        println("\n=== Search Meals by Date ===")
+        println("Please enter a date in the format YYYY-MM-DD:")
+        val dateInput = getStringUserInput()
+
+        if (dateInput.isNullOrBlank()) {
+            println("Error: Date cannot be empty.")
+            return
+        }
+
+        try {
+            val date = LocalDate.parse(dateInput)
+            println("Successfully parsed date: $date")
+
+            println("Fetching meals...")
+            val meals = searchMealsByDateUseCase.searchMealsByDate(date)
+
+            if (meals.isEmpty()) {
+                println("No meals found for date: $date")
+            } else {
+                println("\nFound ${meals.size} meals added on $date:")
+                meals.forEach { meal ->
+                    println("ID: ${meal.id}, Name: ${meal.name}")
+                }
+
+                println("\nWould you like to see details of a specific meal? (Enter meal ID or 'no'):")
+                val mealIdInput = getStringUserInput()
+
+                if (mealIdInput?.lowercase() != "no") {
+                    try {
+                        val mealId = mealIdInput?.toInt()
+                        val selectedMeal = meals.find { it.id == mealId }
+
+                        if (selectedMeal != null) {
+                            showMealDetails(selectedMeal)
+                        } else {
+                            println("Meal with ID $mealId not found in the results.")
+                        }
+                    } catch (e: NumberFormatException) {
+                        println("Invalid meal ID format.")
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            println("Error: ${e.javaClass.simpleName} - ${e.message}")
+        }
     }
 
     private fun launchSearchMealsByName() {
@@ -316,6 +365,7 @@ class FoodChangeMoodUI(
         println("5 - Guess preparation time game")
         println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
+        println("8 - Search Foods by Add Date")
         println("10 - Explore food culture by country")
         println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
