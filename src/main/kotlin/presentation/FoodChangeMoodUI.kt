@@ -1,5 +1,6 @@
 package org.berlin.presentation
 
+import org.berlin.logic.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
 import org.berlin.logic.usecase.SearchMealsByNameUseCase
 import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
@@ -19,6 +20,12 @@ class FoodChangeMoodUI(
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase
 ) {
+    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
+    private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
+    private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
+
+    ) {
+
     fun start() {
         showWelcome()
         presentFeatures()
@@ -38,6 +45,13 @@ class FoodChangeMoodUI(
             "10" -> launchExploreFoodCulture()
             "15" -> getItalianMealsForLargeGroup()
 
+            2 -> identifyIraqiMeals()
+            3 -> suggestEggFreeSweet()
+            7 -> launchSuggestionKetoMeal()
+            4 -> launchEasyFoodSuggestion()
+            10 ->launchExploreFoodCulture()
+            12 -> launchRandomPotatoesMeals()
+            15 -> getItalianMealsForLargeGroup()
             else -> println("Invalid Input")
         }
 
@@ -168,6 +182,7 @@ class FoodChangeMoodUI(
     }
 
 
+
     private fun suggestEggFreeSweet() {
         val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
         if (suggestion != null) {
@@ -237,6 +252,7 @@ class FoodChangeMoodUI(
         println("15 - Get Italian Meals For Large Group")
         println("5 - Identify Iraqi Meals")
 
+        println("12- Get names of 10 meals that contains potatoes in its ingredients")
         print("Here: ")
     }
 
@@ -258,6 +274,14 @@ class FoodChangeMoodUI(
 
     private companion object {
         val ALL_SPACES_VALUE = "\\s+".toRegex()
+    }
+
+    private fun launchRandomPotatoesMeals(){
+        getMealsContainsPotatoUseCase.getMealsContainsPotato().forEach { println(it) }
+    }
+
+    private fun getUserInput(): Int? {
+        return readLine()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
