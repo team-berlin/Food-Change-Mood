@@ -1,7 +1,6 @@
 package com.berlin.data
 
 import com.opencsv.CSVParserBuilder
-import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import com.opencsv.CSVWriter
 import java.io.File
@@ -23,7 +22,6 @@ class CsvFileReader(
                 val allRows = reader.readAll()
                 val dataRows = allRows.drop(1)
                 return dataRows
-
             }
     }
 }
