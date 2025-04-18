@@ -9,20 +9,18 @@ class ExploreFoodCultureUseCase(
 
     fun exploreFoodByCountry(country: String): List<Meal> {
         return mealsRepository.getAllMeals()
-            .filter { containsCountryInTags(it, country) }
+            .filter { isMealRelatedToCountry(it, country) }
             .takeIf { it.isNotEmpty() }
             ?.shuffled()
             ?.take(MEALS_NUMBER)
             ?: emptyList()
     }
 
-    private fun containsCountryInTags(meal: Meal, country: String): Boolean {
-        return meal.tags.any { it
-            .trim()
-            .split(Regex("\\s+"))
-            .filter { it.isNotEmpty() }
-            .any { it.contains(country, ignoreCase = true) }
-        }
+    private fun isMealRelatedToCountry(meal: Meal, country: String): Boolean {
+        return  meal.tags.any { tag -> tag.contains(country, ignoreCase = true) } ||
+                meal.description?.contains(country, ignoreCase = true) ?: false ||
+                meal.name.contains(country, ignoreCase = true) ||
+                meal.steps.contains(country)
     }
 
     private companion object {
