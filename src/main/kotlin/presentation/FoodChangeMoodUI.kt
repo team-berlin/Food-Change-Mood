@@ -3,10 +3,13 @@ package org.berlin.presentation
 import kotlinx.datetime.LocalDate
 import org.berlin.logic.usecase.SearchMealsByDateUseCase
 import logic.usecase.GetSeafoodMealsUseCase
+import org.berlin.logic.usecase.GymHelperUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.*
+import org.berlin.model.CaloriesAndProteinTolerance
+import org.berlin.model.GymHelperInput
 import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
@@ -23,7 +26,8 @@ class FoodChangeMoodUI(
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
     private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
     private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
-    private val searchMealsByDateUseCase: SearchMealsByDateUseCase
+    private val searchMealsByDateUseCase: SearchMealsByDateUseCase,
+    private val gymHelperUseCase: GymHelperUseCase
 ) {
     fun start() {
         showWelcome()
@@ -43,6 +47,7 @@ class FoodChangeMoodUI(
             "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
             "8" -> launchSearchMealsByDate()
+            "9" -> launchGymHelper()
             "10" -> launchExploreFoodCulture()
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
@@ -149,12 +154,7 @@ class FoodChangeMoodUI(
             return
         }
 
-        meals.forEachIndexed { index, meal ->
-            println("\n[${index + 1}] ${meal.name}")
-            displayMeal(meal)
-        }
-
-        println("\nTotal meals found: ${meals.size}")
+        displayMeals(meals)
     }
 
     private fun launchExploreFoodCulture() {
@@ -352,6 +352,36 @@ class FoodChangeMoodUI(
         println("    Steps: ${meal.nSteps}")
     }
 
+    private fun launchGymHelper() {
+        println("Please enter the number of calories:")
+        val caloriesInput = readlnOrNull()?.toDoubleOrNull()
+        println("Please enter the amount of protein:")
+        val proteinInput = readlnOrNull()?.toDoubleOrNull()
+        println("Enter calories tolerance if you want:")
+        val caloriesToleranceInput = readlnOrNull()?.toIntOrNull()
+        println("Enter protein tolerance if you want:")
+        val proteinToleranceInput = readlnOrNull()?.toIntOrNull()
+
+        if (caloriesInput == null || proteinInput == null) {
+            println("Invalid input. Please enter numeric values.")
+            return
+        }
+
+        val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(
+            calorieAndProteinValues = GymHelperInput(
+                calories = caloriesInput,
+                protein = proteinInput,
+                caloriesAndProteinTolerance = CaloriesAndProteinTolerance(caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10)
+            ),
+        )
+
+        if (meals.isEmpty()) {
+            println("No meals found matching meals.")
+        } else {
+            displayMeals(meals)
+        }
+    }
+
     private fun showWelcome() {
         println("Welcome to Food Change Mood app")
     }
@@ -366,6 +396,7 @@ class FoodChangeMoodUI(
         println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
         println("8 - Search Foods by Add Date")
+        println("9- Use gym helper to search for meals by calories and proteins ")
         println("10 - Explore food culture by country")
         println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
@@ -418,6 +449,15 @@ class FoodChangeMoodUI(
                         "${removeAllSpaces(meal.name)}\n"
             )
         }
+    }
+
+    private fun displayMeals (meals: List<Meal>) {
+        meals.forEachIndexed { index, meal ->
+            println("\n[${index + 1}] ${meal.name}")
+            displayMeal(meal)
+        }
+
+        println("\nTotal meals found: ${meals.size}")
     }
 
     private companion object {
