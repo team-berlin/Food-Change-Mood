@@ -276,11 +276,11 @@ class FoodChangeMoodUI(
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Get fake UseCase for testing")
-        println("5 - Guess preparation time game")
         println("2 - Search meals by name")
-        println("3 - Suggest Egg FreeSweet")
+        println("3 - Identify Iraqi Meals")
         println("4 - Get easy food suggestion")
-        println("5 - Identify Iraqi Meals")
+        println("5 - Guess preparation time game")
+        println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
         println("11 - Ingredient Game")
@@ -343,7 +343,7 @@ class FoodChangeMoodUI(
     }
 
     private fun getUserInput(): Int? {
-        return readLine()?.toIntOrNull()
+        return readlnOrNull()?.toIntOrNull()
     }
 
     private fun getStringUserInput(): String? {
