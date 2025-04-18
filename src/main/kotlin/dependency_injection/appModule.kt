@@ -19,4 +19,7 @@ val appModule = module {
         single { FoodChangeMoodUI(get() , get()) }
         single { SuggestEggFreeSweetUseCase(get())}
         single { IdentifyIraqiMealsUseCase(get()) }
+
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get()) }
+
 }
