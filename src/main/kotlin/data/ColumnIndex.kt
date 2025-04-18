@@ -1,4 +1,4 @@
-package com.berlin.data
+package data
 
 object ColumnIndex {
     const val NAME = 0
