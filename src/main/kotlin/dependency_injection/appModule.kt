@@ -14,6 +14,11 @@ val appModule = module {
         single { MealsCsvParser() }
 
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
+        single { FoodChangeMoodUI(get()) }
+
+        single { FoodChangeMoodUI(get() , get()) }
+        single { SuggestEggFreeSweetUseCase(get())}
+        single { IdentifyIraqiMealsUseCase(get()) }
 
         single { FoodChangeMoodUI(get() , get(), get(), get(), get()) }
 
