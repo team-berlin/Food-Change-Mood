@@ -1,15 +1,19 @@
 package org.berlin.dependency_injection
-import org.berlin.logic.usecase.*
 
-import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
-import org.berlin.logic.usecase.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.*
 import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.usecase.IngredientGameUseCase
 import org.berlin.presentation.IngredientGameInteractor
+import org.berlin.logic.usecase.SearchMealsByNameUseCase
+import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
+import org.berlin.logic.usecase.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
+import org.berlin.logic.GetMealsContainsPotatoUseCase
 import org.koin.dsl.module
 
 
 val useCaseModule = module {
+    single { SearchMealsByNameUseCase(get()) }
     single { ExploreFoodCultureUseCase(get()) }
     single { SuggestKetoMealUseCase(get()) }
     single { EasyFoodSuggestionUseCase(get()) }
@@ -18,7 +22,6 @@ val useCaseModule = module {
     single { IngredientGameMealsMapper() }
     single { IngredientGameUseCase(get(),get()) }
     single { IngredientGameInteractor(get()) }
+    single { SuggestItalianFoodForLargeGroupUseCase(get()) }
+    single { GetMealsContainsPotatoUseCase(get()) }
 }
-
-
-
