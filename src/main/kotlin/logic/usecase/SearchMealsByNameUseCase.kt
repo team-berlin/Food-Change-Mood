@@ -39,19 +39,19 @@ class SearchMealsByNameUseCase(
 
     private fun computeLPSArray(wordToSearchBy: String): IntArray {
         val lsp = IntArray(wordToSearchBy.length)
-        var length = 0
-        var index = 1
-        while (index < wordToSearchBy.length) {
-            if (wordToSearchBy[index] == wordToSearchBy[length]) {
-                length++
-                lsp[index] = length
-                index++
+        var prefixLength = 0
+        var currentIndex = 1
+        while (currentIndex < wordToSearchBy.length) {
+            if (wordToSearchBy[currentIndex] == wordToSearchBy[prefixLength]) {
+                prefixLength++
+                lsp[currentIndex] = prefixLength
+                currentIndex++
             } else {
-                if (length != 0) {
-                    length = lsp[length - 1]
+                if (prefixLength != 0) {
+                    prefixLength = lsp[prefixLength - 1]
                 } else {
-                    lsp[index] = 0
-                    index++
+                    lsp[currentIndex] = 0
+                    currentIndex++
                 }
             }
         }
