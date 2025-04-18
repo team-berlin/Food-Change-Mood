@@ -2,6 +2,12 @@ package org.berlin.presentation
 
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.*
+import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
+import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
+import org.berlin.logic.usecase.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
+import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
+import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
@@ -10,7 +16,10 @@ class FoodChangeMoodUI(
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
-    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase
+    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
+    private val suggestItalianFoodForLargeGroupUseCase:
+    SuggestItalianFoodForLargeGroupUseCase
+
 ) {
 
     fun start() {
@@ -21,7 +30,7 @@ class FoodChangeMoodUI(
     private fun presentFeatures() {
         showOptions()
         val input = getUserInput()
-
+        println()
         when (input) {
             11 -> ingredientGameUseCase()
             2 -> identifyIraqiMeals()
@@ -29,7 +38,7 @@ class FoodChangeMoodUI(
             7 -> launchSuggestionKetoMeal()
             4 -> launchEasyFoodSuggestion()
             10 ->launchExploreFoodCulture()
-
+            15 -> getItalianMealsForLargeGroup()
             else -> println("Invalid Input")
         }
 
@@ -223,10 +232,29 @@ class FoodChangeMoodUI(
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
         println("1 - Get fake UseCase for testing")
+        println("15 - Get Italian Meals For Large Group")
         println("2 - Identify Iraqi Meals")
         println("3 - Suggest Egg FreeSweet")
         println("11 - Ingredient Game")
         print("Here: ")
+    }
+
+    private fun removeAllSpaces(input: String): String {
+        return input.replace(ALL_SPACES_VALUE, " ")
+    }
+
+    private fun getItalianMealsForLargeGroup() {
+
+        val meals = suggestItalianFoodForLargeGroupUseCase
+            .suggestItalianMealsForLargeGroup()
+        meals.forEachIndexed { index, meal ->
+            println("${index + 1}. Meal Name: " +
+                    "${removeAllSpaces(meal.name)}\n")
+        }
+    }
+
+    private companion object {
+        val ALL_SPACES_VALUE = "\\s+".toRegex()
     }
 
     private fun getUserInput(): Int? {

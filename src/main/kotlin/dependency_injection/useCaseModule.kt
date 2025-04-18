@@ -6,6 +6,7 @@ import org.berlin.logic.usecase.SuggestKetoMealUseCase
 import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.usecase.IngredientGameUseCase
 import org.berlin.presentation.IngredientGameInteractor
+import org.berlin.logic.usecase.SuggestItalianFoodForLargeGroupUseCase
 import org.koin.dsl.module
 
 
@@ -15,10 +16,9 @@ val useCaseModule = module {
     single { EasyFoodSuggestionUseCase(get()) }
     single { SuggestEggFreeSweetUseCase(get()) }
     single { IdentifyIraqiMealsUseCase(get()) }
+    single { SuggestItalianFoodForLargeGroupUseCase(get()) }
     single { IngredientGameMealsMapper() }
     single { IngredientGameUseCase(get(),get()) }
     single { IngredientGameInteractor(get()) }
 }
-
-
 

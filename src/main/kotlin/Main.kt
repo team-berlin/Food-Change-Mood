@@ -13,8 +13,6 @@ fun main() {
         modules(appModule, useCaseModule)
     }
 
-
-
     val ui : FoodChangeMoodUI = getKoin().get()
     ui.start()
 

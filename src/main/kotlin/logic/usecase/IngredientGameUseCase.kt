@@ -11,9 +11,12 @@ class IngredientGameUseCase(
 
     fun getFifteenMeals(): List<MealForIngredientGame> {
 
-        return ingredientGameMealsMapper.map(
-            repository.getAllMeals()
-        ).shuffled().take(MAX_QUESTIONS)
+        val meals=repository.getAllMeals()
+        if (meals.isEmpty()||meals.size< MAX_QUESTIONS)throw Exception("need more meals list from repo")
+
+        return ingredientGameMealsMapper.map(meals)
+            .shuffled()
+            .take(MAX_QUESTIONS)
 
 
     }
