@@ -18,14 +18,9 @@ class FoodChangeMoodUI(
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
-    private val searchMealsByNameUseCase: SearchMealsByNameUseCase
-) {
-    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
-    private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
+    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
-
-    ) {
-
+) {
     fun start() {
         showWelcome()
         presentFeatures()
@@ -36,29 +31,21 @@ class FoodChangeMoodUI(
         val input = getStringUserInput()
 
         when (input) {
-            "1" -> printFakeUseCase()
-            "2" -> searchMealsByName()
-            "5" -> identifyIraqiMeals()
-            "3" -> suggestEggFreeSweet()
+            "2" -> launchSearchMealsByName()
+            "5" -> launchIdentifyIraqiMeals()
+            "3" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
             "4" -> launchEasyFoodSuggestion()
             "10" -> launchExploreFoodCulture()
-            "15" -> getItalianMealsForLargeGroup()
-
-            2 -> identifyIraqiMeals()
-            3 -> suggestEggFreeSweet()
-            7 -> launchSuggestionKetoMeal()
-            4 -> launchEasyFoodSuggestion()
-            10 ->launchExploreFoodCulture()
-            12 -> launchRandomPotatoesMeals()
-            15 -> getItalianMealsForLargeGroup()
+            "15" -> launchGetItalianMealsForLargeGroup()
+            "12" -> launchRandomPotatoesMeals()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
     }
 
-    private fun searchMealsByName() {
+    private fun launchSearchMealsByName() {
         println("===Search meals by name===\n")
         println("please enter meal name or part of it: ")
         val searchWord = readlnOrNull() ?: ""
@@ -71,10 +58,6 @@ class FoodChangeMoodUI(
                 println(meal.name)
             }
         }
-    }
-
-    private fun printFakeUseCase() {
-        println("UseCase successfully done...!")
     }
 
     private fun launchExploreFoodCulture() {
@@ -183,7 +166,7 @@ class FoodChangeMoodUI(
 
 
 
-    private fun suggestEggFreeSweet() {
+    private fun launchSuggestEggFreeSweet() {
         val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
         if (suggestion != null) {
             println("\n--- Suggested Free Sweet ---")
@@ -195,7 +178,7 @@ class FoodChangeMoodUI(
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
-                    suggestEggFreeSweet()
+                    launchSuggestEggFreeSweet()
                 }
 
                 "exit" -> presentFeatures()
@@ -219,7 +202,7 @@ class FoodChangeMoodUI(
         }
     }
 
-    private fun identifyIraqiMeals() {
+    private fun launchIdentifyIraqiMeals() {
         val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
         if (iraqiMeals.isNotEmpty()) {
             println("\n--- Iraqi Meals ---")
@@ -260,7 +243,7 @@ class FoodChangeMoodUI(
         return input.replace(ALL_SPACES_VALUE, " ")
     }
 
-    private fun getItalianMealsForLargeGroup() {
+    private fun launchGetItalianMealsForLargeGroup() {
 
         val meals = suggestItalianFoodForLargeGroupUseCase
             .suggestItalianMealsForLargeGroup()
