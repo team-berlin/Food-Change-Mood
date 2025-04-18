@@ -1,8 +1,8 @@
-package org.berlin.logic
+package org.berlin.logic.usecase
 
+import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
 import kotlin.random.Random
-
 
 class SuggestEggFreeSweetUseCase(
     private val mealsRepository: MealsRepository
@@ -16,7 +16,7 @@ class SuggestEggFreeSweetUseCase(
 
         if (eggFreeSweets.isEmpty()) return null
 
-        val randomSweet = eggFreeSweets.random(Random)
+        val randomSweet = eggFreeSweets.random(Random.Default)
         suggestedSweets.add(randomSweet.name)
         return randomSweet
     }
