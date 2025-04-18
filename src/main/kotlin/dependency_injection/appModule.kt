@@ -1,4 +1,4 @@
-package org.berlin.dependency_injection
+package dependency_injection;
 
 import com.berlin.data.CsvFileReader
 import com.berlin.data.CsvMealsRepository
@@ -15,10 +15,7 @@ val appModule = module {
         single { MealsCsvParser() }
 
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
-
-        // Logic Layer
         single { QuickHealthyMealsUseCase(get()) }
 
-        // Presentation Layer
         single { FoodChangeMoodUI(get() , get(), get(), get(), get()) }
 }

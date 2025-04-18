@@ -20,5 +20,8 @@ fun main() {
     mealsRepository.getAllMeals().also {
         print(it.size)
     }
+
+    val ui: FoodChangeMoodUI = getKoin().get()
+    ui.start()
 }
 

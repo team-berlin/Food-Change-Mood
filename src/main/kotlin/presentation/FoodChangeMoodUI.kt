@@ -10,10 +10,10 @@ class FoodChangeMoodUI(
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
-    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase
+    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
+    private val suggestItalianFoodForLargeGroupUseCase:
+    SuggestItalianFoodForLargeGroupUseCase
 ) {
-
-class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase) {
 
     fun start() {
         showWelcome()
@@ -28,8 +28,8 @@ class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUs
             1 -> displayQuickHealthyMeals()
             2 -> identifyIraqiMeals()
             3 -> suggestEggFreeSweet()
-            7 -> launchSuggestionKetoMeal()
             4 -> launchEasyFoodSuggestion()
+            7 -> launchSuggestionKetoMeal()
             10 ->launchExploreFoodCulture()
 
             else -> println("Invalid Input")
@@ -177,23 +177,34 @@ class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUs
             }
         }
     }
+    private fun showWelcome() {
+        println("Welcome to food change mood app")
+    }
+    private fun removeAllSpaces(input: String): String {
+        return input.replace(ALL_SPACES_VALUE, " ")
+    }
 
-    private fun identifyIraqiMeals() {
-        val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
-        if (iraqiMeals.isNotEmpty()) {
-            println("\n--- Iraqi Meals ---")
-            iraqiMeals.forEach { meal ->
-                println("Name: ${meal.name}")
-                println("ID: ${meal.id}")
-                println("Description: ${meal.description ?: "No description available"}")
-                println("Tags: ${meal.tags.joinToString(", ")}")
-                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
-                println("---")
-            }
-            println("--- End of Iraqi Meals ---")
-        } else {
-            println("No Iraqi meals found.")
+    private fun getItalianMealsForLargeGroup() {
+
+        val meals = suggestItalianFoodForLargeGroupUseCase
+            .suggestItalianMealsForLargeGroup()
+        meals.forEachIndexed { index, meal ->
+            println("${index + 1}. Meal Name: " +
+                    "${removeAllSpaces(meal.name)}\n")
         }
+    }
+
+    private companion object {
+        val ALL_SPACES_VALUE = "\\s+".toRegex()
+    }
+
+    private fun getUserInput(): Int? {
+        return readLine()?.toIntOrNull()
+    }
+
+    private fun getStringUserInput(): String? {
+        return readlnOrNull()
+    }
     private fun displayQuickHealthyMeals() {
         println("\n=== Quick & Healthy Meals ===")
 
@@ -223,10 +234,6 @@ class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUs
         println("\nTotal meals found: ${meals.size}")
     }
 
-    private fun showWelcome() {
-        println("Welcome to food change mood app")
-    }
-
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
         println("1 - Find fast healthy meals that can be prepared in 15 minutes and under")
@@ -234,12 +241,27 @@ class FoodChangeMoodUI(private val quickHealthyMealsUseCase: QuickHealthyMealsUs
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
         println("1 - Get fake UseCase for testing")
+        println("15 - Get Italian Meals For Large Group")
         println("2 - Identify Iraqi Meals")
         println("3 - Suggest Egg FreeSweet")
         print("Here: ")
     }
 
-    private fun getStringUserInput(): String? {
-        return readlnOrNull()
+    private fun identifyIraqiMeals() {
+        val iraqiMeals = identifyIraqiMealsUseCase.identifyIraqiMeals()
+        if (iraqiMeals.isNotEmpty()) {
+            println("\n--- Iraqi Meals ---")
+            iraqiMeals.forEach { meal ->
+                println("Name: ${meal.name}")
+                println("ID: ${meal.id}")
+                println("Description: ${meal.description ?: "No description available"}")
+                println("Tags: ${meal.tags.joinToString(", ")}")
+                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+                println("---")
+            }
+            println("--- End of Iraqi Meals ---")
+        } else {
+            println("No Iraqi meals found.")
+        }
     }
 }
