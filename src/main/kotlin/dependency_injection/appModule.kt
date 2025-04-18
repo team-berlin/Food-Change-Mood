@@ -21,7 +21,6 @@ val appModule = module {
         single { IdentifyIraqiMealsUseCase(get()) }
         single { HighCalorieMealsUseCase(get()) }
 
-        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-
+        single { FoodChangeMoodUI(get() , get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
 }

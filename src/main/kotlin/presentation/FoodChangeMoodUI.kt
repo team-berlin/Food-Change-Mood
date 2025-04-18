@@ -1,5 +1,6 @@
 package org.berlin.presentation
 
+import org.berlin.logic.GetSeafoodMealsUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
@@ -18,7 +19,8 @@ class FoodChangeMoodUI(
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
-    private val highCalorieMealsUseCase: HighCalorieMealsUseCase
+    private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase
 ) {
     fun start() {
         showWelcome()
@@ -41,11 +43,18 @@ class FoodChangeMoodUI(
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
             "13" -> launchHighCalorieMeal()
+            "14" -> launchSeafoodMealsUseCase()
             "15" -> launchGetItalianMealsForLargeGroup()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
+    }
+
+    private fun launchSeafoodMealsUseCase() {
+        getSeafoodMealsUseCase.getSeafoodMeals().forEachIndexed { index, seafoodMeal ->
+            println("${index + 1} ,Name:${seafoodMeal.name}, has protein value:${seafoodMeal.protein}")
+        }
     }
 
     private fun launchHighCalorieMeal() {
@@ -308,6 +317,7 @@ class FoodChangeMoodUI(
         println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
         println("13 - Do you want a suggestion for a meal with more than 700 calories")
+        println("14 - Get a list of all seafood meals")
         println("15 - Get Italian Meals For Large Group")
         print("Here: ")
     }
