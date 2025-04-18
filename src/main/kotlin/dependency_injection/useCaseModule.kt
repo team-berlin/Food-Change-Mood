@@ -1,5 +1,5 @@
 package org.berlin.dependency_injection
-import org.berlin.logic.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.ExploreFoodCultureUseCase
 
 import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
 import org.berlin.logic.usecase.SuggestKetoMealUseCase

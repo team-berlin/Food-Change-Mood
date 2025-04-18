@@ -1,17 +1,16 @@
 package org.berlin.presentation
-import org.berlin.logic.ExploreFoodCultureUseCase
 
+import org.berlin.logic.usecase.ExploreFoodCultureUseCase
 import org.berlin.logic.usecase.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.EasyFoodSuggestionUseCase
 import org.berlin.model.Meal
-import java.util.*
 
 class FoodChangeMoodUI(
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
-    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
-    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase
+    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
+    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase
 
 ) {
-
     fun start() {
         showWelcome()
         presentFeatures()
@@ -22,36 +21,60 @@ class FoodChangeMoodUI(
         val input = getUserInput()
 
         when (input) {
-            7 -> suggestionKetoMeal()
-            4 -> easyFoodSuggestion()
-            10 ->handleExploreFoodCulture()
+            7 -> launchSuggestionKetoMeal()
+            4 -> launchEasyFoodSuggestion()
+            10 ->launchExploreFoodCulture()
             else -> println("Invalid Input")
         }
 
         presentFeatures()
     }
-    private fun easyFoodSuggestion() {
-        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
-        meals.onSuccess {
-            it.forEach { meal ->
-                println(
-                    """
-                        ${meal.name}
-                        Time: ${meal.minutes} minutes
-                        Ingredients: ${meal.nIngredients}
-                        Steps: ${meal.nSteps}
-                        ---------------------
-                    """.trimIndent()
-                )
+
+
+    private fun launchExploreFoodCulture() {
+        print("Enter Country name:")
+        readlnOrNull()?.takeIf { it.isNotBlank() }?.let { countryName ->
+            try {
+                val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = countryName)
+                if (meals.isEmpty()) {
+                    println(" \"$countryName\" is not found in any meal tags.")
+                } else {
+                    println("\nFound ${meals.size} meals related to \"$countryName\":")
+                    meals.forEachIndexed { index, meal ->
+                        println("${index + 1}. ${meal.name}")
+                    }
+                }
+            } catch (e: Exception) {
+                println("️ Something went wrong while searching for \"$countryName\".")
             }
+        } ?: println(" Please enter a valid country name.")
+    }
+
+    private fun launchEasyFoodSuggestion() {
+        val meals = easyFoodSuggestionRepository.getEasyFoodSuggestion()
+
+        if (meals.isEmpty()) {
+            println("No easy food meals")
         }
-        meals.onFailure {
-            println("No meals found")
+        meals.forEach { meal ->
+            showEasyMealsDetails(meal)
         }
     }
 
-    private fun suggestionKetoMeal() {
-        val shuffledMeals = suggestKetoMealUseCase.suggestMeal()
+    private fun showEasyMealsDetails(meal: Meal) {
+        println(
+            """
+                    ${meal.name}
+                    Time: ${meal.minutes} minutes
+                    Ingredients: ${meal.nIngredients}
+                    Steps: ${meal.nSteps}
+                    ---------------------
+                """.trimIndent()
+        )
+    }
+
+    private fun launchSuggestionKetoMeal() {
+        val shuffledMeals = suggestKetoMealUseCase.suggestKetoMeal()
 
         if (shuffledMeals.isEmpty()) {
             println("No keto‑friendly meals available. Goodbye!")
@@ -113,35 +136,15 @@ class FoodChangeMoodUI(
 
 
     private fun showWelcome() {
-        println("Welcome to food change mood app")
+        println("Welcome to cost of living app")
     }
 
     private fun showOptions() {
         println("\n\n=== Please enter one of the following numbers ===")
-        println("1 - Get fake UseCase for testing")
         println("4 - Get easy food suggestion")
         println("7 - Get friendly keto meal suggestion")
         println("10 - Explore food culture by country")
         print("Here: ")
-    }
-
-    private fun handleExploreFoodCulture() {
-        print("Enter Country name:")
-        readlnOrNull()?.takeIf { it.isNotBlank() }?.let { countryName ->
-            try {
-                val meals = exploreFoodCultureUseCase.exploreFoodByCountry(country = countryName)
-                if (meals.isEmpty()) {
-                    println(" \"$countryName\" is not found in any meal tags.")
-                } else {
-                    println("\nFound ${meals.size} meals related to \"$countryName\":")
-                    meals.forEachIndexed { index, meal ->
-                        println("${index + 1}. ${meal.name}")
-                    }
-                }
-            } catch (e: Exception) {
-                println("️ Something went wrong while searching for \"$countryName\".")
-            }
-        } ?: println(" Please enter a valid country name.")
     }
 
     private fun getUserInput(): Int? {

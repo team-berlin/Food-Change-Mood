@@ -6,25 +6,26 @@ import org.berlin.model.Meal
 class EasyFoodSuggestionUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun getEasyFoodSuggestion(): Result<List<Meal>> {
-        val filteredList = mealsRepository.getAllMeals()
-            .filter { meal ->
-                meal.minutes <= MAX_PREP_TIME_MINUTES &&
-                        meal.nIngredients <= INGREDIENTS_COUNT &&
-                        meal.nSteps <= STEPS_COUNT
-            }
-            .shuffled()
-            .take(RANDOM_N)
-        if (filteredList.isEmpty()){
-            return Result.failure(Exception("No meals found"))
-        }
-        return Result.success(filteredList)
+    fun getEasyFoodSuggestion(): List<Meal> {
+        return mealsRepository.getAllMeals()
+            .filter(::onlyEasyFood)
+            .takeIf { it.isNotEmpty() }
+            ?.shuffled()
+            ?.take(RANDOM_N)
+            ?: emptyList()
     }
-    companion object{
-         private const val MAX_PREP_TIME_MINUTES = 30
-         private const val INGREDIENTS_COUNT = 5
-         private const val STEPS_COUNT = 6
-         private const val RANDOM_N = 10
+
+    private fun onlyEasyFood(meal: Meal): Boolean {
+        return meal.minutes <= MAX_PREP_TIME_MINUTES &&
+                meal.nIngredients <= INGREDIENTS_COUNT &&
+                meal.nSteps <= STEPS_COUNT
+    }
+
+    private companion object{
+         const val MAX_PREP_TIME_MINUTES = 30
+         const val INGREDIENTS_COUNT = 5
+         const val STEPS_COUNT = 6
+         const val RANDOM_N = 10
     }
 }
 
