@@ -1,7 +1,6 @@
 package org.berlin.dependency_injection
 
 import logic.usecase.GetSeafoodMealsUseCase
-import org.berlin.logic.SearchMealsByDateUseCase
 import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.berlin.logic.usecase.*
 import org.berlin.logic.usecase.IngredientGameMealsMapper
@@ -33,5 +32,4 @@ val useCaseModule = module {
     single { GetMealsContainsPotatoUseCase(get()) }
     single { GuessPreparationTimeGameUseCase(get()) }
     single{ GetSeafoodMealsUseCase(get()) }
-    single { SearchMealsByDateUseCase(get()) }
 }

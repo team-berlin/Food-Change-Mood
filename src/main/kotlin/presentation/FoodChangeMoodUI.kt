@@ -1,7 +1,5 @@
 package org.berlin.presentation
 
-import kotlinx.datetime.LocalDate
-import org.berlin.logic.SearchMealsByDateUseCase
 import logic.usecase.GetSeafoodMealsUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
@@ -22,9 +20,7 @@ class FoodChangeMoodUI(
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
     private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
-    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
-    private val searchMealsByDateUseCase: SearchMealsByDateUseCase
-
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase
 ) {
     fun start() {
         showWelcome()
@@ -36,14 +32,13 @@ class FoodChangeMoodUI(
         val input = getStringUserInput()
 
         when (input) {
-            "1" -> launchSearchMealsByDate()
+            "1" -> launchQuickHealthyMeals()
             "2" -> launchSearchMealsByName()
             "3" -> launchIdentifyIraqiMeals()
             "4" -> launchEasyFoodSuggestion()
             "5" -> launchGuessPreparationTimeGame()
             "6" -> launchSuggestEggFreeSweet()
             "7" -> launchSuggestionKetoMeal()
-            "8" -> launchSearchMealsByDate()
             "10" -> launchExploreFoodCulture()
             "11"-> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
@@ -54,54 +49,6 @@ class FoodChangeMoodUI(
         }
 
         presentFeatures()
-    }
-
-    private fun launchSearchMealsByDate() {
-        println("\n=== Search Meals by Date ===")
-        println("Please enter a date in the format YYYY-MM-DD:")
-        val dateInput = getStringUserInput()
-
-        if (dateInput.isNullOrBlank()) {
-            println("Error: Date cannot be empty.")
-            return
-        }
-
-        try {
-            val date = LocalDate.parse(dateInput)
-            println("Successfully parsed date: $date")
-
-            println("Fetching meals...")
-            val meals = searchMealsByDateUseCase.searchMealsByDate(date)
-
-            if (meals.isEmpty()) {
-                println("No meals found for date: $date")
-            } else {
-                println("\nFound ${meals.size} meals added on $date:")
-                meals.forEach { meal ->
-                    println("ID: ${meal.id}, Name: ${meal.name}")
-                }
-
-                println("\nWould you like to see details of a specific meal? (Enter meal ID or 'no'):")
-                val mealIdInput = getStringUserInput()
-
-                if (mealIdInput?.lowercase() != "no") {
-                    try {
-                        val mealId = mealIdInput?.toInt()
-                        val selectedMeal = meals.find { it.id == mealId }
-
-                        if (selectedMeal != null) {
-                            showMealDetails(selectedMeal)
-                        } else {
-                            println("Meal with ID $mealId not found in the results.")
-                        }
-                    } catch (e: NumberFormatException) {
-                        println("Invalid meal ID format.")
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            println("Error: ${e.javaClass.simpleName} - ${e.message}")
-        }
     }
 
     private fun launchSeafoodMealsUseCase() {
@@ -117,7 +64,7 @@ class FoodChangeMoodUI(
             .fold(
                 onSuccess = { meal ->
                     println("\nSuggested high-calorie meal:")
-                    showMealDetails(meal)
+                    displayMeal(meal)
                 },
                 onFailure = { error ->
                     println("Error: ${error.message}")
@@ -152,7 +99,7 @@ class FoodChangeMoodUI(
 
         meals.forEachIndexed { index, meal ->
             println("\n[${index + 1}] ${meal.name}")
-            showMealDetails(meal)
+            displayMeal(meal)
         }
 
         println("\nTotal meals found: ${meals.size}")
@@ -305,7 +252,12 @@ class FoodChangeMoodUI(
         if (iraqiMeals.isNotEmpty()) {
             println("\n--- Iraqi Meals ---")
             iraqiMeals.forEach { meal ->
-                showMealDetails(meal)
+                println("Name: ${meal.name}")
+                println("ID: ${meal.id}")
+                println("Description: ${meal.description ?: "No description available"}")
+                println("Tags: ${meal.tags.joinToString(", ")}")
+                println("Ingredients: ${meal.ingredients.joinToString(", ")}")
+                println("---")
             }
             println("--- End of Iraqi Meals ---")
         } else {
@@ -332,6 +284,21 @@ class FoodChangeMoodUI(
             println(e.message)
         }
     }
+    private fun displayMeal(meal: Meal) {
+        println(meal.name)
+        println("    Preparation Time: ${meal.minutes} minutes")
+        println("    Tags: ${meal.tags.joinToString(", ")}")
+        println("    Nutrition:")
+        println("      - Calories: ${meal.nutrition.calories}")
+        println("      - Protein: ${meal.nutrition.protein}g")
+        println("      - Total Fat: ${meal.nutrition.totalFat}g")
+        println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
+        println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
+        println("      - Sugar: ${meal.nutrition.sugar}g")
+        println("      - Sodium: ${meal.nutrition.sodium}mg")
+        println("    Ingredients: ${meal.nIngredients}")
+        println("    Steps: ${meal.nSteps}")
+    }
 
     private fun showWelcome() {
         println("Welcome to Food Change Mood app")
@@ -346,7 +313,6 @@ class FoodChangeMoodUI(
         println("5 - Guess preparation time game")
         println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
-        println("8 - Search Foods by Add Date")
         println("10 - Explore food culture by country")
         println("11 - Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
