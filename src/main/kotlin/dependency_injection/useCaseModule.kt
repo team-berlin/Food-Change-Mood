@@ -19,7 +19,10 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single { HighCalorieMealsUseCase(get()) }
-    single { SearchMealsByNameUseCase(get()) }
+    single { SearchMealsByNameUseCase(
+        get(),
+        get()
+    ) }
     single { ExploreFoodCultureUseCase(get()) }
     single { SuggestKetoMealUseCase(get()) }
     single { EasyFoodSuggestionUseCase(get()) }
