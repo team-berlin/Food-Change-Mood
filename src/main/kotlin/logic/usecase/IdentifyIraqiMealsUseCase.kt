@@ -7,9 +7,9 @@ class IdentifyIraqiMealsUseCase(
     private val repository: MealsRepository
 ) {
 
-    val allMeals by lazy {repository.getAllMeals()}
     fun identifyIraqiMeals(): List<Meal> {
-        return allMeals.filter { isIraqiMeal(it) }
+        return repository.getAllMeals()
+            .filter { isIraqiMeal(it) }
     }
 
     private fun isIraqiMeal(meal: Meal): Boolean {

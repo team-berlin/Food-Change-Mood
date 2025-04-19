@@ -8,9 +8,11 @@ class CsvMealsRepository(
     private val mealsCsvParser: MealsCsvParser
 ): MealsRepository {
 
-    override fun getAllMeals(): List<Meal> {
-        return csvFileReader.readLinesFromFile().map { line ->
+    private val cachedMeals by lazy {
+        csvFileReader.readLinesFromFile().map { line ->
             mealsCsvParser.parseColumnsToMeal(line)
         }
     }
+
+    override fun getAllMeals(): List<Meal> = cachedMeals
 }
