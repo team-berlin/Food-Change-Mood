@@ -14,7 +14,7 @@ import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
     private val ingredientGame: IngredientGameInteractor,
-    private val identifyIraqiMealsUseCase : IdentifyIraqiMealsUseCase,
+    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
@@ -49,7 +49,7 @@ class FoodChangeMoodUI(
             "8" -> launchSearchMealsByDate()
             "9" -> launchGymHelper()
             "10" -> launchExploreFoodCulture()
-            "11"-> launchIngredientGameUseCase()
+            "11" -> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
             "13" -> launchHighCalorieMeal()
             "14" -> launchSeafoodMealsUseCase()
@@ -130,16 +130,24 @@ class FoodChangeMoodUI(
     }
 
     private fun launchSearchMealsByName() {
-        println("===Search meals by name===\n")
-        println("please enter meal name or part of it: ")
-        val searchWord = readlnOrNull() ?: ""
+        println("=== Search Meals by Name ===\n")
+        print("Type the name or part of the meal you're looking for: ")
+
+        val searchWord = readlnOrNull()?.trim().orEmpty()
+
+        if (searchWord.isBlank()) {
+            println("You didn't type anything. Please enter a word to search")
+            return
+        }
+
         val meals = searchMealsByNameUseCase.searchMealsByName(searchWord)
+
         if (meals.isEmpty()) {
-            println("Search word is empty, please enter something to search.")
+            println("No meals found for \"$searchWord\".")
         } else {
-            println("there is ${meals.size} founded for $searchWord: \n")
-            meals.forEach { meal ->
-                println(meal.name)
+            println("Found ${meals.size} result(s) for \"$searchWord\":\n")
+            meals.forEachIndexed { index, meal ->
+                println("${index + 1}. ${removeAllSpaces(meal.name)}")
             }
         }
     }
@@ -262,7 +270,6 @@ class FoodChangeMoodUI(
     }
 
 
-
     private fun launchSuggestEggFreeSweet() {
         val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
         if (suggestion != null) {
@@ -271,7 +278,7 @@ class FoodChangeMoodUI(
             println("Description: ${suggestion.description}")
             println("---------------------------")
             println("Like it? (yes/no/exit)")
-            when(readlnOrNull()?.lowercase()){
+            when (readlnOrNull()?.lowercase()) {
                 "yes" -> showSweetDetails(suggestion)
                 "no" -> {
                     println("Disliked. Getting another suggestion.")
@@ -336,6 +343,7 @@ class FoodChangeMoodUI(
             println(e.message)
         }
     }
+
     private fun displayMeal(meal: Meal) {
         println(meal.name)
         println("    Preparation Time: ${meal.minutes} minutes")
@@ -371,7 +379,10 @@ class FoodChangeMoodUI(
             calorieAndProteinValues = GymHelperInput(
                 calories = caloriesInput,
                 protein = proteinInput,
-                caloriesAndProteinTolerance = CaloriesAndProteinTolerance(caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10)
+                caloriesAndProteinTolerance = CaloriesAndProteinTolerance(
+                    caloriesToleranceInput ?: 30,
+                    proteinToleranceInput ?: 10
+                )
             ),
         )
 
@@ -406,7 +417,7 @@ class FoodChangeMoodUI(
         print("Here: ")
     }
 
-    private fun launchGuessPreparationTimeGame(){
+    private fun launchGuessPreparationTimeGame() {
         var isCorrect = false
         val meal = guessPreparationTimeGameUseCase.guessPreparationTime()
         val minutes = meal.minutes
@@ -414,7 +425,7 @@ class FoodChangeMoodUI(
         println("Guess the preparation time of $mealName meal")
         var preparationTime: Int?
         var attempts = 3
-        while (attempts-- > 0){
+        while (attempts-- > 0) {
             try {
                 preparationTime = getUserInput()
                 if (minutes > preparationTime!!) {
@@ -426,14 +437,14 @@ class FoodChangeMoodUI(
                     isCorrect = true
                     break
                 }
-            }catch (exception: Exception){
+            } catch (exception: Exception) {
                 println("Please enter a valid input")
             }
         }
-        if (!isCorrect){
+        if (!isCorrect) {
             println("The time it takes to prepare $mealName meal is $minutes minutes")
-            }
         }
+    }
 
     private fun removeAllSpaces(input: String): String {
         return input.replace(ALL_SPACES_VALUE, " ")
@@ -451,7 +462,7 @@ class FoodChangeMoodUI(
         }
     }
 
-    private fun displayMeals (meals: List<Meal>) {
+    private fun displayMeals(meals: List<Meal>) {
         meals.forEachIndexed { index, meal ->
             println("\n[${index + 1}] ${meal.name}")
             displayMeal(meal)
@@ -464,7 +475,7 @@ class FoodChangeMoodUI(
         val ALL_SPACES_VALUE = "\\s+".toRegex()
     }
 
-    private fun launchRandomPotatoesMeals(){
+    private fun launchRandomPotatoesMeals() {
         getMealsContainsPotatoUseCase.getMealsContainsPotato().forEach { println(it) }
     }
 
