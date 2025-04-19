@@ -3,6 +3,8 @@ import data.CsvFileReader
 import data.CsvMealsRepository
 import data.MealsCsvParser
 import org.berlin.logic.MealsRepository
+import org.berlin.logic.search.SearchAlgorithm
+import org.berlin.logic.search.SearchByName
 import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
@@ -12,7 +14,7 @@ import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-        single { File("food.csv") }
+        single { File("D:\\the chance\\food.csv") }
         single { CsvFileReader(get()) }
         single { MealsCsvParser() }
         single<MealsRepository> { CsvMealsRepository(get(), get()) }
@@ -20,7 +22,7 @@ val appModule = module {
         single { SuggestEggFreeSweetUseCase(get()) }
         single { IdentifyIraqiMealsUseCase(get()) }
         single { HighCalorieMealsUseCase(get()) }
-
+        single<SearchByName> { SearchAlgorithm() }
         single { FoodChangeMoodUI(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get() , get()) }
 
 }
