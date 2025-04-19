@@ -16,10 +16,11 @@ class GetMealsContainsPotatoUseCase(
     }
 
     private fun containsPotatoIngredient(meal: Meal): Boolean{
-        return meal.ingredients.any{ it.lowercase().contains("potato") }
+        return meal.ingredients.any{ it.lowercase().contains(POTATO_INGREDIENT) }
     }
 
     private companion object{
         const val RANDOM_N = 10
+        const val POTATO_INGREDIENT = "potato"
     }
 }
