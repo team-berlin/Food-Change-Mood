@@ -8,23 +8,26 @@ class SearchMealsByNameUseCase(
 ) {
     fun searchMealsByName(inputMealName: String): List<Meal> {
         return mealsRepository.getAllMeals().filter { meal ->
-            kmpSearch(meal.name.lowercase(), inputMealName.lowercase())
+            val mealName = meal.name.lowercase()
+            val searchName = inputMealName.lowercase()
+            kmpSearchAlgorithm(mealName, searchName)
+                    || levenshteinDistanceSearchAlgorithm(mealName, searchName)
         }
     }
 
-    private fun kmpSearch(text: String, wordToSearchBy: String): Boolean {
+    private fun kmpSearchAlgorithm(textToSearchIn: String, wordToSearchBy: String): Boolean {
         if (wordToSearchBy.isEmpty()) return true
-        if (text.isEmpty()) return false
+        if (textToSearchIn.isEmpty()) return false
         val lps = computeLPSArray(wordToSearchBy)
         var textIndex = 0
         var wordIndex = 0
-        while (textIndex < text.length) {
-            if (wordToSearchBy[wordIndex] == text[textIndex]) {
+        while (textIndex < textToSearchIn.length) {
+            if (wordToSearchBy[wordIndex] == textToSearchIn[textIndex]) {
                 textIndex++
                 wordIndex++
             }
             if (wordIndex == wordToSearchBy.length) return true
-            else if (textIndex < text.length && wordToSearchBy[wordIndex] != text[textIndex]) {
+            else if (textIndex < textToSearchIn.length && wordToSearchBy[wordIndex] != textToSearchIn[textIndex]) {
                 if (wordIndex != 0) {
                     wordIndex = lps[wordIndex - 1]
 
@@ -57,4 +60,28 @@ class SearchMealsByNameUseCase(
         }
         return lsp
     }
+
+    private fun levenshteinDistanceSearchAlgorithm(textToSearchIn: String, wordToSearchBy: String): Boolean {
+        val textToBeSearchLength = textToSearchIn.length
+        val wordToSearchByLength = wordToSearchBy.length
+        val distanceMatrix = Array(textToBeSearchLength + 1) { IntArray(wordToSearchByLength + 1) }
+        (0..textToBeSearchLength).forEach { distanceMatrix[it][0] = it }
+        (0..wordToSearchByLength).forEach { distanceMatrix[0][it] = it }
+        for (i in 1..textToBeSearchLength) {
+            for (j in 1..wordToSearchByLength) {
+                val cost = if (textToSearchIn[i - 1] == wordToSearchBy[j - 1]) 0 else 1
+                distanceMatrix[i][j] = minOf(
+                    distanceMatrix[i - 1][j] + 1,
+                    distanceMatrix[i][j - 1] + 1,
+                    distanceMatrix[i - 1][j - 1] + cost
+                )
+            }
+        }
+        return distanceMatrix[textToBeSearchLength][wordToSearchByLength] <= thresholdForLevenshteinDistance(wordToSearchBy)
+    }
+    private fun thresholdForLevenshteinDistance(inputMealName: String): Int{
+       return (inputMealName.length * 0.3).toInt()
+
+    }
+
 }
