@@ -2,23 +2,20 @@ package org.berlin.logic.usecase
 
 import org.berlin.logic.MealsRepository
 import org.berlin.model.Meal
-import kotlin.random.Random
 
 class SuggestEggFreeSweetUseCase(
     private val mealsRepository: MealsRepository
 ) {
     private val suggestedSweets = mutableSetOf<String>()
 
-    private val allMeals  by lazy { mealsRepository.getAllMeals() }
     fun suggestEggFreeSweet() : Meal? {
 
-        val eggFreeSweets = allMeals.filter(::isEggFreeSweet)
-
-        if (eggFreeSweets.isEmpty()) return null
-
-        val randomSweet = eggFreeSweets.random(Random.Default)
-        suggestedSweets.add(randomSweet.name)
-        return randomSweet
+        return mealsRepository.getAllMeals()
+            .filter(::isEggFreeSweet)
+            .takeIf { it.isNotEmpty() }
+            ?.shuffled()
+            ?.first()
+            ?.also { suggestedSweets.add(it.name) }
     }
 
     private fun isEggFreeSweet(meal: Meal): Boolean {
