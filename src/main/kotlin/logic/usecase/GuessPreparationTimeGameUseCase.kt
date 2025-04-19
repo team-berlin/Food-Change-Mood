@@ -6,7 +6,7 @@ import org.berlin.model.Meal
 class GuessPreparationTimeGameUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun guessPreparationTime(): Meal {
+    fun getRandomMeal(): Meal {
         return mealsRepository.getAllMeals()
             .shuffled()
             .first()

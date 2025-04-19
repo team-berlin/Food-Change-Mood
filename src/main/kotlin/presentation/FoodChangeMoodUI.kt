@@ -419,30 +419,31 @@ class FoodChangeMoodUI(
 
     private fun launchGuessPreparationTimeGame() {
         var isCorrect = false
-        val meal = guessPreparationTimeGameUseCase.guessPreparationTime()
-        val minutes = meal.minutes
-        val mealName = meal.name
-        println("Guess the preparation time of $mealName meal")
-        var preparationTime: Int?
+        val randomMeal = guessPreparationTimeGameUseCase.getRandomMeal()
+        val mealName = randomMeal.name
+        val correctPreparationTime = randomMeal.minutes
+        var guessPreparationTime: Int?
         var attempts = 3
+        println("Guess the preparation time of $mealName meal")
         while (attempts-- > 0) {
             try {
-                preparationTime = getUserInput()
-                if (minutes > preparationTime!!) {
+                guessPreparationTime = getUserInput()
+                if (correctPreparationTime > guessPreparationTime!!) {
                     println("too low, try again")
-                } else if (minutes < preparationTime) {
+                } else if (correctPreparationTime < guessPreparationTime) {
                     println("too high, try again")
                 } else {
-                    println("Great Job!, it takes $preparationTime minutes")
+                    println("Great Job!, it takes $guessPreparationTime minutes")
                     isCorrect = true
                     break
                 }
             } catch (exception: Exception) {
+                attempts++
                 println("Please enter a valid input")
             }
         }
         if (!isCorrect) {
-            println("The time it takes to prepare $mealName meal is $minutes minutes")
+            println("The time it takes to prepare $mealName meal is $correctPreparationTime minutes")
         }
     }
 
