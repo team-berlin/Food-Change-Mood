@@ -2,10 +2,8 @@ package org.berlin.logic.search
 
 class LevenshteinSearch : SearchByName {
 
-    override fun search(textToSearchIn: String, wordToSearchBy: String): Boolean {
-        val distance = evaluateLevenshteinDistance(textToSearchIn, wordToSearchBy)
-        return distance <= calculateLevenshteinThreshold(wordToSearchBy)
-    }
+    override fun search(textToSearchIn: String, wordToSearchBy: String): Boolean =
+        evaluateLevenshteinDistance(textToSearchIn, wordToSearchBy) <= calculateLevenshteinThreshold(wordToSearchBy)
 
     private fun evaluateLevenshteinDistance(
         textToSearchIn: String, wordToSearchBy: String
@@ -20,8 +18,8 @@ class LevenshteinSearch : SearchByName {
         textToSearchIn: String,
         wordToSearchBy: String
     ): Array<IntArray> {
-        for (textIndex in 1..textToSearchIn.length) {
-            for (wordIndex in 1..wordToSearchBy.length) {
+        (1..textToSearchIn.length).forEach { textIndex ->
+            (1..wordToSearchBy.length).forEach { wordIndex ->
                 val cost = if (textToSearchIn[textIndex - 1] == wordToSearchBy[wordIndex - 1]) 0 else 1
                 distanceMatrix[textIndex][wordIndex] = minOf(
                     distanceMatrix[textIndex - 1][wordIndex] + 1,
@@ -46,7 +44,11 @@ class LevenshteinSearch : SearchByName {
         return distanceMatrix
     }
 
-    private fun calculateLevenshteinThreshold(inputMealName: String): Int {
-        return (inputMealName.length * 0.3).toInt()
+    private fun calculateLevenshteinThreshold(input: String): Int =
+        (input.length * ERROR_RATE).toInt()
+
+    companion object {
+        private const val ERROR_RATE = 0.3
     }
 }
+

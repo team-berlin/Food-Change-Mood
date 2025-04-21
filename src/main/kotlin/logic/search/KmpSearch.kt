@@ -24,15 +24,17 @@ class KmpSearch : SearchByName {
         var wordIndex = 0
         while (textIndex < textToSearchIn.length) {
             if (wordToSearchBy[wordIndex] == textToSearchIn[textIndex]) {
-                textIndex++
-                wordIndex++
+                textIndex+=1
+                wordIndex+=1
             }
-            if (wordIndex == wordToSearchBy.length) return true
-            else if (textIndex < textToSearchIn.length && wordToSearchBy[wordIndex] != textToSearchIn[textIndex]) {
-                if (wordIndex != 0) {
-                    wordIndex = lps[wordIndex - 1]
-                } else {
-                    textIndex++
+            when {
+                (wordIndex == wordToSearchBy.length)-> return true
+                (textIndex < textToSearchIn.length && wordToSearchBy[wordIndex] != textToSearchIn[textIndex])-> {
+                    if (wordIndex != 0) {
+                        wordIndex = lps[wordIndex - 1]
+                    } else {
+                        textIndex += 1
+                    }
                 }
             }
         }
@@ -44,13 +46,17 @@ class KmpSearch : SearchByName {
         var prefixLength = 0
         var currentIndex = 1
         while (currentIndex < wordToSearchBy.length) {
-            if (wordToSearchBy[currentIndex] == wordToSearchBy[prefixLength]) {
-                lsp[currentIndex++] = ++prefixLength
-            } else {
-                if (prefixLength != 0) {
+            when{
+                wordToSearchBy[currentIndex] == wordToSearchBy[prefixLength]-> {
+                    prefixLength+=1
+                    lsp[currentIndex] = prefixLength
+                    currentIndex+=1
+                }
+                prefixLength != 0->
                     prefixLength = lsp[prefixLength - 1]
-                } else {
-                    lsp[currentIndex++] = 0
+                else-> {
+                    lsp[currentIndex] = 0
+                    currentIndex+=1
                 }
             }
         }
