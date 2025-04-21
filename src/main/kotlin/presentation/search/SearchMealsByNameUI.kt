@@ -7,6 +7,7 @@ import org.berlin.presentation.input_output.Reader
 class SearchMealsByNameUI(
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val reader:Reader
+
 ): UiRunner {
     override val id: Int = 2
     override val label: String="Search meals by name"
