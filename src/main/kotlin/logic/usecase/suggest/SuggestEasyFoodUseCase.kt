@@ -1,5 +1,6 @@
 package org.berlin.logic.usecase.suggest
 
+import org.berlin.data.utils.Utils.getRandomItems
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 
@@ -7,12 +8,13 @@ class SuggestEasyFoodUseCase(
     private val mealsRepository: MealsRepository
 ) {
     fun getEasyFoodSuggestion(): List<Meal> {
-        return mealsRepository.getAllMeals()
+        val filterList = mealsRepository.getAllMeals()
             .filter(::onlyEasyFood)
-            .takeIf { it.isNotEmpty() }
-            ?.shuffled()
-            ?.take(RANDOM_N)
-            ?: emptyList()
+        return if (filterList.size <= RANDOM_N) {
+            filterList
+        } else {
+            filterList.getRandomItems(RANDOM_N)
+        }
     }
 
     private fun onlyEasyFood(meal: Meal): Boolean {
@@ -21,11 +23,13 @@ class SuggestEasyFoodUseCase(
                 meal.nSteps <= STEPS_COUNT
     }
 
-    private companion object{
-         const val MAX_PREP_TIME_MINUTES = 30
-         const val INGREDIENTS_COUNT = 5
-         const val STEPS_COUNT = 6
-         const val RANDOM_N = 10
+    private companion object {
+        const val MAX_PREP_TIME_MINUTES = 30
+        const val INGREDIENTS_COUNT = 5
+        const val STEPS_COUNT = 6
+        const val RANDOM_N = 10
     }
+
 }
+
 
