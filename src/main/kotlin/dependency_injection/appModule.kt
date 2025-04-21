@@ -7,8 +7,6 @@ import org.berlin.logic.repository.MealsRepository
 import org.berlin.logic.search.CombineSearchAlgorithms
 import org.berlin.logic.search.KmpSearch
 import org.berlin.logic.search.LevenshteinSearch
-import org.berlin.logic.search.SearchByName
-import org.berlin.logic.usecase.retrieval.HighCalorieMealsUseCase
 import org.berlin.logic.usecase.retrieval.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.retrieval.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
@@ -25,7 +23,7 @@ val appModule = module {
     single { QuickHealthyMealsUseCase(get()) }
     single { SuggestEggFreeSweetUseCase(get()) }
     single { IdentifyIraqiMealsUseCase(get()) }
-    single { HighCalorieMealsUseCase(get()) }
+    single { SuggestHighCalorieMealsUseCase(get()) }
     single {
         CombineSearchAlgorithms(
             listOf(KmpSearch(),LevenshteinSearch())
