@@ -19,7 +19,7 @@ class FoodChangeMoodUI(
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
     private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,
-    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
+    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,//
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,//
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,//
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,

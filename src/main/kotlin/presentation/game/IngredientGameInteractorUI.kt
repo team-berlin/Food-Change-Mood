@@ -4,10 +4,12 @@ import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.presentation.IngredientGameInteractor
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.UiRunner
+import org.berlin.presentation.input_output.Viewer
 
 class IngredientGameInteractorUI (
     private val ingredientGame: IngredientGameInteractor,
-    private val reader: Reader
+    private val reader: Reader,
+    private val viewer: Viewer
 ) : UiRunner{
     override val id: Int = 11
     override val label: String = "Select the Ingredient Game"
@@ -16,19 +18,21 @@ class IngredientGameInteractorUI (
         try {
             ingredientGame.run()
             while (ingredientGame.isRunning()) {
-                println("Meal Name : ${ingredientGame.getCurrentMealName()}")
-                println("Ingredients : ")
+                viewer.display("Meal Name : ${ingredientGame.getCurrentMealName()}")
+                viewer.display("Ingredients : ")
                 ingredientGame.getCurrentIngredients()
-                    .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
-                print("Choose The Number Of Correct Ingredient : ")
-                ingredientGame.submitUserAnswer(reader.getUserInput()?.toIntOrNull() ?: return)
+                    .forEachIndexed { i, ingredient ->
+                        viewer.display("${i + 1}--> $ingredient") }
+                viewer.display("Choose The Number Of Correct Ingredient : ")
+                ingredientGame.submitUserAnswer(
+                    reader.getUserInput()?.toIntOrNull() ?: return)
                 println()
             }
-            println(ingredientGame.getTurnResult())
+            viewer.display(ingredientGame.getTurnResult())
         } catch (e: InvalidInputForIngredientGameException) {
-            println(e.message)
+            viewer.display("${e.message}")
         } catch (e: Exception) {
-            println(e.message)
+            viewer.display("${e.message}")
         }
     }
 }
