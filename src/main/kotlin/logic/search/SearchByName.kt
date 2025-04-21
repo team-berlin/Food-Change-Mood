@@ -1,4 +1,4 @@
-package org.berlin.logic
+package org.berlin.logic.search
 
 interface SearchByName {
     fun search(textToSearchIn: String,
