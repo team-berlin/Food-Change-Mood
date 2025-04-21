@@ -1,12 +1,12 @@
 package org.berlin.logic.usecase.search
 
+import org.berlin.logic.search.CombineSearchAlgorithms
 import org.berlin.logic.repository.MealsRepository
-import org.berlin.logic.SearchByName
 import org.berlin.model.Meal
 
 class SearchMealsByNameUseCase(
     private val mealsRepository: MealsRepository,
-    private val searchByName: SearchByName
+    private val searchByName: CombineSearchAlgorithms
 ) {
     fun searchMealsByName(inputMealName: String): List<Meal> {
         val lowercaseInput=inputMealName.lowercase()

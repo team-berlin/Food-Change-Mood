@@ -24,7 +24,7 @@ class FoodChangeMoodUI(
     private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,//
-    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
+    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,//
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
@@ -134,26 +134,7 @@ class FoodChangeMoodUI(
     }
 
     private fun launchSearchMealsByName() {
-        println("=== Search Meals by Name ===\n")
-        print("Type the name or part of the meal you're looking for: ")
 
-        val searchWord = readlnOrNull()?.trim().orEmpty()
-
-        if (searchWord.isBlank()) {
-            println("You didn't type anything. Please enter a word to search")
-            return
-        }
-
-        val meals = searchMealsByNameUseCase.searchMealsByName(searchWord)
-
-        if (meals.isEmpty()) {
-            println("No meals found for \"$searchWord\".")
-        } else {
-            println("Found ${meals.size} result(s) for \"$searchWord\":\n")
-            meals.forEachIndexed { index, meal ->
-                println("${index + 1}. ${removeAllSpaces(meal.name)}")
-            }
-        }
     }
 
     private fun launchQuickHealthyMeals() {
