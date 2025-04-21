@@ -1,4 +1,4 @@
-package org.berlin.logic.game
+package org.berlin.logic.usecase.search
 
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.GymHelperInput
