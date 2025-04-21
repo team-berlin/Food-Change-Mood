@@ -2,10 +2,12 @@ package org.berlin.presentation.retrieval
 
 import org.berlin.logic.usecase.suggest.SuggestItalianFoodForLargeGroupUseCase
 import org.berlin.presentation.UiRunner
+import org.berlin.presentation.input_output.Viewer
 
 class SuggestItalianFoodForLargeGroupUI (
     private val suggestItalianFoodForLargeGroupUseCase:
-    SuggestItalianFoodForLargeGroupUseCase
+    SuggestItalianFoodForLargeGroupUseCase,
+    private val viewer: Viewer
 ) : UiRunner {
     override val id: Int = 15
     override val label: String = "Get Italian Meals For Large Group"
@@ -13,7 +15,7 @@ class SuggestItalianFoodForLargeGroupUI (
         val meals = suggestItalianFoodForLargeGroupUseCase
             .suggestItalianMealsForLargeGroup()
         meals.forEach { meal ->
-            println(
+            viewer.display(
                 "- Meal Name: ${meal.name}\n"
             )
         }

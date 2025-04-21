@@ -5,10 +5,12 @@ import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
 import org.berlin.model.Meal
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.input_output.Reader
+import org.berlin.presentation.input_output.Viewer
 
 class SearchMealsByDateUI(
     private val searchMealsByDateUseCase: SearchMealsByDateUseCase,
-    private val reader: Reader
+    private val reader: Reader,
+    private val viewer: Viewer
 ): UiRunner {
 
     override val id: Int = 8
@@ -16,31 +18,31 @@ class SearchMealsByDateUI(
 
     //TODO separated function to get meal by id and by date
     override fun run() {
-        println("\n=== Search Meals by Date ===")
-        println("Please enter a date in the format YYYY-MM-DD:")
+        viewer.display("\n=== Search Meals by Date ===")
+        viewer.display("Please enter a date in the format YYYY-MM-DD:")
         val dateInput = reader.getUserInput()
 
         if (dateInput.isNullOrBlank()) {
-            println("Error: Date cannot be empty.")
+            viewer.display("Error: Date cannot be empty.")
             return
         }
 
         try {
             val date = LocalDate.parse(dateInput)
-            println("Successfully parsed date: $date")
+            viewer.display("Successfully parsed date: $date")
 
-            println("Fetching meals...")
+            viewer.display("Fetching meals...")
             val meals = searchMealsByDateUseCase.searchMealsByDate(date)
 
             if (meals.isEmpty()) {
-                println("No meals found for date: $date")
+                viewer.display("No meals found for date: $date")
             } else {
-                println("\nFound ${meals.size} meals added on $date:")
+                viewer.display("\nFound ${meals.size} meals added on $date:")
                 meals.forEach { meal ->
-                    println("ID: ${meal.id}, Name: ${meal.name}")
+                    viewer.display("ID: ${meal.id}, Name: ${meal.name}")
                 }
 
-                println("\nWould you like to see details of a specific meal? (Enter meal ID or 'no'):")
+                viewer.display("\nWould you like to see details of a specific meal? (Enter meal ID or 'no'):")
                 val mealIdInput = reader.getUserInput()
 
                 if (mealIdInput?.lowercase() != "no") {
@@ -51,15 +53,15 @@ class SearchMealsByDateUI(
                         if (selectedMeal != null) {
                             showMealDetails(selectedMeal)
                         } else {
-                            println("Meal with ID $mealId not found in the results.")
+                            viewer.display("Meal with ID $mealId not found in the results.")
                         }
-                    } catch (e: NumberFormatException) {
-                        println("Invalid meal ID format.")
+                    } catch (_: NumberFormatException) {
+                        viewer.display("Invalid meal ID format.")
                     }
                 }
             }
         } catch (e: Exception) {
-            println("Error: ${e.javaClass.simpleName} - ${e.message}")
+            viewer.display("Error: ${e.javaClass.simpleName} - ${e.message}")
         }
     }
 
