@@ -413,7 +413,7 @@ class FoodChangeMoodUI(
         println("9 - Use gym helper to search for meals by calories and proteins ")
         println("10 - Explore food culture by country")
         println("11 - Select the Ingredient Game")
-        println("12- Get names of 10 meals that contains potatoes in its ingredients")
+        println("12 - Get names of 10 meals that contains potatoes in its ingredients")
         println("13 - Do you want a suggestion for a meal with more than 700 calories")
         println("14 - Get a list of all seafood meals")
         println("15 - Get Italian Meals For Large Group")
