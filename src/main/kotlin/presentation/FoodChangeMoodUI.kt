@@ -1,32 +1,36 @@
 package org.berlin.presentation
 
 import kotlinx.datetime.LocalDate
-import org.berlin.logic.usecase.SearchMealsByDateUseCase
-import logic.usecase.GetSeafoodMealsUseCase
-import org.berlin.logic.usecase.GymHelperUseCase
+import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
+import org.berlin.logic.game.GymHelperUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
-import org.berlin.logic.usecase.GetMealsContainsPotatoUseCase
-import org.berlin.logic.usecase.GuessPreparationTimeGameUseCase
-import org.berlin.logic.usecase.*
+import logic.usecase.game.GuessPreparationTimeGameUseCase
+import org.berlin.logic.usecase.retrieval.*
+import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
+import org.berlin.logic.usecase.suggest.SuggestEasyFoodUseCase
+import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
+import org.berlin.logic.usecase.suggest.SuggestItalianFoodForLargeGroupUseCase
+import org.berlin.logic.usecase.suggest.SuggestKetoMealUseCase
 import org.berlin.model.CaloriesAndProteinTolerance
 import org.berlin.model.GymHelperInput
 import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
-    private val ingredientGame: IngredientGameInteractor,
+    private val ingredientGame: IngredientGameInteractor,//
     private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
-    private val easyFoodSuggestionRepository: EasyFoodSuggestionUseCase,
+    private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
-    private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,
+    private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,//
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
     private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
     private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
-    private val searchMealsByDateUseCase: SearchMealsByDateUseCase,
+    private val searchMealsByDateUseCase: SearchMealsByDateUseCase,//
     private val gymHelperUseCase: GymHelperUseCase
 ) {
     fun start() {
@@ -244,7 +248,6 @@ class FoodChangeMoodUI(
     }
 
     private fun showMealDetails(meal: Meal) {
-        println("\n--- Sweet Details ---")
         println("Name: ${meal.name}")
         println("Description: ${meal.description ?: "No description provided."}")
         println("Preparation Time (minutes): ${meal.minutes}")
@@ -333,7 +336,7 @@ class FoodChangeMoodUI(
                 ingredientGame.getCurrentIngredients()
                     .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
                 print("Choose The Number Of Correct Ingredient : ")
-                ingredientGame.submitAnswer(getUserInput() ?: return)
+                ingredientGame.submitUserAnswer(getUserInput() ?: return)
                 println()
             }
             println(ingredientGame.getTurnResult())
@@ -407,9 +410,9 @@ class FoodChangeMoodUI(
         println("6 - Suggest Egg FreeSweet")
         println("7 - Get friendly keto meal suggestion")
         println("8 - Search Foods by Add Date")
-        println("9- Use gym helper to search for meals by calories and proteins ")
+        println("9 - Use gym helper to search for meals by calories and proteins ")
         println("10 - Explore food culture by country")
-        println("11 - Ingredient Game")
+        println("11 - Select the Ingredient Game")
         println("12- Get names of 10 meals that contains potatoes in its ingredients")
         println("13 - Do you want a suggestion for a meal with more than 700 calories")
         println("14 - Get a list of all seafood meals")

@@ -1,28 +1,47 @@
 package dependency_injection
+
 import data.CsvFileReader
 import data.CsvMealsRepository
 import data.MealsCsvParser
-import org.berlin.logic.MealsRepository
-import org.berlin.logic.search.SearchAlgorithm
-import org.berlin.logic.search.SearchByName
-import org.berlin.logic.usecase.IdentifyIraqiMealsUseCase
-import org.berlin.logic.usecase.QuickHealthyMealsUseCase
-import org.berlin.logic.usecase.SuggestEggFreeSweetUseCase
+import org.berlin.logic.repository.MealsRepository
+import org.berlin.logic.KmpSearchAlgorithm
+import org.berlin.logic.SearchByName
+import org.berlin.logic.usecase.retrieval.HighCalorieMealsUseCase
+import org.berlin.logic.usecase.retrieval.IdentifyIraqiMealsUseCase
+import org.berlin.logic.usecase.retrieval.QuickHealthyMealsUseCase
+import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
 import org.berlin.presentation.FoodChangeMoodUI
-import org.berlin.logic.usecase.HighCalorieMealsUseCase
 import org.koin.dsl.module
 import java.io.File
 
 val appModule = module {
-        single { File("D:\\the chance\\food.csv") }
-        single { CsvFileReader(get()) }
-        single { MealsCsvParser() }
-        single<MealsRepository> { CsvMealsRepository(get(), get()) }
-        single { QuickHealthyMealsUseCase(get()) }
-        single { SuggestEggFreeSweetUseCase(get()) }
-        single { IdentifyIraqiMealsUseCase(get()) }
-        single { HighCalorieMealsUseCase(get()) }
-        single<SearchByName> { SearchAlgorithm() }
-        single { FoodChangeMoodUI(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get() , get()) }
+    single { File("D:\\the chance\\food.csv") }
+    single { CsvFileReader(get()) }
+    single { MealsCsvParser() }
+    single<MealsRepository> { CsvMealsRepository(get(), get()) }
+    single { QuickHealthyMealsUseCase(get()) }
+    single { SuggestEggFreeSweetUseCase(get()) }
+    single { IdentifyIraqiMealsUseCase(get()) }
+    single { HighCalorieMealsUseCase(get()) }
+    single<SearchByName> { KmpSearchAlgorithm() }
+    single {
+        FoodChangeMoodUI(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
 
 }
