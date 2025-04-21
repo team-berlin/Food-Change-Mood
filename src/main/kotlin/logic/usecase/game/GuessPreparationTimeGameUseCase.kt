@@ -8,7 +8,6 @@ class GuessPreparationTimeGameUseCase(
 ) {
     fun getRandomMeal(): Meal {
         return mealsRepository.getAllMeals()
-            .shuffled()
-            .first()
+            .random()
         }
 }

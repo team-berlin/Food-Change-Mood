@@ -8,15 +8,12 @@ import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
 import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
-import org.berlin.logic.usecase.suggest.SuggestEasyFoodUseCase
-import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
-import org.berlin.logic.usecase.suggest.SuggestItalianFoodForLargeGroupUseCase
-import org.berlin.logic.usecase.suggest.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.suggest.*
 import org.berlin.presentation.IngredientGameInteractor
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single { HighCalorieMealsUseCase(get()) }
+    single { SuggestHighCalorieMealsUseCase(get()) }
     single {
         SearchMealsByNameUseCase(
             get(), get()

@@ -7,10 +7,12 @@ import org.berlin.logic.repository.MealsRepository
 import org.berlin.logic.search.CombineSearchAlgorithms
 import org.berlin.logic.search.KmpSearch
 import org.berlin.logic.search.LevenshteinSearch
+import org.berlin.logic.search.SearchByName
 import org.berlin.logic.usecase.retrieval.HighCalorieMealsUseCase
 import org.berlin.logic.usecase.retrieval.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.retrieval.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
+import org.berlin.logic.usecase.suggest.SuggestHighCalorieMealsUseCase
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
