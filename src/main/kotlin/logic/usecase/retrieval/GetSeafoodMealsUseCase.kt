@@ -1,6 +1,6 @@
-package logic.usecase
+package org.berlin.logic.usecase.retrieval
 
-import org.berlin.logic.MealsRepository
+import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 import org.berlin.model.SeafoodMeal
 

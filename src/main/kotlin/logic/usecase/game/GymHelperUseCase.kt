@@ -1,6 +1,6 @@
-package org.berlin.logic.usecase
+package org.berlin.logic.game
 
-import org.berlin.logic.MealsRepository
+import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.GymHelperInput
 import org.berlin.model.Meal
 import kotlin.math.abs

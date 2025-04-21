@@ -1,6 +1,6 @@
 package org.berlin.presentation
 
-import org.berlin.logic.usecase.IngredientGameUseCase
+import logic.usecase.game.IngredientGameUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
@@ -21,17 +21,34 @@ class IngredientGameInteractor(
     }
 
     fun getCurrentIngredients() = meals[currentIndex].threeIngredientOnlyOneCorrect
-    fun submitAnswer(answer: Int) {
-        val meal = meals[currentIndex]
-        if (answer !in 1..3) throw InvalidInputForIngredientGameException("Invalid Input Ingredient Only 3")
-        val ingredientAnswer = getCurrentIngredients()[answer - 1]
+
+    fun submitUserAnswer(answer: Int) {
+        validateUserAnswer(answer)
+        val ingredientAnswer = fetchIngredientAnswer(answer)
+        updateState(ingredientAnswer, meals[currentIndex])
+    }
+
+    private fun validateUserAnswer(answer: Int) {
+        if (answer !in MIN_ANSWER..MAX_ANSWER) {
+            throw InvalidInputForIngredientGameException("Invalid Input: Only $MIN_ANSWER to $MAX_ANSWER are allowed.")
+        }
+    }
+
+    private fun fetchIngredientAnswer(answer: Int): String {
+        return getCurrentIngredients()[answer - ANSWER_OFFSET]
+    }
+
+    private fun updateState(ingredientAnswer: String,
+                                       meal: MealForIngredientGame) {
         if (ingredientAnswer == meal.correctIngredient) {
             score += QUESTION_SCORE
             currentIndex++
             if (score == MAX_SCORE) state = GameState.WON
-        } else state = GameState.LOST
-
+        } else {
+            state = GameState.LOST
+        }
     }
+
 
     fun getTurnResult(): String {
         return when (state) {
@@ -54,9 +71,12 @@ class IngredientGameInteractor(
     fun getCurrentMealName() = meals[currentIndex].mealName
 
     private companion object {
-        private const val MAX_QUESTIONS = 15
-        private const val QUESTION_SCORE = 1000
-        private const val MAX_SCORE = MAX_QUESTIONS * QUESTION_SCORE
+        const val MIN_ANSWER = 1
+        const val MAX_ANSWER = 3
+        const val ANSWER_OFFSET = 1
+        const val MAX_QUESTIONS = 15
+        const val QUESTION_SCORE = 1000
+        const val MAX_SCORE = MAX_QUESTIONS * QUESTION_SCORE
     }
 
 }

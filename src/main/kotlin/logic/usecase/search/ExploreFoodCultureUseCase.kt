@@ -1,6 +1,6 @@
-package org.berlin.logic.usecase
+package org.berlin.logic.usecase.search
 
-import org.berlin.logic.MealsRepository
+import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 
 class ExploreFoodCultureUseCase(

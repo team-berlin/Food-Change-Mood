@@ -1,6 +1,6 @@
-package org.berlin.logic.usecase
+package logic.usecase.game
 
-import org.berlin.logic.MealsRepository
+import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 
 class GuessPreparationTimeGameUseCase(
