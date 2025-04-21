@@ -2,10 +2,10 @@ package org.berlin.dependency_injection
 
 import org.berlin.logic.IngredientGameMealsMapper
 import logic.usecase.game.GuessPreparationTimeGameUseCase
-import org.berlin.logic.game.GymHelperUseCase
 import logic.usecase.game.IngredientGameUseCase
 import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.search.GymHelperUseCase
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
 import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
 import org.berlin.logic.usecase.suggest.*

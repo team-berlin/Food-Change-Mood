@@ -2,11 +2,11 @@ package org.berlin.presentation
 
 import kotlinx.datetime.LocalDate
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
-import org.berlin.logic.game.GymHelperUseCase
 import org.berlin.logic.InvalidInputForIngredientGameException
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.search.GymHelperUseCase
 import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
 import org.berlin.logic.usecase.suggest.*
 import org.berlin.model.CaloriesAndProteinTolerance
