@@ -8,10 +8,7 @@ import logic.usecase.game.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
 import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
-import org.berlin.logic.usecase.suggest.SuggestEasyFoodUseCase
-import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
-import org.berlin.logic.usecase.suggest.SuggestItalianFoodForLargeGroupUseCase
-import org.berlin.logic.usecase.suggest.SuggestKetoMealUseCase
+import org.berlin.logic.usecase.suggest.*
 import org.berlin.model.CaloriesAndProteinTolerance
 import org.berlin.model.GymHelperInput
 import org.berlin.model.Meal
@@ -28,7 +25,7 @@ class FoodChangeMoodUI(
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
-    private val highCalorieMealsUseCase: HighCalorieMealsUseCase,
+    private val suggestHighCalorieMealsUseCase: SuggestHighCalorieMealsUseCase,
     private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
     private val searchMealsByDateUseCase: SearchMealsByDateUseCase,//
     private val gymHelperUseCase: GymHelperUseCase
@@ -73,7 +70,7 @@ class FoodChangeMoodUI(
     private fun launchHighCalorieMeal() {
         println("\n=== High Calorie Meal Suggestion ===")
 
-        highCalorieMealsUseCase.suggestHighCalorieMeal()
+        suggestHighCalorieMealsUseCase.suggestHighCalorieMeal()
             .fold(
                 onSuccess = { meal ->
                     println("\nSuggested high-calorie meal:")
