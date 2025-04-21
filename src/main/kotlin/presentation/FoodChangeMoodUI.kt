@@ -21,7 +21,7 @@ class FoodChangeMoodUI(
     private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,//
-    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
+    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,//
     private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
@@ -148,9 +148,10 @@ class FoodChangeMoodUI(
         } else {
             println("Found ${meals.size} result(s) for \"$searchWord\":\n")
             meals.forEachIndexed { index, meal ->
-                println("${index + 1}. ${removeAllSpaces(meal.name)}")
+                println("${index + 1}. ${meal.name}")
             }
         }
+
     }
 
     private fun launchQuickHealthyMeals() {
