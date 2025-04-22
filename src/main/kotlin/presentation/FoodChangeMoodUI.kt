@@ -26,7 +26,7 @@ class FoodChangeMoodUI(
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
     private val suggestHighCalorieMealsUseCase: SuggestHighCalorieMealsUseCase,
-    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,
+    private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,//
     private val searchMealsByDateUseCase: SearchMealsByDateUseCase,//
     private val gymHelperUseCase: GymHelperUseCase
 ) {
