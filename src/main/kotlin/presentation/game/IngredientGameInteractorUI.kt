@@ -40,9 +40,9 @@ class IngredientGameInteractorUI (
     private fun getMatchedUserInput():Int{
         viewer.display("Choose The Number Of Correct Ingredient or 0 To Exit(Ingredient Game) : ")
         val input:Int=reader.getUserInput()?.toIntOrNull()?:getMatchedUserInput()
-        if (input !in EXIT_OPTION..MAX_CHOICE)getMatchedUserInput()
+        if (input in EXIT_OPTION..MAX_CHOICE)return input
 
-        return input
+        return getMatchedUserInput()
 
     }
 
