@@ -2,17 +2,18 @@ package org.berlin
 
 import dependency_injection.appModule
 import org.berlin.dependency_injection.useCaseModule
-import org.berlin.presentation.FoodChangeMoodUI
+import org.berlin.presentation.MainMenuUI
 import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform.getKoin
+import uiModule
 
 fun main() {
 
     startKoin{
-        modules(appModule, useCaseModule)
+        modules(appModule, useCaseModule, uiModule)
     }
 
-    val ui: FoodChangeMoodUI = getKoin().get()
-    ui.start()
+    val ui: MainMenuUI = getKoin().get()
+    ui.run()
 }
 
