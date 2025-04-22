@@ -7,11 +7,12 @@ import org.berlin.presentation.input_output.Viewer
 
 class SearchMealsByNameUI(
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
-    private val reader:Reader,
-    private val viewer: Viewer
-): UiRunner {
+    private val reader: Reader,
+    private val viewer: Viewer,
+
+    ) : UiRunner {
     override val id: Int = 2
-    override val label: String="Search meals by name"
+    override val label: String = "Search meals by name"
     override fun run() {
         viewer.display("=== Search Meals by Name ===\n")
         viewer.display("Type the name or part of the meal you're looking for: ")
@@ -31,8 +32,8 @@ class SearchMealsByNameUI(
             viewer.display("No meals found for \"$searchWord\".")
         } else {
             viewer.display("Found ${meals.size} result(s) for \"$searchWord\":\n")
-            meals.forEachIndexed { index, meal ->
-                viewer.display("${index + 1}. ${meal.name}")
+            meals.forEach { meal ->
+                viewer.display(meal.name)
             }
         }
     }
