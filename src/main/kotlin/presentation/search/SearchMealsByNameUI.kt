@@ -7,7 +7,6 @@ import org.berlin.presentation.input_output.Viewer
 
 class SearchMealsByNameUI(
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
-    private val reader: Reader,
     private val viewer: Viewer,
 
     ) : UiRunner {
