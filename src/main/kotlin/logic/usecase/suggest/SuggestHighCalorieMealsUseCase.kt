@@ -23,9 +23,7 @@ class SuggestHighCalorieMealsUseCase(
                 "No meals found with more than $CALORIE_THRESHOLD calories"
             )
 
-
-    companion object {
+    private companion object {
         const val CALORIE_THRESHOLD: Double = 700.0
     }
-
 }

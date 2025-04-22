@@ -37,9 +37,7 @@ class GuessPreparationTimeGameUI(
             }
 
             isCorrect = processGuess(userGuess, correctPreparationTime)
-
             if (isCorrect) break
-
             remainingAttempts--
         }
 
@@ -56,15 +54,14 @@ class GuessPreparationTimeGameUI(
     private fun processGuess(guess: Int, correctTime: Int): Boolean {
         return when {
             guess < correctTime -> {
-                viewer.display("Too low, try again")
+                viewer.display("Low..., try again")
                 false
             }
             guess > correctTime -> {
-                viewer.display("Too high, try again")
+                viewer.display("High..., try again")
                 false
             }
             else -> {
-                viewer.display("Great Job! It takes $correctTime minutes")
                 true
             }
         }
@@ -73,6 +70,8 @@ class GuessPreparationTimeGameUI(
     private fun showFinalResult(isCorrect: Boolean, mealName: String, correctTime: Int) {
         if (!isCorrect) {
             viewer.display("The time it takes to prepare $mealName meal is $correctTime minutes")
+        } else {
+            viewer.display("Great Job! It takes $correctTime minutes")
         }
     }
 

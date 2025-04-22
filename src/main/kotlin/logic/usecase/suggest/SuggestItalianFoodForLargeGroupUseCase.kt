@@ -10,13 +10,13 @@ class SuggestItalianFoodForLargeGroupUseCase(
     fun suggestItalianMealsForLargeGroup(): List<Meal> =
         mealsRepository
             .getAllMeals()
-            .filter(::isItalianFoodForLargeGroup)
+            .filter(::onlyItalianFoodForLargeGroup)
             .takeIf { it.isNotEmpty() }
             ?: throw NoSuchElementException(
                 "No Italian meals found suitable for a large group"
             )
 
-    private fun isItalianFoodForLargeGroup(meal: Meal): Boolean {
+    private fun onlyItalianFoodForLargeGroup(meal: Meal): Boolean {
         return meal.tags.any { tag ->
             tag.equals(ITALIAN_FOOD_TAG, ignoreCase = true)
         } && meal.tags.any { tag ->

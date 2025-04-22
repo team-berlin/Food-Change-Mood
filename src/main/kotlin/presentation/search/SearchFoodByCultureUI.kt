@@ -1,12 +1,12 @@
 package org.berlin.presentation.search
 
-import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
+import org.berlin.logic.usecase.search.SearchFoodByCultureUseCase
 import org.berlin.model.Meal
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.input_output.Viewer
 
-class ExploreFoodCultureUI(
-    private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
+class SearchFoodByCultureUI(
+    private val exploreFoodCultureUseCase: SearchFoodByCultureUseCase,
     private val viewer: Viewer
 ) : UiRunner {
     override val id: Int = 10

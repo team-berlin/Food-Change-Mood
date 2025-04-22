@@ -10,4 +10,3 @@ data class CaloriesAndProteinTolerance(
     val caloriesTolerance: Int,
     val proteinTolerance: Int
 )
-
