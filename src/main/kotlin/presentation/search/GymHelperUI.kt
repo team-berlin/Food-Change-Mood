@@ -1,18 +1,18 @@
 package org.berlin.presentation.search
 
-import Utils.DisplayMeals
 import org.berlin.logic.usecase.search.GymHelperUseCase
 import org.berlin.model.CaloriesAndProteinTolerance
 import org.berlin.model.GymHelperInput
+import org.berlin.model.Meal
 import org.berlin.presentation.UiRunner
-import org.berlin.presentation.common.displayListOfMeals
+import org.berlin.presentation.common.showMealDetails
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
 
-class GymHelperUI (
+class GymHelperUI(
     private val gymHelperUseCase: GymHelperUseCase,
     private val reader: Reader,
-    private val viewer: Viewer ,
+    private val viewer: Viewer,
 ) : UiRunner {
     override val id: Int = 9
     override val label: String = "Use gym helper to search for meals by calories and proteins"
@@ -37,8 +37,7 @@ class GymHelperUI (
                 calories = caloriesInput,
                 protein = proteinInput,
                 caloriesAndProteinTolerance = CaloriesAndProteinTolerance(
-                    caloriesToleranceInput ?: 30,
-                    proteinToleranceInput ?: 10
+                    caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10
                 )
             ),
         )
@@ -50,4 +49,11 @@ class GymHelperUI (
         }
     }
 
+    private fun displayListOfMeals(meals: List<Meal>, viewer: Viewer) {
+        meals.forEach { meal ->
+            println("\n- ${meal.name}")
+            showMealDetails(meal, viewer)
+        }
+        println("\nTotal meals found: ${meals.size}")
+    }
 }
