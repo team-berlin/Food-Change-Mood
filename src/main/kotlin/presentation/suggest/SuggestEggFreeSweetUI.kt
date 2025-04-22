@@ -23,20 +23,21 @@ class SuggestEggFreeSweetUI(
             viewer.display("---------------------------")
             viewer.display("Like it? (yes/no/exit)")
             when (reader.getUserInput()?.lowercase()) {
-                "yes" -> showSweetDetails(suggestion)
+                "yes" -> showSweetDetails(suggestion, viewer)
                 "no" -> {
                     viewer.display("Disliked. Getting another suggestion.")
                     run()
                 }
 
-                "exit" -> return // presentFeatures()
+                "exit" -> return
                 else -> viewer.display("Invalid Input")
             }
         } else {
             println("No more egg-free sweets to suggest :( ")
         }
     }
-    private fun showSweetDetails(meal: Meal) {
+
+    private fun showSweetDetails(meal: Meal, viewer: Viewer) {
         viewer.display("\n--- Sweet Details ---")
         viewer.display("Name: ${meal.name}")
         viewer.display("Description: ${meal.description}")
@@ -48,4 +49,5 @@ class SuggestEggFreeSweetUI(
             }
         }
     }
+
 }
