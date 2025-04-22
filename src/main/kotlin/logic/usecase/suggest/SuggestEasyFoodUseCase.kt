@@ -1,6 +1,6 @@
 package org.berlin.logic.usecase.suggest
 
-import org.berlin.data.utils.Utils.getRandomItems
+import org.berlin.logic.common.extention.getRandomItems
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 

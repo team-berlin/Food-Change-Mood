@@ -10,7 +10,6 @@ import org.berlin.logic.search.LevenshteinSearch
 import org.berlin.logic.usecase.retrieval.IdentifyIraqiMealsUseCase
 import org.berlin.logic.usecase.retrieval.QuickHealthyMealsUseCase
 import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
-import org.berlin.logic.usecase.suggest.SuggestHighCalorieMealsUseCase
 import org.berlin.presentation.FoodChangeMoodUI
 import org.koin.dsl.module
 import java.io.File
@@ -23,10 +22,9 @@ val appModule = module {
     single { QuickHealthyMealsUseCase(get()) }
     single { SuggestEggFreeSweetUseCase(get()) }
     single { IdentifyIraqiMealsUseCase(get()) }
-    single { SuggestHighCalorieMealsUseCase(get()) }
     single {
         CombineSearchAlgorithms(
-            listOf(KmpSearch(),LevenshteinSearch())
+            listOf(KmpSearch(), LevenshteinSearch())
         )
     }
 

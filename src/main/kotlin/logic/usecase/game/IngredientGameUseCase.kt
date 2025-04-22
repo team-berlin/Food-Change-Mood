@@ -2,6 +2,7 @@ package logic.usecase.game
 
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.logic.IngredientGameMealsMapper
+import org.berlin.logic.common.extention.getRandomItems
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameUseCase(
@@ -16,8 +17,7 @@ class IngredientGameUseCase(
 
         validateMealsMatchMaxQUESTIONS()
         return mealsForGame
-            .shuffled()
-            .take(MAX_QUESTIONS)
+            .getRandomItems(MAX_QUESTIONS)
     }
     private fun validateMealsMatchMaxQUESTIONS(){
         if (mealsForGame.size < MAX_QUESTIONS)

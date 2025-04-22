@@ -2,8 +2,8 @@ package org.berlin.presentation.search
 
 import kotlinx.datetime.LocalDate
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
-import org.berlin.model.Meal
 import org.berlin.presentation.UiRunner
+import org.berlin.presentation.common.showMealDetails
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
 
@@ -51,7 +51,7 @@ class SearchMealsByDateUI(
                         val selectedMeal = meals.find { it.id == mealId }
 
                         if (selectedMeal != null) {
-                            showMealDetails(selectedMeal)
+                            showMealDetails(selectedMeal, viewer)
                         } else {
                             viewer.display("Meal with ID $mealId not found in the results.")
                         }
@@ -64,30 +64,4 @@ class SearchMealsByDateUI(
             viewer.display("Error: ${e.javaClass.simpleName} - ${e.message}")
         }
     }
-
-    private fun showMealDetails(meal: Meal) {
-        println("Name: ${meal.name}")
-        println("Description: ${meal.description ?: "No description provided."}")
-        println("Preparation Time (minutes): ${meal.minutes}")
-        println("Tags: ${meal.tags.joinToString(", ")}")
-
-        with(meal.nutrition) {
-            println("Nutrition:")
-            println("  Calories: $calories kcal")
-            println("  Total Fat: $totalFat g")
-            println("  Saturated Fat: $saturatedFat g")
-            println("  Carbohydrates: $carbohydrates g")
-            println("  Sugar: $sugar g")
-            println("  Protein: $protein g")
-            println("  Sodium: $sodium mg")
-        }
-
-        println("Steps:")
-        meal.steps.forEachIndexed { index, step ->
-            println("  ${index + 1}. $step")
-        }
-
-        println("Ingredients (${meal.nIngredients}): ${meal.ingredients.joinToString(", ")}")
-    }
-
 }

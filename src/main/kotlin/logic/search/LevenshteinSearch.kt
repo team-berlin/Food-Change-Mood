@@ -6,7 +6,7 @@ class LevenshteinSearch : SearchByName {
         evaluateLevenshteinDistance(textToSearchIn, wordToSearchBy) <= calculateLevenshteinThreshold(wordToSearchBy)
 
     private fun evaluateLevenshteinDistance(
-        textToSearchIn: String, wordToSearchBy: String
+        textToSearchIn: String, wordToSearchBy: String,
     ): Int {
         val distanceMatrix = buildDistanceMatrix(textToSearchIn.length, wordToSearchBy.length)
         computeDistances(distanceMatrix, textToSearchIn, wordToSearchBy)
@@ -16,7 +16,7 @@ class LevenshteinSearch : SearchByName {
     private fun computeDistances(
         distanceMatrix: Array<IntArray>,
         textToSearchIn: String,
-        wordToSearchBy: String
+        wordToSearchBy: String,
     ): Array<IntArray> {
         (1..textToSearchIn.length).forEach { textIndex ->
             (1..wordToSearchBy.length).forEach { wordIndex ->
@@ -32,7 +32,7 @@ class LevenshteinSearch : SearchByName {
     }
 
     private fun buildDistanceMatrix(
-        textToBeSearchLength: Int, wordToSearchByLength: Int
+        textToBeSearchLength: Int, wordToSearchByLength: Int,
     ): Array<IntArray> {
         val distanceMatrix = Array(textToBeSearchLength + 1) {
             IntArray(wordToSearchByLength + 1)
