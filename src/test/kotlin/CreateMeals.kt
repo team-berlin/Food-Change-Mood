@@ -23,7 +23,7 @@ fun createMeals(
         totalFat = 10.0,
         sugar = 10.0,
         sodium = 10.0,
-        protein = 10.0,
+        proteinGrams = 10.0,
         saturatedFat = 10.0,
         carbohydrates = 10.0
     ),
