@@ -6,7 +6,7 @@ import org.berlin.presentation.input_output.Viewer
 
 class ExploreFoodCultureUI(
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,
-    private val viewer: Viewer
+   private val viewer: Viewer
 ): UiRunner {
     override val id: Int = 10
     override val label: String = "Explore food culture by country"
