@@ -1,4 +1,4 @@
-package org.berlin.presentation.retrieval
+package org.berlin.presentation.suggest
 
 import org.berlin.logic.usecase.suggest.SuggestEasyFoodUseCase
 import org.berlin.model.Meal
@@ -29,4 +29,3 @@ class SuggestionEasyFoodUI(
         )
     }
 }
-

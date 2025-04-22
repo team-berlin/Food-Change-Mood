@@ -14,20 +14,20 @@ import org.berlin.model.Meal
 
 class FoodChangeMoodUI(
     private val ingredientGame: IngredientGameInteractor,//
-    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,
-    private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
-    private val suggestKetoMealUseCase: SuggestKetoMealUseCase,
-    private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,
+    private val identifyIraqiMealsUseCase: IdentifyIraqiMealsUseCase,//
+    private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,//
+    private val suggestKetoMealUseCase: SuggestKetoMealUseCase,//
+    private val easyFoodSuggestionRepository: SuggestEasyFoodUseCase,//
     private val exploreFoodCultureUseCase: ExploreFoodCultureUseCase,//
     private val suggestItalianFoodForLargeGroupUseCase: SuggestItalianFoodForLargeGroupUseCase,//
     private val searchMealsByNameUseCase: SearchMealsByNameUseCase,//
-    private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,
-    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
-    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
-    private val suggestHighCalorieMealsUseCase: SuggestHighCalorieMealsUseCase,
+    private val getMealsContainsPotatoUseCase: GetMealsContainsPotatoUseCase,//
+    private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,//
+    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,//
+    private val suggestHighCalorieMealsUseCase: SuggestHighCalorieMealsUseCase,//
     private val getSeafoodMealsUseCase: GetSeafoodMealsUseCase,//
     private val searchMealsByDateUseCase: SearchMealsByDateUseCase,//
-    private val gymHelperUseCase: GymHelperUseCase
+    private val gymHelperUseCase: GymHelperUseCase //
 ) {
     fun start() {
         showWelcome()
@@ -51,7 +51,6 @@ class FoodChangeMoodUI(
             "10" -> launchExploreFoodCulture()
             "11" -> launchIngredientGameUseCase()
             "12" -> launchRandomPotatoesMeals()
-            "13" -> launchHighCalorieMeal()
             "14" -> launchSeafoodMealsUseCase()
             "15" -> launchGetItalianMealsForLargeGroup()
             else -> println("Invalid Input")
@@ -65,21 +64,7 @@ class FoodChangeMoodUI(
             println("${index + 1} ,Name:${seafoodMeal.name}, has protein value:${seafoodMeal.protein}")
         }
     }
-
-    private fun launchHighCalorieMeal() {
-        println("\n=== High Calorie Meal Suggestion ===")
-
-        suggestHighCalorieMealsUseCase.suggestHighCalorieMeal()
-            .fold(
-                onSuccess = { meal ->
-                    println("\nSuggested high-calorie meal:")
-                    displayMeal(meal)
-                },
-                onFailure = { error ->
-                    println("Error: ${error.message}")
-                }
-            )
-    }
+    
 
     private fun launchSearchMealsByDate() {
         println("\n=== Search Meals by Date ===")
@@ -163,7 +148,7 @@ class FoodChangeMoodUI(
             return
         }
 
-        displayMeals(meals)
+        
     }
 
     private fun launchExploreFoodCulture() {
@@ -342,21 +327,7 @@ class FoodChangeMoodUI(
         }
     }
 
-    private fun displayMeal(meal: Meal) {
-        println(meal.name)
-        println("    Preparation Time: ${meal.minutes} minutes")
-        println("    Tags: ${meal.tags.joinToString(", ")}")
-        println("    Nutrition:")
-        println("      - Calories: ${meal.nutrition.calories}")
-        println("      - Protein: ${meal.nutrition.protein}g")
-        println("      - Total Fat: ${meal.nutrition.totalFat}g")
-        println("      - Saturated Fat: ${meal.nutrition.saturatedFat}g")
-        println("      - Carbohydrates: ${meal.nutrition.carbohydrates}g")
-        println("      - Sugar: ${meal.nutrition.sugar}g")
-        println("      - Sodium: ${meal.nutrition.sodium}mg")
-        println("    Ingredients: ${meal.nIngredients}")
-        println("    Steps: ${meal.nSteps}")
-    }
+
 
     private fun launchGymHelper() {
         println("Please enter the number of calories:")
@@ -384,11 +355,7 @@ class FoodChangeMoodUI(
             ),
         )
 
-        if (meals.isEmpty()) {
-            println("No meals found matching meals.")
-        } else {
-            displayMeals(meals)
-        }
+
     }
 
     private fun showWelcome() {
@@ -445,9 +412,6 @@ class FoodChangeMoodUI(
         }
     }
 
-    private fun removeAllSpaces(input: String): String {
-        return input.replace(ALL_SPACES_VALUE, " ")
-    }
 
     private fun launchGetItalianMealsForLargeGroup() {
 
@@ -456,23 +420,14 @@ class FoodChangeMoodUI(
         meals.forEachIndexed { index, meal ->
             println(
                 "${index + 1}. Meal Name: " +
-                        "${removeAllSpaces(meal.name)}\n"
+                        "${meal.name}\n"
             )
         }
     }
 
-    private fun displayMeals(meals: List<Meal>) {
-        meals.forEachIndexed { index, meal ->
-            println("\n[${index + 1}] ${meal.name}")
-            displayMeal(meal)
-        }
 
-        println("\nTotal meals found: ${meals.size}")
-    }
 
-    private companion object {
-        val ALL_SPACES_VALUE = "\\s+".toRegex()
-    }
+
 
     private fun launchRandomPotatoesMeals() {
         getMealsContainsPotatoUseCase.getMealsContainsPotato().forEach { println(it) }

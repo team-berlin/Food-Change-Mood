@@ -18,6 +18,8 @@ fun showMealDetails(meal: Meal, viewer: Viewer) {
         viewer.display("  Sugar: $sugar g")
         viewer.display("  Protein: $protein g")
         viewer.display("  Sodium: $sodium mg")
+        viewer.display("  Ingredients: ${meal.nIngredients}")
+        viewer.display("  Steps: ${meal.nSteps}")
     }
 
     viewer.display("Steps:")

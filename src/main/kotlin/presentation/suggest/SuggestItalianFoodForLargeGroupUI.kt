@@ -1,4 +1,4 @@
-package org.berlin.presentation.retrieval
+package org.berlin.presentation.suggest
 
 import org.berlin.logic.usecase.suggest.SuggestItalianFoodForLargeGroupUseCase
 import org.berlin.presentation.UiRunner
