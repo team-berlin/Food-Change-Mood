@@ -13,7 +13,7 @@ class SuggestKetoMealUI(
 ): UiRunner {
 
     override val id: Int = 7
-    override val label: String = "7 - Get friendly keto meal suggestion"
+    override val label: String = "Get friendly keto meal suggestion"
 
     override fun run() {
         val shuffledMeals = suggestKetoMealUseCase.suggestKetoMeal()
