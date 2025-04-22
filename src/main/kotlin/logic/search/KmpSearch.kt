@@ -14,7 +14,7 @@ class KmpSearch : SearchByName {
         else -> searchWordInText(textToSearchIn, wordToSearchBy)
     }
 
-    fun searchWordInText(textToSearchIn: String, wordToSearchBy: String): Boolean {
+    private fun searchWordInText(textToSearchIn: String, wordToSearchBy: String): Boolean {
         val lps = computeLPSArray(wordToSearchBy)
 
         return generateSequence(Pair(0, 0)) { (textIndex, wordIndex) ->
