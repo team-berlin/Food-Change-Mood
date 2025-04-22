@@ -3,6 +3,9 @@ package org.berlin.dependency_injection
 import org.berlin.logic.IngredientGameMealsMapper
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import logic.usecase.game.IngredientGameUseCase
+import org.berlin.logic.search.CombineSearchAlgorithms
+import org.berlin.logic.search.KmpSearch
+import org.berlin.logic.search.LevenshteinSearch
 import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
 import org.berlin.logic.usecase.search.GymHelperUseCase
@@ -14,11 +17,7 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single { SuggestHighCalorieMealsUseCase(get()) }
-    single {
-        SearchMealsByNameUseCase(
-            get(), get()
-        )
-    }
+    single { SearchMealsByNameUseCase(get(), get()) }
     single { ExploreFoodCultureUseCase(get()) }
     single { SuggestKetoMealUseCase(get()) }
     single { SuggestEasyFoodUseCase(get()) }
@@ -34,4 +33,10 @@ val useCaseModule = module {
     single { GetSeafoodMealsUseCase(get()) }
     single { SearchMealsByDateUseCase(get()) }
     single { GymHelperUseCase(get()) }
+
+    single {
+        CombineSearchAlgorithms(
+            listOf(KmpSearch(), LevenshteinSearch())
+        )
+    }
 }
