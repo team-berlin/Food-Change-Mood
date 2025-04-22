@@ -91,7 +91,10 @@ class SuggestEasyFoodUseCaseTest {
             createMeals(6, "random easy meal", 20, 1, 1),
             createMeals(7, "random easy meal", 10, 5, 4),
             createMeals(5, "random easy meal", 15, 3, 2),
-            createMeals(9, "random easy meal", 30, 5, 5)
+            createMeals(9, "random easy meal", 30, 5, 5),
+            createMeals(10, "random easy meal", 30, 5, 5),
+            createMeals(11, "random easy meal", 30, 5, 5),
+
         )
 
         //when
