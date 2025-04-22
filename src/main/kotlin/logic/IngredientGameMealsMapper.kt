@@ -5,34 +5,62 @@ import org.berlin.model.MealForIngredientGame
 
 class IngredientGameMealsMapper {
     fun map(meals: List<Meal>): List<MealForIngredientGame> {
-
-        if (meals.isEmpty()) throw Exception("list of meals is empty")
-
-        val allMealsIngredients = meals.flatMap { meal -> meal.ingredients }.toSet().toList()
-
+        validateEmptyMeals(meals)
+        val allMealsIngredients = getAllMealsIngredients(meals)
         return meals.map { currentFullMeal ->
-            if (currentFullMeal.nIngredients < 1)
-                throw Exception("there is invalid meal ingredient")
-            val correctIngredientIndex = (0 until currentFullMeal.nIngredients).random()
-            val correctIngredient = currentFullMeal.ingredients[correctIngredientIndex]
-            val currentIngredientSet = currentFullMeal.ingredients.toSet()
-
-
-            val wrongIngredients = mutableSetOf<String>()
-            while (wrongIngredients.size < 2) {
-                val randomIngredient = allMealsIngredients.random()
-                if (randomIngredient !in currentIngredientSet) {
-                    wrongIngredients.add(randomIngredient)
-                }
-            }
-
-            val options = (wrongIngredients + correctIngredient).shuffled()
-
+            validateEmptyIngredients(currentFullMeal)
+            val correctIngredient = getRandomIngredient(currentFullMeal)
+            val wrongIngredients = getTwoWrongIngredient(allMealsIngredients, currentFullMeal)
             MealForIngredientGame(
                 mealName = currentFullMeal.name,
                 correctIngredient = correctIngredient,
-                threeIngredientOnlyOneCorrect = options
+                threeIngredientOnlyOneCorrect = (wrongIngredients + correctIngredient).shuffled()
             )
         }
     }
+
+    private fun validateEmptyMeals(meals: List<Meal>) {
+        if (meals.isEmpty()) throw Exception("list of meals is empty")
+    }
+
+    private fun getAllMealsIngredients(meals: List<Meal>): List<String> {
+        validateEmptyMeals(meals)
+        return meals.flatMap { meal ->
+            validateEmptyIngredients(meal)
+            meal.ingredients
+        }.toSet().toList()
+    }
+
+    private fun validateEmptyIngredients(meal: Meal) {
+        if (meal.nIngredients < 1)
+            throw Exception("there is invalid meal ingredients")
+    }
+
+    private fun getRandomIngredient(meal: Meal): String {
+        validateEmptyIngredients(meal)
+        return meal.ingredients.random()
+    }
+
+    private fun getTwoWrongIngredient(
+        allMealsIngredients: List<String>,
+        meal: Meal
+    ): List<String> {
+        validateEmptyIngredients(meal)
+
+        val wrongIngredients = mutableSetOf<String>()
+        var counter = 0
+        while (wrongIngredients.size < 2 && counter < 500) {
+            val randomIngredient = allMealsIngredients.random()
+            if (randomIngredient !in meal.ingredients) {
+                wrongIngredients.add(randomIngredient)
+            }
+            counter++
+        }
+        if (wrongIngredients.size < 2)
+            throw Exception("failed to find two wrong ingredients after 500 attempts")
+
+        return wrongIngredients.toList()
+
+    }
+
 }

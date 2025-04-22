@@ -2,7 +2,6 @@ package org.berlin.presentation
 
 import kotlinx.datetime.LocalDate
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
-import org.berlin.logic.InvalidInputForIngredientGameException
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import org.berlin.logic.usecase.retrieval.*
 import org.berlin.logic.usecase.search.ExploreFoodCultureUseCase
@@ -329,17 +328,15 @@ class FoodChangeMoodUI(
         try {
             ingredientGame.run()
             while (ingredientGame.isRunning()) {
-                println("Meal Name : ${ingredientGame.getCurrentMealName()}")
+                println("Meal Name : ${ingredientGame.getCurrentMeal().mealName}")
                 println("Ingredients : ")
-                ingredientGame.getCurrentIngredients()
+                ingredientGame.getCurrentMeal().threeIngredientOnlyOneCorrect
                     .forEachIndexed { i, ingredient -> println("${i + 1}--> $ingredient") }
                 print("Choose The Number Of Correct Ingredient : ")
                 ingredientGame.submitUserAnswer(getUserInput() ?: return)
                 println()
             }
-            println(ingredientGame.getTurnResult())
-        } catch (e: InvalidInputForIngredientGameException) {
-            println(e.message)
+            println(ingredientGame.getScore())
         } catch (e: Exception) {
             println(e.message)
         }
