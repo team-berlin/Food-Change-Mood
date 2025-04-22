@@ -1,13 +1,13 @@
 package org.berlin.presentation
 
 import logic.usecase.game.IngredientGameUseCase
-import org.berlin.logic.InvalidInputForIngredientGameException
 import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameInteractor(
     private val ingredientGame: IngredientGameUseCase
 ) {
+
     private var meals: List<MealForIngredientGame> = emptyList()
     private var currentIndex = 0
     private var score = 0
@@ -15,31 +15,36 @@ class IngredientGameInteractor(
 
     fun run() {
         meals = ingredientGame.getFifteenMeals()
+        validateMealsSize()
         currentIndex = 0
         score = 0
         state = GameState.RUNNING
     }
-
-    fun getCurrentIngredients() = meals[currentIndex].threeIngredientOnlyOneCorrect
-
+    fun isRunning(): Boolean {
+        return state == GameState.RUNNING
+    }
+    fun getCurrentMeal() = meals[currentIndex]
     fun submitUserAnswer(answer: Int) {
         validateUserAnswer(answer)
-        val ingredientAnswer = fetchIngredientAnswer(answer)
-        updateState(ingredientAnswer, meals[currentIndex])
+        updateState(fetchIngredientAnswerChosen(answer), meals[currentIndex])
     }
+    fun getScore() = score
 
     private fun validateUserAnswer(answer: Int) {
         if (answer !in MIN_ANSWER..MAX_ANSWER) {
-            throw InvalidInputForIngredientGameException("Invalid Input: Only $MIN_ANSWER to $MAX_ANSWER are allowed.")
+            throw Exception("Invalid Input: Only $MIN_ANSWER to $MAX_ANSWER are allowed.")
         }
     }
 
-    private fun fetchIngredientAnswer(answer: Int): String {
-        return getCurrentIngredients()[answer - ANSWER_OFFSET]
+    private fun fetchIngredientAnswerChosen(answer: Int): String {
+        return getCurrentMeal()
+            .threeIngredientOnlyOneCorrect[answer - INPUT_COMPERED_INDEX]
     }
 
-    private fun updateState(ingredientAnswer: String,
-                                       meal: MealForIngredientGame) {
+    private fun updateState(
+        ingredientAnswer: String,
+        meal: MealForIngredientGame
+    ) {
         if (ingredientAnswer == meal.correctIngredient) {
             score += QUESTION_SCORE
             currentIndex++
@@ -49,31 +54,15 @@ class IngredientGameInteractor(
         }
     }
 
-
-    fun getTurnResult(): String {
-        return when (state) {
-            GameState.WON -> {
-                "You Won your Score , $score"
-            }
-
-            GameState.LOST -> {
-                "You Lost your Score , $score"
-            }
-
-            else -> "Game Is Going"
-        }
+    private fun validateMealsSize() {
+        if (meals.size != MAX_QUESTIONS)
+            throw Exception("meals to run game is less $MAX_QUESTIONS")
     }
-
-    fun isRunning(): Boolean {
-        return state == GameState.RUNNING
-    }
-
-    fun getCurrentMealName() = meals[currentIndex].mealName
 
     private companion object {
         const val MIN_ANSWER = 1
         const val MAX_ANSWER = 3
-        const val ANSWER_OFFSET = 1
+        const val INPUT_COMPERED_INDEX = 1
         const val MAX_QUESTIONS = 15
         const val QUESTION_SCORE = 1000
         const val MAX_SCORE = MAX_QUESTIONS * QUESTION_SCORE
