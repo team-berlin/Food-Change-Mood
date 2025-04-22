@@ -16,12 +16,13 @@ class SuggestHighCalorieMealsUseCase(
     private fun onlyHighCalorieMeal(meal: Meal): Boolean =
         meal.nutrition.calories > CALORIE_THRESHOLD
 
-    fun suggestHighCalorieMeal(): Result<Meal> =
-        getHighCalorieMeals().randomOrNull()?.let { Result.success(it) } ?: Result.failure(
-            NoSuchElementException(
+    fun suggestHighCalorieMeal(): Meal =
+        getHighCalorieMeals()
+            .randomOrNull()
+            ?: throw NoSuchElementException(
                 "No meals found with more than $CALORIE_THRESHOLD calories"
             )
-        )
+
 
     companion object {
         const val CALORIE_THRESHOLD: Double = 700.0

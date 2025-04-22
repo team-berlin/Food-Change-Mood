@@ -6,7 +6,11 @@ import org.berlin.model.Meal
 class GuessPreparationTimeGameUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun getRandomMeal(): Meal {
-        return mealsRepository.getAllMeals().random()
-    }
+    fun getRandomMeal(): Meal =
+        mealsRepository
+            .getAllMeals()
+            .randomOrNull()
+            ?: throw NoSuchElementException(
+                "Cannot start GuessPreparationTimeGame – no meals found"
+            )
 }

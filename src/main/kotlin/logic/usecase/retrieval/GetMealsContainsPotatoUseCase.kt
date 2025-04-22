@@ -8,13 +8,15 @@ class GetMealsContainsPotatoUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getMealsContainsPotato(): List<String> {
-        return mealsRepository.getAllMeals()
+    fun getMealsContainsPotato(): List<String> =
+        mealsRepository
+            .getAllMeals()
             .filter(::containsPotatoIngredient)
-            .getRandomItems(10)
-            .take(RANDOM_N)
-            .map { it.name }
-    }
+            .takeIf { it.isNotEmpty() }
+            ?.getRandomItems(10)
+            ?.take(RANDOM_N)
+            ?.map { it.name }
+            ?: throw NoSuchElementException("No meals found that contain potato")
 
     private fun containsPotatoIngredient(meal: Meal): Boolean {
         return meal.ingredients.any {

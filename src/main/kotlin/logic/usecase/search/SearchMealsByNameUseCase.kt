@@ -10,13 +10,18 @@ class SearchMealsByNameUseCase(
 ) {
 
     fun searchMealsByName(inputMealName: String): List<Meal> {
-        return mealsRepository.getAllMeals()
-            .filter { meal ->
-                searchByName.search(
-                    textToSearchIn = meal.name.lowercase(),
-                    wordToSearchBy = inputMealName.lowercase()
-                )
-            }
+        val query = inputMealName.lowercase()
+
+        return mealsRepository
+            .getAllMeals()
+            .filter { matchesName(it, query) }
+            .takeIf { it.isNotEmpty() }
+            ?: throw NoSuchElementException("No meals found for \"$inputMealName\"")
     }
 
+    private fun matchesName(meal: Meal, query: String): Boolean =
+        searchByName.search(
+            textToSearchIn  = meal.name.lowercase(),
+            wordToSearchBy = query
+        )
 }

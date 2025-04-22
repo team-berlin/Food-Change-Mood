@@ -8,14 +8,14 @@ class SuggestEggFreeSweetUseCase(
 ) {
     private val suggestedSweets = mutableSetOf<String>()
 
-    fun suggestEggFreeSweet(): Meal? {
-
-        return mealsRepository.getAllMeals()
+    fun suggestEggFreeSweet(): Meal =
+        mealsRepository
+            .getAllMeals()
             .filter(::isEggFreeSweet)
             .takeIf { it.isNotEmpty() }
             ?.random()
             ?.also { suggestedSweets.add(it.name) }
-    }
+            ?: throw NoSuchElementException("No egg‑free sweet found")
 
     private fun isEggFreeSweet(meal: Meal): Boolean {
         return meal.tags.any { tag ->
