@@ -7,11 +7,13 @@ import org.berlin.model.Meal
 class SearchMealsByDateUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun searchMealsByDate(date: LocalDate): List<Meal> {
-        return mealsRepository.getAllMeals()
+
+    fun searchMealsByDate(date: LocalDate): List<Meal> =
+        mealsRepository
+            .getAllMeals()
             .filter { onlySelectedDate(it, date) }
-            .ifEmpty { emptyList() }
-    }
+            .takeIf { it.isNotEmpty() }
+            ?: throw NoSuchElementException("No meals found for date: $date")
 
     private fun onlySelectedDate(meal: Meal, date: LocalDate): Boolean {
         return meal.submissionDate == date

@@ -7,10 +7,12 @@ class GetIraqiMealsUseCase(
     private val repository: MealsRepository
 ) {
 
-    fun getIraqiMeals(): List<Meal> {
-        return repository.getAllMeals()
-            .filter { isIraqiMeal(it) }
-    }
+    fun getIraqiMeals(): List<Meal> =
+        repository
+            .getAllMeals()
+            .filter(::isIraqiMeal)
+            .takeIf { it.isNotEmpty() }
+            ?: throw NoSuchElementException("No Iraqi meals found")
 
     private fun isIraqiMeal(meal: Meal): Boolean {
         return meal.tags.any { tag ->

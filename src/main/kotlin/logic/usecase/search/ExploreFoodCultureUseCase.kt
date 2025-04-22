@@ -8,12 +8,13 @@ class ExploreFoodCultureUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun exploreFoodByCountry(country: String): List<Meal> {
-        return mealsRepository.getAllMeals()
+    fun exploreFoodByCountry(country: String): List<Meal> =
+        mealsRepository
+            .getAllMeals()
             .filter { isMealRelatedToCountry(it, country) }
             .takeIf { it.isNotEmpty() }
-            ?.getRandomItems(MEALS_NUMBER) ?: emptyList()
-    }
+            ?.getRandomItems(MEALS_NUMBER)
+            ?: throw NoSuchElementException("No meals found related to country: $country")
 
     private fun isMealRelatedToCountry(meal: Meal, country: String): Boolean {
         return meal.tags.any { tag ->

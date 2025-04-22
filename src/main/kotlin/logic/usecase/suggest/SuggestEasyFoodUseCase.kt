@@ -7,11 +7,14 @@ import org.berlin.model.Meal
 class SuggestEasyFoodUseCase(
     private val mealsRepository: MealsRepository
 ) {
-    fun getEasyFoodSuggestion(): List<Meal> {
-        val easyMeals = mealsRepository.getAllMeals()
+
+    fun getEasyFoodSuggestion(): List<Meal> =
+        mealsRepository
+            .getAllMeals()
             .filter(::onlyEasyFood)
-        return easyMeals.getRandomItems(RANDOM_N)
-    }
+            .takeIf { it.isNotEmpty() }
+            ?.getRandomItems(RANDOM_N)
+            ?: throw NoSuchElementException("No easy‑food meals found")
 
     private fun onlyEasyFood(meal: Meal): Boolean {
         return meal.minutes <= MAX_PREP_TIME_MINUTES &&

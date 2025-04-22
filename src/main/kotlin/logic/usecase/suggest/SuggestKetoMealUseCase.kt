@@ -7,12 +7,13 @@ class SuggestKetoMealUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun suggestKetoMeal(): List<Meal> {
-        return mealsRepository.getAllMeals()
-            .filter (::onlyKetoFriendly)
+    fun suggestKetoMeal(): List<Meal> =
+        mealsRepository
+            .getAllMeals()
+            .filter(::onlyKetoFriendly)
             .takeIf { it.isNotEmpty() }
-            ?.shuffled() ?: emptyList()
-    }
+            ?.shuffled()
+            ?: throw NoSuchElementException("No keto‑friendly meals found")
 
     private fun onlyKetoFriendly(meal: Meal): Boolean {
         val carbValue = meal.nutrition.carbohydrates

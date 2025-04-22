@@ -11,10 +11,14 @@ class GymHelperUseCase(
 ) {
 
     fun getMealsByCaloriesAndProtein(input: GymHelperInput): List<Meal> =
-        mealsRepository.getAllMeals()
-            .filter { meal ->
-            meal.matchesCaloriesAndProtein(input)
-        }
+        mealsRepository
+            .getAllMeals()
+            .filter { it.matchesCaloriesAndProtein(input) }
+            .takeIf { it.isNotEmpty() }
+            ?: throw NoSuchElementException(
+                "No meals found matching calories = ${input.calories} ± ${input.caloriesAndProteinTolerance.caloriesTolerance} " +
+                        "and protein = ${input.protein} ± ${input.caloriesAndProteinTolerance.proteinTolerance}"
+            )
 
     private fun Meal.matchesCaloriesAndProtein(input: GymHelperInput): Boolean {
         val calorieDifference = abs(this.nutrition.calories.roundToInt() - input.calories.roundToInt())
