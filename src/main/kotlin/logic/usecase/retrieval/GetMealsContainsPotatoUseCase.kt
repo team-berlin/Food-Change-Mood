@@ -13,8 +13,7 @@ class GetMealsContainsPotatoUseCase(
             .getAllMeals()
             .filter(::containsPotatoIngredient)
             .takeIf { it.isNotEmpty() }
-            ?.getRandomItems(10)
-            ?.take(RANDOM_N)
+            ?.getRandomItems(RANDOM_N)
             ?.map { it.name }
             ?: throw NoSuchElementException("No meals found that contain potato")
 
