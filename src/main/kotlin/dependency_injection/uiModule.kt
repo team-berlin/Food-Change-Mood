@@ -8,9 +8,9 @@ import org.berlin.presentation.input_output.ConsoleReader
 import org.berlin.presentation.input_output.ConsoleViewer
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
+import org.berlin.presentation.retrieval.GetIraqiMealsUI
 import org.berlin.presentation.retrieval.GetMealsContainsPotatoUI
 import org.berlin.presentation.retrieval.GetSeafoodMealsUI
-import org.berlin.presentation.retrieval.GetIraqiMealsUI
 import org.berlin.presentation.retrieval.QuickHealthyMealsUI
 import org.berlin.presentation.search.ExploreFoodCultureUI
 import org.berlin.presentation.search.GymHelperUI

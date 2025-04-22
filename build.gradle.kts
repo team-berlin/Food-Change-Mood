@@ -15,6 +15,9 @@ dependencies {
     implementation("com.opencsv:opencsv:5.7.1")
     implementation("io.insert-koin:koin-core:4.0.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    //mockk
+    testImplementation ("io.mockk:mockk:1.14.0")
 }
 
 tasks.test {
