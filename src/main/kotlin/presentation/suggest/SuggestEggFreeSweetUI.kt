@@ -1,8 +1,8 @@
 package org.berlin.presentation.suggest
 
 import org.berlin.logic.usecase.suggest.SuggestEggFreeSweetUseCase
-import org.berlin.model.Meal
 import org.berlin.presentation.UiRunner
+import org.berlin.presentation.common.showSweetDetails
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
 
@@ -23,29 +23,18 @@ class SuggestEggFreeSweetUI(
             viewer.display("---------------------------")
             viewer.display("Like it? (yes/no/exit)")
             when (reader.getUserInput()?.lowercase()) {
-                "yes" -> showSweetDetails(suggestion)
+                "yes" -> showSweetDetails(suggestion, viewer)
                 "no" -> {
                     viewer.display("Disliked. Getting another suggestion.")
                     run()
                 }
 
-                "exit" -> return // presentFeatures()
+                "exit" -> return
                 else -> viewer.display("Invalid Input")
             }
         } else {
             println("No more egg-free sweets to suggest :( ")
         }
     }
-    private fun showSweetDetails(meal: Meal) {
-        viewer.display("\n--- Sweet Details ---")
-        viewer.display("Name: ${meal.name}")
-        viewer.display("Description: ${meal.description}")
-        viewer.display("Ingredients: ${meal.ingredients.joinToString(", ")}")
-        meal.steps.let {
-            viewer.display("Steps:")
-            it.forEachIndexed { index, step ->
-                viewer.display("${index + 1}. $step")
-            }
-        }
-    }
+
 }
