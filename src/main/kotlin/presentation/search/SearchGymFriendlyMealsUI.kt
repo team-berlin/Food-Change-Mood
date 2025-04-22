@@ -1,6 +1,6 @@
 package org.berlin.presentation.search
 
-import org.berlin.logic.usecase.search.GymHelperUseCase
+import org.berlin.logic.usecase.search.SearchGymFriendlyMealsUseCase
 import org.berlin.model.CaloriesAndProteinTolerance
 import org.berlin.model.GymHelperInput
 import org.berlin.model.Meal
@@ -9,8 +9,8 @@ import org.berlin.presentation.common.showMealDetails
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
 
-class GymHelperUI(
-    private val gymHelperUseCase: GymHelperUseCase,
+class SearchGymFriendlyMealsUI(
+    private val gymHelperUseCase: SearchGymFriendlyMealsUseCase,
     private val reader: Reader,
     private val viewer: Viewer,
 ) : UiRunner {

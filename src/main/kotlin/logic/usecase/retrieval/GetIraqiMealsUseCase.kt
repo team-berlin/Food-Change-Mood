@@ -10,11 +10,11 @@ class GetIraqiMealsUseCase(
     fun getIraqiMeals(): List<Meal> =
         repository
             .getAllMeals()
-            .filter(::isIraqiMeal)
+            .filter(::onlyIraqiMeal)
             .takeIf { it.isNotEmpty() }
             ?: throw NoSuchElementException("No Iraqi meals found")
 
-    private fun isIraqiMeal(meal: Meal): Boolean {
+    private fun onlyIraqiMeal(meal: Meal): Boolean {
         return meal.tags.any { tag ->
             tag.contains(
                 IRAQI_TAG, ignoreCase = true
@@ -24,7 +24,7 @@ class GetIraqiMealsUseCase(
         ) == true
     }
 
-    companion object {
+    private companion object {
         const val IRAQI_TAG = "iraqi"
     }
 }

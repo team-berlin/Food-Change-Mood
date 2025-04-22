@@ -68,7 +68,7 @@ class MealsCsvParser {
         val totalFat = parts[NutritionIndex.TOTAL_FAT]
         val sugar = parts[NutritionIndex.SUGAR]
         val sodium = parts[NutritionIndex.SODIUM]
-        val protein = parts[NutritionIndex.PROTEIN]
+        val protein = parts[NutritionIndex.PROTEIN_GRAMS]
         val saturatedFat = parts[NutritionIndex.SATURATED_FAT]
         val carbohydrates = parts[NutritionIndex.CARBOHYDRATES]
 
@@ -77,7 +77,7 @@ class MealsCsvParser {
             totalFat = totalFat,
             sugar = sugar,
             sodium = sodium,
-            protein = protein,
+            proteinGrams = protein,
             saturatedFat = saturatedFat,
             carbohydrates = carbohydrates
         )

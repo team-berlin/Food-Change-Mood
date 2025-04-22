@@ -11,14 +11,13 @@ class GetMealsContainsPotatoUseCase(
     fun getMealsContainsPotato(): List<String> =
         mealsRepository
             .getAllMeals()
-            .filter(::containsPotatoIngredient)
+            .filter(::onlyContainsPotatoIngredient)
             .takeIf { it.isNotEmpty() }
-            ?.getRandomItems(10)
-            ?.take(RANDOM_N)
+            ?.getRandomItems(RANDOM_N)
             ?.map { it.name }
             ?: throw NoSuchElementException("No meals found that contain potato")
 
-    private fun containsPotatoIngredient(meal: Meal): Boolean {
+    private fun onlyContainsPotatoIngredient(meal: Meal): Boolean {
         return meal.ingredients.any {
             it.lowercase().contains(POTATO_INGREDIENT)
         }
