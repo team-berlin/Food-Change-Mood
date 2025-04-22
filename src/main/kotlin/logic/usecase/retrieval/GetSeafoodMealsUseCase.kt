@@ -11,17 +11,16 @@ class GetSeafoodMealsUseCase(
     fun getSeafoodMeals(): List<SeafoodMeal> =
         mealsRepository
             .getAllMeals()
-            .filter(::isSeafoodMeal)
+            .filter(::onlySeafoodMeal)
             .takeIf { it.isNotEmpty() }
-            ?.sortedByDescending { it.nutrition.protein }
-            ?.map { SeafoodMeal(it.name, it.nutrition.protein) }
+            ?.sortedByDescending { it.nutrition.proteinGrams }
+            ?.map { SeafoodMeal(it.name, it.nutrition.proteinGrams) }
             ?: throw NoSuchElementException("No seafood meals found")
 
-
-    private fun isSeafoodMeal(meal: Meal): Boolean =
+    private fun onlySeafoodMeal(meal: Meal): Boolean =
         meal.tags.any { it.contains(TAG_NAME, ignoreCase = true) }
 
-    companion object {
+    private companion object {
         const val TAG_NAME = "seafood"
     }
 }

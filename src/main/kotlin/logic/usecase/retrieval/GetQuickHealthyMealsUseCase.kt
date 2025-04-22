@@ -43,7 +43,7 @@ class GetQuickHealthyMealsUseCase(
             )
         }
 
-    companion object {
+    private companion object {
         const val MAX_MINUTES: Int = 15
         const val HEALTHY_TAG: String = "healthy"
         const val NUTRITION_THRESHOLD_MULTIPLIER: Double = 0.7

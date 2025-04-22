@@ -5,7 +5,7 @@ import org.berlin.presentation.UiRunner
 import org.berlin.presentation.common.showMealDetails
 import org.berlin.presentation.input_output.Viewer
 
-class QuickHealthyMealsUI(
+class GetQuickHealthyMealsUI(
     private val quickHealthyMealsUseCase: GetQuickHealthyMealsUseCase,
     private val viewer: Viewer
 ) : UiRunner {

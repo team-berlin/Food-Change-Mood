@@ -16,7 +16,7 @@ fun showMealDetails(meal: Meal, viewer: Viewer) {
         viewer.display("  Saturated Fat: $saturatedFat g")
         viewer.display("  Carbohydrates: $carbohydrates g")
         viewer.display("  Sugar: $sugar g")
-        viewer.display("  Protein: $protein g")
+        viewer.display("  Protein: $proteinGrams g")
         viewer.display("  Sodium: $sodium mg")
         viewer.display("  Ingredients: ${meal.nIngredients}")
         viewer.display("  Steps: ${meal.nSteps}")

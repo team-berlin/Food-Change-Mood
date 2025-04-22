@@ -11,13 +11,13 @@ class SuggestEggFreeSweetUseCase(
     fun suggestEggFreeSweet(): Meal =
         mealsRepository
             .getAllMeals()
-            .filter(::isEggFreeSweet)
+            .filter(::onlyEggFreeSweet)
             .takeIf { it.isNotEmpty() }
             ?.random()
             ?.also { suggestedSweets.add(it.name) }
             ?: throw NoSuchElementException("No egg‑free sweet found")
 
-    private fun isEggFreeSweet(meal: Meal): Boolean {
+    private fun onlyEggFreeSweet(meal: Meal): Boolean {
         return meal.tags.any { tag ->
             tag.contains(SWEET_TAG, ignoreCase = true) && meal.ingredients.none { ingredient ->
                 ingredient.equals(
@@ -28,8 +28,8 @@ class SuggestEggFreeSweetUseCase(
         }
     }
 
-    companion object {
-        private const val SWEET_TAG = "sweet"
-        private const val EGG_INGREDIENT = "egg"
+    private companion object {
+        const val SWEET_TAG = "sweet"
+        const val EGG_INGREDIENT = "egg"
     }
 }
