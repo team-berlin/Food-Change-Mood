@@ -13,13 +13,17 @@ class IngredientGameUseCase(
     private val mealsForGame = ingredientGameMealsMapper.map(meals)
 
     fun getFifteenMeals(): List<MealForIngredientGame> {
-        if (mealsForGame.isEmpty() || mealsForGame.size < MAX_QUESTIONS)
-            throw Exception("need more meals to run a game")
+
+        validateMealsMatchMaxQUESTIONS()
         return mealsForGame
             .shuffled()
             .take(MAX_QUESTIONS)
     }
-    private companion object Constants {
+    private fun validateMealsMatchMaxQUESTIONS(){
+        if (mealsForGame.size < MAX_QUESTIONS)
+            throw Exception("meals to run game is less $MAX_QUESTIONS")
+    }
+    private companion object  {
         const val MAX_QUESTIONS = 15
 
     }
