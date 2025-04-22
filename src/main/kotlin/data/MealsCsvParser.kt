@@ -51,7 +51,6 @@ class MealsCsvParser {
         )
     }
 
-
     private fun parseStringList(raw: String): List<String> {
         val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
         if (trimmed.isEmpty()) {

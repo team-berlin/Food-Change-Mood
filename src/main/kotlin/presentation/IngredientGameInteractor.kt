@@ -20,14 +20,17 @@ class IngredientGameInteractor(
         score = 0
         state = GameState.RUNNING
     }
+
     fun isRunning(): Boolean {
         return state == GameState.RUNNING
     }
+
     fun getCurrentMeal() = meals[currentIndex]
     fun submitUserAnswer(answer: Int) {
         validateUserAnswer(answer)
         updateState(fetchIngredientAnswerChosen(answer), meals[currentIndex])
     }
+
     fun getScore() = score
 
     private fun validateUserAnswer(answer: Int) {
@@ -37,13 +40,11 @@ class IngredientGameInteractor(
     }
 
     private fun fetchIngredientAnswerChosen(answer: Int): String {
-        return getCurrentMeal()
-            .threeIngredientOnlyOneCorrect[answer - INPUT_COMPERED_INDEX]
+        return getCurrentMeal().threeIngredientOnlyOneCorrect[answer - INPUT_COMPERED_INDEX]
     }
 
     private fun updateState(
-        ingredientAnswer: String,
-        meal: MealForIngredientGame
+        ingredientAnswer: String, meal: MealForIngredientGame
     ) {
         if (ingredientAnswer == meal.correctIngredient) {
             score += QUESTION_SCORE
@@ -67,5 +68,4 @@ class IngredientGameInteractor(
         const val QUESTION_SCORE = 1000
         const val MAX_SCORE = MAX_QUESTIONS * QUESTION_SCORE
     }
-
 }

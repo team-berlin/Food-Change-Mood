@@ -7,7 +7,7 @@ class SuggestItalianFoodForLargeGroupUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun suggestItalianMealsForLargeGroup(): List<Meal>{
+    fun suggestItalianMealsForLargeGroup(): List<Meal> {
         return mealsRepository.getAllMeals()
             .filter(::isItalianFoodForLargeGroup)
     }
@@ -15,8 +15,7 @@ class SuggestItalianFoodForLargeGroupUseCase(
     private fun isItalianFoodForLargeGroup(meal: Meal): Boolean {
         return meal.tags.any { tag ->
             tag.equals(ITALIAN_FOOD_TAG, ignoreCase = true)
-        }
-                && meal.tags.any { tag ->
+        } && meal.tags.any { tag ->
             tag.equals(LARGE_GROUP_TAG, ignoreCase = true)
         }
     }

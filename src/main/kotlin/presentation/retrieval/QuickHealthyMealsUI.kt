@@ -1,12 +1,12 @@
 package org.berlin.presentation.retrieval
 
-import org.berlin.logic.usecase.retrieval.QuickHealthyMealsUseCase
+import org.berlin.logic.usecase.retrieval.GetQuickHealthyMealsUseCase
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.common.showMealDetails
 import org.berlin.presentation.input_output.Viewer
 
 class QuickHealthyMealsUI(
-    private val quickHealthyMealsUseCase: QuickHealthyMealsUseCase,
+    private val quickHealthyMealsUseCase: GetQuickHealthyMealsUseCase,
     private val viewer: Viewer
 ) : UiRunner {
     override val id: Int = 1

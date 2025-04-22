@@ -33,7 +33,7 @@ class GymHelperUI(
         }
 
         val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(
-            calorieAndProteinValues = GymHelperInput(
+              input = GymHelperInput(
                 calories = caloriesInput,
                 protein = proteinInput,
                 caloriesAndProteinTolerance = CaloriesAndProteinTolerance(

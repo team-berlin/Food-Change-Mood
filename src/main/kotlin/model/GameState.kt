@@ -1,7 +1,5 @@
 package org.berlin.model
 
 enum class GameState {
-    WON,
-    LOST,
-    RUNNING
+    WON, LOST, RUNNING
 }

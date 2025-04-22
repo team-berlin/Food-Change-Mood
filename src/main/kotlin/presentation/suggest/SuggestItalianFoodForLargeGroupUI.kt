@@ -11,6 +11,7 @@ class SuggestItalianFoodForLargeGroupUI (
 ) : UiRunner {
     override val id: Int = 15
     override val label: String = "Get Italian Meals For Large Group"
+
     override fun run() {
         val meals = suggestItalianFoodForLargeGroupUseCase
             .suggestItalianMealsForLargeGroup()

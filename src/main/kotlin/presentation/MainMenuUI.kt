@@ -27,9 +27,7 @@ class MainMenuUI(
 
     private fun showMenu() {
         viewer.display("=== Food Change Mood ===")
-        runners
-            .sortedBy { it.id }
-            .forEach { ui ->
+        runners.sortedBy { it.id }.forEach { ui ->
                 viewer.display("${ui.id} - ${ui.label}")
             }
         viewer.display("X - Exit")

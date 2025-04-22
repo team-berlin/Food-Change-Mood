@@ -7,7 +7,6 @@ class GuessPreparationTimeGameUseCase(
     private val mealsRepository: MealsRepository
 ) {
     fun getRandomMeal(): Meal {
-        return mealsRepository.getAllMeals()
-            .random()
-        }
+        return mealsRepository.getAllMeals().random()
+    }
 }

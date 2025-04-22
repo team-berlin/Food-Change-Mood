@@ -1,8 +1,8 @@
 package logic.usecase.game
 
-import org.berlin.logic.repository.MealsRepository
 import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.common.extention.getRandomItems
+import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameUseCase(
@@ -16,15 +16,15 @@ class IngredientGameUseCase(
     fun getFifteenMeals(): List<MealForIngredientGame> {
 
         validateMealsMatchMaxQUESTIONS()
-        return mealsForGame
-            .getRandomItems(MAX_QUESTIONS)
+        return mealsForGame.getRandomItems(MAX_QUESTIONS)
     }
-    private fun validateMealsMatchMaxQUESTIONS(){
+
+    private fun validateMealsMatchMaxQUESTIONS() {
         if (mealsForGame.size < MAX_QUESTIONS)
             throw Exception("meals to run game is less $MAX_QUESTIONS")
     }
-    private companion object  {
-        const val MAX_QUESTIONS = 15
 
+    private companion object {
+        const val MAX_QUESTIONS = 15
     }
 }

@@ -1,5 +1,6 @@
 package org.berlin.logic.usecase.search
 
+import org.berlin.logic.common.extention.getRandomItems
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 
@@ -11,16 +12,18 @@ class ExploreFoodCultureUseCase(
         return mealsRepository.getAllMeals()
             .filter { isMealRelatedToCountry(it, country) }
             .takeIf { it.isNotEmpty() }
-            ?.shuffled()
-            ?.take(MEALS_NUMBER)
-            ?: emptyList()
+            ?.getRandomItems(MEALS_NUMBER) ?: emptyList()
     }
 
     private fun isMealRelatedToCountry(meal: Meal, country: String): Boolean {
-        return  meal.tags.any { tag -> tag.contains(country, ignoreCase = true) } ||
-                meal.description?.contains(country, ignoreCase = true) ?: false ||
-                meal.name.contains(country, ignoreCase = true) ||
-                meal.steps.contains(country)
+        return meal.tags.any { tag ->
+            tag.contains(country, ignoreCase = true) }
+                || meal.description?.contains(
+            country,
+            ignoreCase = true
+        ) ?: false
+                || meal.name.contains(country, ignoreCase = true)
+                || meal.steps.contains(country)
     }
 
     private companion object {

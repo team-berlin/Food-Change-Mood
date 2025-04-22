@@ -8,13 +8,9 @@ class SuggestEasyFoodUseCase(
     private val mealsRepository: MealsRepository
 ) {
     fun getEasyFoodSuggestion(): List<Meal> {
-        val filterList = mealsRepository.getAllMeals()
+        val easyMeals = mealsRepository.getAllMeals()
             .filter(::onlyEasyFood)
-        return if (filterList.size <= RANDOM_N) {
-            filterList
-        } else {
-            filterList.getRandomItems(RANDOM_N)
-        }
+        return easyMeals.getRandomItems(RANDOM_N)
     }
 
     private fun onlyEasyFood(meal: Meal): Boolean {

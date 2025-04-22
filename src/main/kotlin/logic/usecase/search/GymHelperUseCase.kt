@@ -6,18 +6,23 @@ import org.berlin.model.Meal
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class GymHelperUseCase(private val mealsRepository: MealsRepository) {
+class GymHelperUseCase(
+    private val mealsRepository: MealsRepository
+) {
 
-    fun getMealsByCaloriesAndProtein(
-        calorieAndProteinValues: GymHelperInput
-    ): List<Meal> {
-        return mealsRepository.getAllMeals()
+    fun getMealsByCaloriesAndProtein(input: GymHelperInput): List<Meal> =
+        mealsRepository.getAllMeals()
             .filter { meal ->
-                abs(meal.nutrition.calories.roundToInt() - calorieAndProteinValues.calories.roundToInt()) <= calorieAndProteinValues.caloriesAndProteinTolerance.caloriesTolerance &&
-                        abs(meal.nutrition.protein.roundToInt() - calorieAndProteinValues.protein.roundToInt()) <= calorieAndProteinValues.caloriesAndProteinTolerance.proteinTolerance
-            }
+            meal.matchesCaloriesAndProtein(input)
+        }
+
+    private fun Meal.matchesCaloriesAndProtein(input: GymHelperInput): Boolean {
+        val calorieDifference = abs(this.nutrition.calories.roundToInt() - input.calories.roundToInt())
+        val proteinDifference = abs(this.nutrition.protein.roundToInt() - input.protein.roundToInt())
+
+        val withinCalorieTolerance = calorieDifference <= input.caloriesAndProteinTolerance.caloriesTolerance
+        val withinProteinTolerance = proteinDifference <= input.caloriesAndProteinTolerance.proteinTolerance
+
+        return withinCalorieTolerance && withinProteinTolerance
     }
 }
-
-
-

@@ -27,5 +27,5 @@ fun showMealDetails(meal: Meal, viewer: Viewer) {
         viewer.display("  ${index + 1}. $step")
     }
 
-    viewer.display("Ingredients (${meal.nIngredients}): ${meal.ingredients.joinToString(", ")}")
+    viewer.display("\nIngredients (${meal.nIngredients}): ${meal.ingredients.joinToString(", ")}")
 }

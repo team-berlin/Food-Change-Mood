@@ -38,8 +38,12 @@ class LevenshteinSearch : SearchByName {
             IntArray(wordToSearchByLength + 1)
         }
 
-        (0..textToBeSearchLength).forEach { distanceMatrix[it][0] = it }
-        (0..wordToSearchByLength).forEach { distanceMatrix[0][it] = it }
+        (0..textToBeSearchLength).forEach {
+            distanceMatrix[it][0] = it
+        }
+        (0..wordToSearchByLength).forEach {
+            distanceMatrix[0][it] = it
+        }
 
         return distanceMatrix
     }

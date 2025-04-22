@@ -11,6 +11,7 @@ class SuggestionEasyFoodUI(
 ) : UiRunner {
     override val id: Int = 4
     override val label: String = "Get 10 random meals that are east to prepare"
+
     override fun run() {
         suggestEasyFoodUseCase.getEasyFoodSuggestion().forEach { meal ->
             displayEasyFoodMeal(meal, viewer)

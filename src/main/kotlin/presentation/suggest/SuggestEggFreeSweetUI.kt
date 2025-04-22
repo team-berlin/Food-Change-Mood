@@ -15,25 +15,39 @@ class SuggestEggFreeSweetUI(
     override val label: String = "Suggest Egg FreeSweet"
 
     override fun run() {
-        val suggestion = suggestEggFreeSweetUseCase.suggestEggFreeSweet()
+        val suggestion = getSuggestedSweet()
         if (suggestion != null) {
-            viewer.display("\n--- Suggested Free Sweet ---")
-            viewer.display("Name: ${suggestion.name}")
-            viewer.display("Description: ${suggestion.description}")
-            viewer.display("---------------------------")
-            viewer.display("Like it? (yes/no/exit)")
-            when (reader.getUserInput()?.lowercase()) {
-                "yes" -> showSweetDetails(suggestion, viewer)
-                "no" -> {
-                    viewer.display("Disliked. Getting another suggestion.")
-                    run()
-                }
-
-                "exit" -> return
-                else -> viewer.display("Invalid Input")
-            }
+            displaySuggestedSweet(suggestion)
+            handleUserResponse(suggestion)
         } else {
-            println("No more egg-free sweets to suggest :( ")
+            viewer.display("No more egg-free sweets to suggest :( ")
+        }
+    }
+
+    private fun getSuggestedSweet(): Meal? {
+        return suggestEggFreeSweetUseCase.suggestEggFreeSweet()
+    }
+
+    private fun displaySuggestedSweet(sweet: Meal) {
+        viewer.display("\n--- Suggested Egg-Free Sweet ---")
+        viewer.display("Name: ${sweet.name}")
+        viewer.display("Description: ${sweet.description}")
+        viewer.display("---------------------------")
+    }
+
+    private fun handleUserResponse(suggestion: Meal) {
+        viewer.display("Like it? (yes/no/exit)")
+        when (reader.getUserInput()?.lowercase()) {
+            "yes" -> showSweetDetails(suggestion, viewer)
+            "no" -> {
+                viewer.display("Disliked. Getting another suggestion.")
+                run()
+            }
+            "exit" -> return
+            else -> {
+                viewer.display("Invalid Input")
+                handleUserResponse(suggestion)
+            }
         }
     }
 

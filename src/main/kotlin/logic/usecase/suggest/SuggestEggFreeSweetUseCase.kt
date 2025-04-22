@@ -8,20 +8,23 @@ class SuggestEggFreeSweetUseCase(
 ) {
     private val suggestedSweets = mutableSetOf<String>()
 
-    fun suggestEggFreeSweet() : Meal? {
+    fun suggestEggFreeSweet(): Meal? {
 
         return mealsRepository.getAllMeals()
             .filter(::isEggFreeSweet)
             .takeIf { it.isNotEmpty() }
-            ?.shuffled()
-            ?.first()
+            ?.random()
             ?.also { suggestedSweets.add(it.name) }
     }
 
     private fun isEggFreeSweet(meal: Meal): Boolean {
-        return meal.tags.any { tag -> tag.contains(SWEET_TAG, ignoreCase = true)
-                && meal.ingredients.none { ingredient -> ingredient.equals(EGG_INGREDIENT, ignoreCase = true) }
-                && !suggestedSweets.contains(meal.name)
+        return meal.tags.any { tag ->
+            tag.contains(SWEET_TAG, ignoreCase = true) && meal.ingredients.none { ingredient ->
+                ingredient.equals(
+                    EGG_INGREDIENT,
+                    ignoreCase = true
+                )
+            } && !suggestedSweets.contains(meal.name)
         }
     }
 

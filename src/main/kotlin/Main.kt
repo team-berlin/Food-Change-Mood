@@ -5,7 +5,7 @@ import org.berlin.dependency_injection.useCaseModule
 import org.berlin.presentation.MainMenuUI
 import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform.getKoin
-import uiModule
+import dependency_injection.uiModule
 
 fun main() {
 

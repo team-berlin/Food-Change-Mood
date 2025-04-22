@@ -4,8 +4,11 @@ import org.berlin.model.Meal
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameMealsMapper {
+
     fun map(meals: List<Meal>): List<MealForIngredientGame> {
+
         validateEmptyMeals(meals)
+
         val allMealsIngredients = getAllMealsIngredients(meals)
         return meals.map { currentFullMeal ->
             validateEmptyIngredients(currentFullMeal)
@@ -32,8 +35,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun validateEmptyIngredients(meal: Meal) {
-        if (meal.nIngredients < 1)
-            throw Exception("there is invalid meal ingredients")
+        if (meal.nIngredients < 1) throw Exception("there is invalid meal ingredients")
     }
 
     private fun getRandomIngredient(meal: Meal): String {
@@ -42,8 +44,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun getTwoWrongIngredient(
-        allMealsIngredients: List<String>,
-        meal: Meal
+        allMealsIngredients: List<String>, meal: Meal
     ): List<String> {
         validateEmptyIngredients(meal)
 
