@@ -1,16 +1,17 @@
 package common
 
-import createMealList
+import createMeal
 import org.berlin.model.Meal
 
 fun genarateEasyMeals(count: Int): List<Meal> {
     return List(count){ index ->
-        createMealList(
+        createMeal(
             id = index,
             name = "Easy Meal",
             minutes = index,
-            nIngredients = 3,
-            nSteps = 5
+            numberOfIngredients = 3,
+            numberOfStep = 5,
+
         )
     }
 }

@@ -5,12 +5,12 @@ import kotlinx.datetime.toLocalDateTime
 import org.berlin.model.Meal
 import org.berlin.model.Nutrition
 
-fun createMealList(
-    id: Int,
-    name: String,
-    minutes: Int,
-    nIngredients: Int,
-    nSteps: Int,
+fun createMeal(
+    id: Int = 1234,
+    name: String = "Meal",
+    minutes: Int = 30,
+    numberOfIngredients: Int = 5,
+    numberOfStep: Int = 5,
     contributorId: Int = 123,
     submissionDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date ,
     tags: List<String> = listOf("tag1", "tag2"),
@@ -35,10 +35,10 @@ fun createMealList(
         submissionDate = submissionDate ,
         tags = tags,
         nutrition = nutrition,
-        nSteps = nSteps,
+        numberOfSteps = numberOfStep,
         steps = steps,
         description = description,
         ingredients = ingredients,
-        nIngredients = nIngredients
+        numberOfIngredients = numberOfIngredients
     )
 }

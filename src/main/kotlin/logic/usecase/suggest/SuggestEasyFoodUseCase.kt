@@ -17,8 +17,8 @@ class SuggestEasyFoodUseCase(
 
     private fun onlyEasyFood(meal: Meal): Boolean {
         return meal.minutes <= MAX_PREP_TIME_MINUTES &&
-                meal.nIngredients <= INGREDIENTS_COUNT &&
-                meal.nSteps <= STEPS_COUNT
+                meal.numberOfIngredients <= INGREDIENTS_COUNT &&
+                meal.numberOfSteps <= STEPS_COUNT
     }
 
     private companion object {
