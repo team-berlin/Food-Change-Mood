@@ -10,21 +10,24 @@ class SuggestEggFreeSweetUI(
     private val suggestEggFreeSweetUseCase: SuggestEggFreeSweetUseCase,
     private val viewer: Viewer,
     private val reader: Reader
-): UiRunner {
+) : UiRunner {
     override val id: Int = 6
     override val label: String = "Suggest Egg FreeSweet"
 
     override fun run() {
-        val suggestion = getSuggestedSweet()
-        if (suggestion != null) {
+
+        try {
+            val suggestion = getSuggestedSweet()
+
             displaySuggestedSweet(suggestion)
             handleUserResponse(suggestion)
-        } else {
-            viewer.display("No more egg-free sweets to suggest :( ")
+        }catch (ex: NoSuchElementException){
+            viewer.display("No more egg-free sweets to suggest")
         }
+
     }
 
-    private fun getSuggestedSweet(): Meal? {
+    private fun getSuggestedSweet(): Meal {
         return suggestEggFreeSweetUseCase.suggestEggFreeSweet()
     }
 
@@ -43,6 +46,7 @@ class SuggestEggFreeSweetUI(
                 viewer.display("Disliked. Getting another suggestion.")
                 run()
             }
+
             "exit" -> return
             else -> {
                 viewer.display("Invalid Input")
