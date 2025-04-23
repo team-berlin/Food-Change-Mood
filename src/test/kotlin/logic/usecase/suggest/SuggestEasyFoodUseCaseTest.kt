@@ -15,7 +15,6 @@ class SuggestEasyFoodUseCaseTest {
     private lateinit var mealRepository: MealsRepository
     private lateinit var easyFoodUseCase: SuggestEasyFoodUseCase
 
-
     @BeforeEach
     fun setup() {
         mealRepository = mockk<MealsRepository>()
@@ -36,20 +35,16 @@ class SuggestEasyFoodUseCaseTest {
     fun `getEasyFood should return easy random meals when filter list is equal random number`() {
         every { mealRepository.getAllMeals() } returns genarateEasyMeals(10)
 
-        //when
         val result = easyFoodUseCase.getEasyFoodSuggestion()
 
-        //then
         assertEquals(result.size, 10)
 
     }
 
     @Test
     fun `getEasyFood should throws NoSuchElementException when filter list is empty`() {
-        //Given
         every { mealRepository.getAllMeals() } returns emptyList()
 
-        //then
         assertThrows<NoSuchElementException> {
             easyFoodUseCase.getEasyFoodSuggestion()
 
