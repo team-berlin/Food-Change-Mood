@@ -1,4 +1,6 @@
+import io.mockk.mockk
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.berlin.model.Meal
@@ -34,3 +36,30 @@ fun createMeals(
     nIngredients = nIngredients
 
 )
+
+fun createMeal(
+    name: String,
+    id: Int,
+    minutes: Int = 30,
+    contributorId: Int = 1,
+    submissionDate: LocalDate =LocalDate(2025, 4, 23),
+    tags: List<String> = emptyList(),
+    ingredients: List<String> = emptyList(),
+    description: String? = null,
+    steps: List<String> = emptyList()
+): Meal {
+    return Meal(
+        name = name,
+        id = id,
+        minutes = minutes,
+        contributorId = contributorId,
+        submissionDate = submissionDate,
+        tags = tags,
+        nutrition = mockk(),
+        nSteps = steps.size,
+        steps = steps,
+        description = description,
+        ingredients = ingredients,
+        nIngredients = ingredients.size
+    )
+}
