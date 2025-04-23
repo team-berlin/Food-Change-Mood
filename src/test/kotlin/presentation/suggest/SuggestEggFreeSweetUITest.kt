@@ -22,20 +22,14 @@ class SuggestEggFreeSweetUITest {
 
 
     private val eggFreeSweet1 = createMeal(
-        name = "Chocolate Cake",
-        id = 1,
-        minutes = 60,
-        tags = listOf("sweet", "chocolate"),
+        name = "Chocolate Cake", id = 1, minutes = 60, tags = listOf("sweet", "chocolate"),
         ingredients = listOf("flour", "sugar", "cocoa powder", "butter", "milk"),
         steps = listOf("Mix ingredients", "Bake", "Cool", "Frost", "Serve"),
         description = "Rich chocolate cake"
     )
 
     private val eggFreeSweet2 = createMeal(
-        name = "Fruit Salad",
-        id = 2,
-        minutes = 15,
-        tags = listOf("sweet", "fruit", "healthy"),
+        name = "Fruit Salad", id = 2, minutes = 15, tags = listOf("sweet", "fruit", "healthy"),
         ingredients = listOf("apple", "banana", "orange", "berries"),
         steps = listOf("Cut fruits", "Mix and serve"),
         description = "Refreshing fruit salad"
@@ -45,7 +39,6 @@ class SuggestEggFreeSweetUITest {
     fun setUp() {
         suggestEggFreeSweetUI = SuggestEggFreeSweetUI(suggestEggFreeSweetUseCase, viewer, reader)
     }
-
 
     @Test
     fun `run should display suggested sweet and details when user likes it`() {
@@ -144,7 +137,6 @@ class SuggestEggFreeSweetUITest {
         //. Then
         verify { viewer.display("No more egg-free sweets to suggest") } // This should now use MockK's verify
         verify(exactly = 1) { suggestEggFreeSweetUseCase.suggestEggFreeSweet() } // And this one too
-
     }
 
     @Test
