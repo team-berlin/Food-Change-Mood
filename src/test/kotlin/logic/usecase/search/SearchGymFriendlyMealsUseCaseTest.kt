@@ -9,7 +9,6 @@ import org.berlin.logic.repository.MealsRepository
 import org.berlin.logic.usecase.search.SearchGymFriendlyMealsUseCase
 import org.berlin.model.CaloriesAndProteinTolerance
 import org.berlin.model.GymHelperInput
-import org.berlin.model.Nutrition
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
