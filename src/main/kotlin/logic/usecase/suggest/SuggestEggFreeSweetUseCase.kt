@@ -20,7 +20,7 @@ class SuggestEggFreeSweetUseCase(
     private fun onlyEggFreeSweet(meal: Meal): Boolean {
         return meal.tags.any { tag ->
             tag.contains(SWEET_TAG, ignoreCase = true) && meal.ingredients.none { ingredient ->
-                ingredient.equals(
+                ingredient.contains(
                     EGG_INGREDIENT,
                     ignoreCase = true
                 )

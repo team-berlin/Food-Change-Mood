@@ -20,7 +20,7 @@ class SuggestKetoMealUI(
         val shuffledMeals = suggestKetoMealUseCase.suggestKetoMeal()
 
         if (shuffledMeals.isEmpty()) {
-            viewer.display("No keto‑friendly meals available. Goodbye!")
+            viewer.display("No keto friendly meals available. Goodbye!")
             return
         }
 
@@ -35,7 +35,7 @@ class SuggestKetoMealUI(
             if (handleUserResponse(userResponse, selectedMeal)) return
         }
 
-        viewer.display("No more keto‑friendly meals available. Goodbye!")
+        viewer.display("No more keto friendly meals available. Goodbye!")
     }
 
     private fun displayMealSuggestion(meal: Meal) {

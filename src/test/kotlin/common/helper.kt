@@ -16,3 +16,15 @@ fun genarateEasyMeals(count: Int): List<Meal> {
     }
 }
 
+
+
+
+fun generatePotatoMeals(count: Int): List<Meal>{
+    return List(count){ index ->
+        createMeal(
+            id = index,
+            name = "Easy Meal",
+            ingredients = listOf("potatoes", "potato", "   potatoes  ", "Potato", "Potatoes", "pOtaToeS", "POTATOES", "POTATO")
+            )
+    }
+}
