@@ -15,3 +15,4 @@ fun genarateEasyMeals(count: Int): List<Meal> {
         )
     }
 }
+

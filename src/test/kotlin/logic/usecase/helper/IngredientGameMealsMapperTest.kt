@@ -1,12 +1,12 @@
 package logic.usecase.helper
 
 import com.google.common.truth.Truth.assertThat
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import createMeal
+import org.berlin.logic.usecase.helper.CantFindWrongIngredientException
+import org.berlin.logic.usecase.helper.EmptyIngredientsException
+import org.berlin.logic.usecase.helper.EmptyMealsException
 import org.berlin.logic.usecase.helper.IngredientGameMealsMapper
 import org.berlin.model.Meal
-import org.berlin.model.Nutrition
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -20,7 +20,7 @@ class IngredientGameMealsMapperTest {
         //Given
         val emptyMealsList = emptyList<Meal>()
         //When && Then
-        assertThrows<Exception> {
+        assertThrows<EmptyMealsException> {
             ingredientGameMealsMapper.map(emptyMealsList)
         }
 
@@ -28,15 +28,10 @@ class IngredientGameMealsMapperTest {
 
     @Test
     fun `should throw exception when list of meals has meal not have ingredients`() {
-        //Given list of meals have meal not have ingredients
-        val mealsList = listOf(
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("abb", "by", "cc", "vd", "wry", "fff")),
-            createMeals(6, listOf("auik", "bgh", "bnmc", "hyud", "hghw", "vbf")),
-            createMeals(0, listOf()),
-        )
+        //Given
+        val mealsList = LIST_OF_INVALID_MEALS_HAVE_MEAL_NOT_HAVE_INGREDIENT
         //When && Then
-        assertThrows<Exception> {
+        assertThrows<EmptyIngredientsException> {
             ingredientGameMealsMapper.map(mealsList)
         }
 
@@ -44,12 +39,8 @@ class IngredientGameMealsMapperTest {
 
     @Test
     fun `should return list of meals after mapped to list for ingredient game exactly same size `() {
-        //Given list of correct meals
-        val mealsList = listOf(
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("abb", "by", "cc", "vd", "wry", "fff")),
-            createMeals(6, listOf("auik", "bgh", "bnmc", "hyud", "hghw", "vbf")),
-        )
+        //Given
+        val mealsList = LIST_OF_VALID_MEALS
         //When
         val result = ingredientGameMealsMapper.map(mealsList)
 
@@ -63,43 +54,48 @@ class IngredientGameMealsMapperTest {
     fun `should throw exception when try to find wrong ingredients 500 attempts`() {
 
         //Given list of meals all have same ingredients
-        val mealsList = listOf(
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-            createMeals(6, listOf("am", "bn", "ce", "dv", "ww", "dd")),
-        )
+        val mealsList = LIST_OF_INVALID_MEALS_ALL_MEALS_HAVE_SAME_INGREDIENT
         //When && Then
-        assertThrows<Exception> {
+        assertThrows<CantFindWrongIngredientException> {
+            ingredientGameMealsMapper.map(mealsList)
+        }
+
+    }
+
+    @Test
+    fun `should throw exception when try to find wrong ingredients 500 attempts only one meal`() {
+
+        //Given list of meals all have same ingredients
+        val mealsList = LIST_OF_ONE_MEAL
+        //When && Then
+        assertThrows<CantFindWrongIngredientException> {
             ingredientGameMealsMapper.map(mealsList)
         }
 
     }
 
 
-    private fun createMeals(nIngredients: Int, ingredients: List<String>) = Meal(
-        name = "name",
-        id = 0,
-        minutes = 1,
-        contributorId = 123,
-        submissionDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
-        tags = listOf("tag1", "tag2"),
-        nutrition = Nutrition(
-            calories = 100.0,
-            totalFat = 10.0,
-            sugar = 10.0,
-            sodium = 10.0,
-            proteinGrams = 10.0,
-            saturatedFat = 10.0,
-            carbohydrates = 10.0
-        ),
-        nSteps = 1,
-        steps = listOf("step1", "step2"),
-        description = "description",
-        ingredients = ingredients,
-        nIngredients = nIngredients
+    companion object{
+        val LIST_OF_VALID_MEALS=listOf(
+            createMeal(numberOfIngredients = 6, ingredients =  listOf("am", "bn", "ce", "dv", "ww", "dd")),
+            createMeal(numberOfIngredients = 6, ingredients = listOf("abb", "by", "cc", "vd", "wry", "fff")),
+            createMeal(numberOfIngredients = 6, ingredients =  listOf("auik", "bgh", "bnmc", "hyud", "hghw", "vbf")),
+        )
+        val LIST_OF_INVALID_MEALS_HAVE_MEAL_NOT_HAVE_INGREDIENT=listOf(
+        createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+        createMeal(numberOfIngredients = 6, ingredients = listOf("abb", "by", "cc", "vd", "wry", "fff")),
+        createMeal(numberOfIngredients = 6, ingredients = listOf("auik", "bgh", "bnmc", "hyud", "hghw", "vbf")),
+        createMeal(numberOfIngredients = 0, ingredients = listOf()),
+        )
+        val LIST_OF_INVALID_MEALS_ALL_MEALS_HAVE_SAME_INGREDIENT=listOf(
+            createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+            createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+            createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+            createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+            createMeal(numberOfIngredients = 6, ingredients = listOf("am", "bn", "ce", "dv", "ww", "dd")),
+        )
+        val LIST_OF_ONE_MEAL=listOf( createMeal(numberOfIngredients = 2, ingredients = listOf("dd","ed")))
 
-    )
+    }
 
 }
