@@ -30,6 +30,6 @@ class SuggestionEasyFoodUITest {
 
         suggestEasyFood.run()
 
-         verify{ viewer.display(any()) }
-        }
+        verify { viewer.display(any()) }
     }
+}
