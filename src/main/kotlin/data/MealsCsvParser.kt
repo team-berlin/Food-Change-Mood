@@ -43,11 +43,11 @@ class MealsCsvParser {
             submissionDate = submittedDate,
             tags = tags,
             nutrition = nutrition,
-            nSteps = nSteps,
+            numberOfSteps = nSteps,
             steps = steps,
             description = description,
             ingredients = ingredients,
-            nIngredients = nIngredients
+            numberOfIngredients = nIngredients
         )
     }
 

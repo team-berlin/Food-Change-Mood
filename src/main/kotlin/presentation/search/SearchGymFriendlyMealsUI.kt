@@ -32,28 +32,29 @@ class SearchGymFriendlyMealsUI(
             return
         }
 
-        val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(
-              input = GymHelperInput(
-                calories = caloriesInput,
-                protein = proteinInput,
-                caloriesAndProteinTolerance = CaloriesAndProteinTolerance(
-                    caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10
-                )
-            ),
-        )
-
-        if (meals.isEmpty()) {
-            println("No meals found matching meals.")
-        } else {
+        try {
+            val meals = gymHelperUseCase.getMealsByCaloriesAndProtein(
+                input = GymHelperInput(
+                    calories = caloriesInput,
+                    protein = proteinInput,
+                    caloriesAndProteinTolerance = CaloriesAndProteinTolerance(
+                        caloriesToleranceInput ?: 30, proteinToleranceInput ?: 10
+                    )
+                ),
+            )
             displayListOfMeals(meals, viewer)
         }
+        catch (e : NoSuchElementException) {
+            viewer.display("No meals found matching meals.")
+        }
+
     }
 
     private fun displayListOfMeals(meals: List<Meal>, viewer: Viewer) {
         meals.forEach { meal ->
-            println("\n- ${meal.name}")
+            viewer.display("\n- ${meal.name}")
             showMealDetails(meal, viewer)
         }
-        println("\nTotal meals found: ${meals.size}")
+        viewer.display("\nTotal meals found: ${meals.size}")
     }
 }

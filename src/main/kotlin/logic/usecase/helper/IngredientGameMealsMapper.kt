@@ -35,7 +35,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun validateEmptyIngredients(meal: Meal) {
-        if (meal.nIngredients < 1) throw Exception("there is invalid meal ingredients")
+        if (meal.numberOfIngredients < 1) throw Exception("there is invalid meal ingredients")
     }
 
     private fun getRandomIngredient(meal: Meal): String {
