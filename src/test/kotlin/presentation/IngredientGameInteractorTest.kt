@@ -13,7 +13,6 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 
 class IngredientGameInteractorTest {
-    private lateinit var interactor: IngredientGameInteractor
     private val ingredientGame = mockk<IngredientGameUseCase>()
 
 
