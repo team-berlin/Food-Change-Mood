@@ -1,9 +1,8 @@
+
 plugins {
     kotlin("jvm") version "2.1.10"
+    id("org.jetbrains.kotlinx.kover") version "0.7.5"
 }
-
-group = "org.berlin"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,15 +15,40 @@ dependencies {
     implementation("io.insert-koin:koin-core:4.0.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    //mockk
-    testImplementation ("io.mockk:mockk:1.14.0")
-    // google truth
+
+    testImplementation("io.mockk:mockk:1.14.0")
     testImplementation("com.google.truth:truth:1.4.4")
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(22)
+}
+
+koverReport {
+    verify {
+        filters{
+            this.includes{
+                packages("data","logic.usecase", "org.berlin.presentation")
+            }
+        }
+        rule {
+            bound {
+                minValue = 90
+                aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
+            }
+        }
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+tasks.named("check") {
+    dependsOn(tasks.koverVerify)
 }
