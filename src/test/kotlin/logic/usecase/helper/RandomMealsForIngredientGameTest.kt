@@ -52,251 +52,184 @@ class RandomMealsForIngredientGameTest {
 
         val LIST_OF_VALID_MEALS_FOR_INGREDIENT_GAME = listOf(
             MealForIngredientGame(
-                mealName = "Meal 1",
-                correctIngredient = "a1",
-                threeIngredientOnlyOneCorrect = listOf("a1", "b1", "c1")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 2",
-                correctIngredient = "a2",
-                threeIngredientOnlyOneCorrect = listOf("a2", "b2", "c2")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 3",
-                correctIngredient = "a3",
-                threeIngredientOnlyOneCorrect = listOf("a3", "b3", "c3")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 4",
-                correctIngredient = "a4",
-                threeIngredientOnlyOneCorrect = listOf("a4", "b4", "c4")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 5",
-                correctIngredient = "a5",
-                threeIngredientOnlyOneCorrect = listOf("a5", "b5", "c5")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 6",
-                correctIngredient = "a6",
-                threeIngredientOnlyOneCorrect = listOf("a6", "b6", "c6")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 7",
-                correctIngredient = "a7",
-                threeIngredientOnlyOneCorrect = listOf("a7", "b7", "c7")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 8",
-                correctIngredient = "a8",
-                threeIngredientOnlyOneCorrect = listOf("a8", "b8", "c8")
-            ),
-            MealForIngredientGame(
-                mealName = "Meal 9",
-                correctIngredient = "a9",
-                threeIngredientOnlyOneCorrect = listOf("a9", "b9", "c9")
-            ),
-            MealForIngredientGame(
+                mealName = "Meal 1", correctIngredient = "a1", threeIngredientOnlyOneCorrect = listOf("a1", "b1", "c1")
+            ), MealForIngredientGame(
+                mealName = "Meal 2", correctIngredient = "a2", threeIngredientOnlyOneCorrect = listOf("a2", "b2", "c2")
+            ), MealForIngredientGame(
+                mealName = "Meal 3", correctIngredient = "a3", threeIngredientOnlyOneCorrect = listOf("a3", "b3", "c3")
+            ), MealForIngredientGame(
+                mealName = "Meal 4", correctIngredient = "a4", threeIngredientOnlyOneCorrect = listOf("a4", "b4", "c4")
+            ), MealForIngredientGame(
+                mealName = "Meal 5", correctIngredient = "a5", threeIngredientOnlyOneCorrect = listOf("a5", "b5", "c5")
+            ), MealForIngredientGame(
+                mealName = "Meal 6", correctIngredient = "a6", threeIngredientOnlyOneCorrect = listOf("a6", "b6", "c6")
+            ), MealForIngredientGame(
+                mealName = "Meal 7", correctIngredient = "a7", threeIngredientOnlyOneCorrect = listOf("a7", "b7", "c7")
+            ), MealForIngredientGame(
+                mealName = "Meal 8", correctIngredient = "a8", threeIngredientOnlyOneCorrect = listOf("a8", "b8", "c8")
+            ), MealForIngredientGame(
+                mealName = "Meal 9", correctIngredient = "a9", threeIngredientOnlyOneCorrect = listOf("a9", "b9", "c9")
+            ), MealForIngredientGame(
                 mealName = "Meal 10",
                 correctIngredient = "a10",
                 threeIngredientOnlyOneCorrect = listOf("a10", "b10", "c10")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 11",
                 correctIngredient = "a11",
                 threeIngredientOnlyOneCorrect = listOf("a11", "b11", "c11")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 12",
                 correctIngredient = "a12",
                 threeIngredientOnlyOneCorrect = listOf("a12", "b12", "c12")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 13",
                 correctIngredient = "a13",
                 threeIngredientOnlyOneCorrect = listOf("a13", "b13", "c13")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 14",
                 correctIngredient = "a14",
                 threeIngredientOnlyOneCorrect = listOf("a14", "b14", "c14")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 15",
                 correctIngredient = "a15",
                 threeIngredientOnlyOneCorrect = listOf("a15", "b15", "c15")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 16",
                 correctIngredient = "a16",
                 threeIngredientOnlyOneCorrect = listOf("a16", "b16", "c16")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 17",
                 correctIngredient = "a17",
                 threeIngredientOnlyOneCorrect = listOf("a17", "b17", "c17")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 18",
                 correctIngredient = "a18",
                 threeIngredientOnlyOneCorrect = listOf("a18", "b18", "c18")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 19",
                 correctIngredient = "a19",
                 threeIngredientOnlyOneCorrect = listOf("a19", "b19", "c19")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 20",
                 correctIngredient = "a20",
                 threeIngredientOnlyOneCorrect = listOf("a20", "b20", "c20")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 21",
                 correctIngredient = "a21",
                 threeIngredientOnlyOneCorrect = listOf("a21", "b21", "c21")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 22",
                 correctIngredient = "a22",
                 threeIngredientOnlyOneCorrect = listOf("a22", "b22", "c22")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 23",
                 correctIngredient = "a23",
                 threeIngredientOnlyOneCorrect = listOf("a23", "b23", "c23")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 24",
                 correctIngredient = "a24",
                 threeIngredientOnlyOneCorrect = listOf("a24", "b24", "c24")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 25",
                 correctIngredient = "a25",
                 threeIngredientOnlyOneCorrect = listOf("a25", "b25", "c25")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 26",
                 correctIngredient = "a26",
                 threeIngredientOnlyOneCorrect = listOf("a26", "b26", "c26")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 27",
                 correctIngredient = "a27",
                 threeIngredientOnlyOneCorrect = listOf("a27", "b27", "c27")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 28",
                 correctIngredient = "a28",
                 threeIngredientOnlyOneCorrect = listOf("a28", "b28", "c28")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 29",
                 correctIngredient = "a29",
                 threeIngredientOnlyOneCorrect = listOf("a29", "b29", "c29")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 30",
                 correctIngredient = "a30",
                 threeIngredientOnlyOneCorrect = listOf("a30", "b30", "c30")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 31",
                 correctIngredient = "a31",
                 threeIngredientOnlyOneCorrect = listOf("a31", "b31", "c31")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 32",
                 correctIngredient = "a32",
                 threeIngredientOnlyOneCorrect = listOf("a32", "b32", "c32")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 33",
                 correctIngredient = "a33",
                 threeIngredientOnlyOneCorrect = listOf("a33", "b33", "c33")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 34",
                 correctIngredient = "a34",
                 threeIngredientOnlyOneCorrect = listOf("a34", "b34", "c34")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 35",
                 correctIngredient = "a35",
                 threeIngredientOnlyOneCorrect = listOf("a35", "b35", "c35")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 36",
                 correctIngredient = "a36",
                 threeIngredientOnlyOneCorrect = listOf("a36", "b36", "c36")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 37",
                 correctIngredient = "a37",
                 threeIngredientOnlyOneCorrect = listOf("a37", "b37", "c37")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 38",
                 correctIngredient = "a38",
                 threeIngredientOnlyOneCorrect = listOf("a38", "b38", "c38")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 39",
                 correctIngredient = "a39",
                 threeIngredientOnlyOneCorrect = listOf("a39", "b39", "c39")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 40",
                 correctIngredient = "a40",
                 threeIngredientOnlyOneCorrect = listOf("a40", "b40", "c40")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 41",
                 correctIngredient = "a41",
                 threeIngredientOnlyOneCorrect = listOf("a41", "b41", "c41")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 42",
                 correctIngredient = "a42",
                 threeIngredientOnlyOneCorrect = listOf("a42", "b42", "c42")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 43",
                 correctIngredient = "a43",
                 threeIngredientOnlyOneCorrect = listOf("a43", "b43", "c43")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 44",
                 correctIngredient = "a44",
                 threeIngredientOnlyOneCorrect = listOf("a44", "b44", "c44")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 45",
                 correctIngredient = "a45",
                 threeIngredientOnlyOneCorrect = listOf("a45", "b45", "c45")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 46",
                 correctIngredient = "a46",
                 threeIngredientOnlyOneCorrect = listOf("a46", "b46", "c46")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 47",
                 correctIngredient = "a47",
                 threeIngredientOnlyOneCorrect = listOf("a47", "b47", "c47")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 48",
                 correctIngredient = "a48",
                 threeIngredientOnlyOneCorrect = listOf("a48", "b48", "c48")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 49",
                 correctIngredient = "a49",
                 threeIngredientOnlyOneCorrect = listOf("a49", "b49", "c49")
-            ),
-            MealForIngredientGame(
+            ), MealForIngredientGame(
                 mealName = "Meal 50",
                 correctIngredient = "a50",
                 threeIngredientOnlyOneCorrect = listOf("a50", "b50", "c50")
