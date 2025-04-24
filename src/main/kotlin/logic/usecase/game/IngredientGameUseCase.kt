@@ -3,6 +3,7 @@ package logic.usecase.game
 import org.berlin.logic.usecase.helper.IngredientGameMealsMapper
 import org.berlin.logic.common.extention.getRandomItems
 import org.berlin.logic.repository.MealsRepository
+import org.berlin.logic.usecase.helper.MealsNotEnoughException
 import org.berlin.model.MealForIngredientGame
 
 class IngredientGameUseCase(
@@ -20,7 +21,7 @@ class IngredientGameUseCase(
 
     private fun validateMealsMatchMaxQUESTIONS() {
         if (mealsForGame.size < MAX_QUESTIONS)
-            throw Exception("meals to run game is less $MAX_QUESTIONS")
+            throw MealsNotEnoughException("meals to run game is less $MAX_QUESTIONS")
     }
 
     private companion object {
