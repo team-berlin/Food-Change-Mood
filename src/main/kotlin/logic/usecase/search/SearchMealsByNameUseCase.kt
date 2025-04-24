@@ -1,12 +1,12 @@
 package org.berlin.logic.usecase.search
 
 import org.berlin.logic.repository.MealsRepository
-import org.berlin.logic.search.CombineSearchAlgorithms
+import org.berlin.logic.search.SelectionOfSearchAlgorithms
 import org.berlin.model.Meal
 
 class SearchMealsByNameUseCase(
     private val mealsRepository: MealsRepository,
-    private val searchByName: CombineSearchAlgorithms
+    private val searchByName: SelectionOfSearchAlgorithms
 ) {
 
     fun searchMealsByName(inputMealName: String): List<Meal> {
