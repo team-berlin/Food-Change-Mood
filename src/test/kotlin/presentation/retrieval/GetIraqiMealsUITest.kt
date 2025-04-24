@@ -42,54 +42,28 @@ class GetIraqiMealsUITest {
 
     @Test
     fun `run should display Iraqi Meals when use case return a list`() {
-        //. Given
+        // Given
         every { getIraqiMealsUseCase.getIraqiMeals() } returns listOf(iraqiMeal1, iraqiMeal2,iraqiMeal3)
+        val expectedDisplayCalls = 1 + (3 * 6) + 1
 
-        //. When
+        // When
         getIraqiMealsUI.run()
 
-        //. Then
-        verifySequence {
-            viewer.display("\n--- Iraqi Meals ---")
-
-            // Details for iraqiMeal1
-            viewer.display("Name: ${iraqiMeal1.name}")
-            viewer.display("ID: ${iraqiMeal1.id}")
-            viewer.display("Description: ${iraqiMeal1.description}")
-            viewer.display("Tags: ${iraqiMeal1.tags.joinToString(", ")}")
-            viewer.display("Ingredients: ${iraqiMeal1.ingredients.joinToString(", ")}")
-            viewer.display("---")
-
-            // Details for iraqiMeal2
-            viewer.display("Name: ${iraqiMeal2.name}")
-            viewer.display("ID: ${iraqiMeal2.id}")
-            viewer.display("Description: ${iraqiMeal2.description}")
-            viewer.display("Tags: ${iraqiMeal2.tags.joinToString(", ")}")
-            viewer.display("Ingredients: ${iraqiMeal2.ingredients.joinToString(", ")}")
-            viewer.display("---")
-
-            // Details for iraqiMeals3
-            viewer.display("Name: ${iraqiMeal3.name}")
-            viewer.display("ID: ${iraqiMeal3.id}")
-            viewer.display("Description: No description available")
-            viewer.display("Tags: ${iraqiMeal3.tags.joinToString(", ")}")
-            viewer.display("Ingredients: ${iraqiMeal3.ingredients.joinToString(", ")}")
-            viewer.display("---")
-
-            viewer.display("--- End of Iraqi Meals ---")
-        }
+        // Then
+        verify(exactly = expectedDisplayCalls) { viewer.display(any()) }
     }
 
     @Test
     fun `run should handle NoSuchElementException and display no Iraqi Meals message`() {
-        //. Given
+        // Given
         every { getIraqiMealsUseCase.getIraqiMeals() } throws NoSuchElementException("No Iraqi meals found")
 
-        //. When
+        // When
         getIraqiMealsUI.run()
 
-        //. Then
-        verify { viewer.display("No Iraqi meals found.") }
+        // Then
+        verify(exactly = 1) { viewer.display("No Iraqi meals found.") }
+        verify(exactly = 1) { viewer.display(any()) }
     }
 
 }

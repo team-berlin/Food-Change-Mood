@@ -50,25 +50,25 @@ class GetIraqiMealsUseCaseTest {
 
     @Test
     fun `getIraqiMeals should return the expected meals when found by tag`() {
-        //. Given
+        // Given
         every { mealsRepository.getAllMeals() } returns listOf(iraqiMeal1 , nonIraqiMeal1, nonIraqiMeal2)
 
-        //. When
+        // When
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        //. Then
+        // Then
         assertThat(result).containsExactly(iraqiMeal1)
     }
 
     @Test
     fun `getIraqiMeals should return the expected meals when found by description`() {
-        //. Given
+        // Given
         every { mealsRepository.getAllMeals() } returns listOf(iraqiMeal2 , nonIraqiMeal1, nonIraqiMeal2)
 
-        //. When
+        // When
         val result = getIraqiMealsUseCase.getIraqiMeals()
 
-        //. Then
+        // Then
         assertThat(result).containsExactly(iraqiMeal2)
     }
 
@@ -98,10 +98,10 @@ class GetIraqiMealsUseCaseTest {
 
     @Test
     fun `getIraqiMeals should throw NoSuchElementException when no Iraqi meals are found`() {
-        //. Given
+        // Given
         every { mealsRepository.getAllMeals() } returns listOf(nonIraqiMeal1,nonIraqiMeal2)
 
-        //. When && Then
+        // When && Then
         assertThrows<NoSuchElementException> {
             getIraqiMealsUseCase.getIraqiMeals()
         }
@@ -109,10 +109,10 @@ class GetIraqiMealsUseCaseTest {
 
     @Test
     fun `getIraqiMeals should throw NoSuchElementException when no meals are found`() {
-        //. Given
+        // Given
         every { mealsRepository.getAllMeals() } returns emptyList()
 
-        //. When && Then
+        // When && Then
         assertThrows<NoSuchElementException> {
             getIraqiMealsUseCase.getIraqiMeals()
         }
