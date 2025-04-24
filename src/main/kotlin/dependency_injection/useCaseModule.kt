@@ -2,7 +2,6 @@ package org.berlin.dependency_injection
 
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import logic.usecase.game.IngredientGameUseCase
-import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.search.SelectionOfSearchAlgorithms
 import org.berlin.logic.usecase.helper.IngredientGameMealsMapper
 import org.berlin.logic.search.KmpSearch
