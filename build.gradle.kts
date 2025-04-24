@@ -1,9 +1,8 @@
+
 plugins {
     kotlin("jvm") version "2.1.10"
+    id("org.jetbrains.kotlinx.kover") version "0.7.5"
 }
-
-group = "org.berlin"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -26,6 +25,30 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(22)
+}
+
+koverReport {
+    verify {
+        filters{
+            this.includes{
+                packages("data","logic.usecase", "org.berlin.presentation")
+            }
+        }
+        rule {
+            bound {
+                minValue = 90
+                aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
+            }
+        }
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+tasks.named("check") {
+    dependsOn(tasks.koverVerify)
 }

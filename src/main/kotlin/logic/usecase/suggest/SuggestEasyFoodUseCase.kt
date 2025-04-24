@@ -8,7 +8,8 @@ class SuggestEasyFoodUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getEasyFoodSuggestion(): List<Meal> = mealsRepository
+    fun getEasyFoodSuggestion(): List<Meal> =
+        mealsRepository
             .getAllMeals()
             .filter(::onlyEasyFood)
             .takeIf { it.isNotEmpty() }
