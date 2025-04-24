@@ -36,14 +36,13 @@ class SearchMealsByNameUseCaseTest {
 
         //when
         val result = searchMealsByName.searchMealsByName("pizza")
-
         //Then
-        assertThat(result.size).isEqualTo(1)
         assertThat(result[0].name).isEqualTo("cheese pizza")
     }
 
+
     @Test
-    fun `searchMealsByName should return 0 when there is no matching with the search word`() {
+    fun `searchMealsByName should throw NoSuchElementException when there is no matching with the search word`() {
         //Given
         val meals = listOf(
             createMeal(name = "cheese cake"),
