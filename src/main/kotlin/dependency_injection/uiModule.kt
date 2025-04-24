@@ -3,7 +3,7 @@ package dependency_injection
 import org.berlin.presentation.MainMenuUI
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.game.GuessPreparationTimeGameUI
-import org.berlin.presentation.game.IngredientGameInteractorUI
+import org.berlin.presentation.game.IngredientGameUI
 import org.berlin.presentation.input_output.ConsoleReader
 import org.berlin.presentation.input_output.ConsoleViewer
 import org.berlin.presentation.input_output.Reader
@@ -40,7 +40,7 @@ val uiModule = module {
     single { SuggestKetoMealUI(get(), get(), get()) } bind UiRunner::class
     single { SuggestItalianFoodForLargeGroupUI(get(), get()) } bind UiRunner::class
     single { GuessPreparationTimeGameUI(get(), get(), get()) } bind UiRunner::class
-    single { IngredientGameInteractorUI(get(), get(), get()) } bind UiRunner::class
+    single { IngredientGameUI(get(), get(), get()) } bind UiRunner::class
     single { GetQuickHealthyMealsUI(get(), get()) } bind UiRunner::class
     single { SuggestHighCalorieMealsUI(get(), get()) } bind UiRunner::class
 

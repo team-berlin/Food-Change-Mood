@@ -1,13 +1,13 @@
 package org.berlin.presentation.game
 
+import logic.usecase.game.IngredientGameUseCase
 import org.berlin.model.MealForIngredientGame
-import org.berlin.presentation.IngredientGameInteractor
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
 
-class IngredientGameInteractorUI(
-    private val ingredientGame: IngredientGameInteractor,
+class IngredientGameUI(
+    private val ingredientGame: IngredientGameUseCase,
     private val reader: Reader,
     private val viewer: Viewer
 ): UiRunner {
