@@ -8,7 +8,6 @@ import io.mockk.verifySequence
 import org.berlin.logic.usecase.retrieval.GetIraqiMealsUseCase
 import org.berlin.presentation.input_output.Viewer
 import org.berlin.presentation.retrieval.GetIraqiMealsUI
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -35,10 +34,16 @@ class GetIraqiMealsUITest {
         description = "Fried Iraqi dumplings"
     )
 
+    private val iraqiMeal3 = createMeal(
+        name = "Kubaa", id = 3, tags = listOf("fried","iraqi"),
+        ingredients = listOf("bulgur", "meat"),
+        description = null
+    )
+
     @Test
     fun `run should display Iraqi Meals when use case return a list`() {
         //. Given
-        every { getIraqiMealsUseCase.getIraqiMeals() } returns listOf(iraqiMeal1, iraqiMeal2)
+        every { getIraqiMealsUseCase.getIraqiMeals() } returns listOf(iraqiMeal1, iraqiMeal2,iraqiMeal3)
 
         //. When
         getIraqiMealsUI.run()
@@ -63,6 +68,13 @@ class GetIraqiMealsUITest {
             viewer.display("Ingredients: ${iraqiMeal2.ingredients.joinToString(", ")}")
             viewer.display("---")
 
+            // Details for iraqiMeals3
+            viewer.display("Name: ${iraqiMeal3.name}")
+            viewer.display("ID: ${iraqiMeal3.id}")
+            viewer.display("Description: No description available")
+            viewer.display("Tags: ${iraqiMeal3.tags.joinToString(", ")}")
+            viewer.display("Ingredients: ${iraqiMeal3.ingredients.joinToString(", ")}")
+            viewer.display("---")
 
             viewer.display("--- End of Iraqi Meals ---")
         }

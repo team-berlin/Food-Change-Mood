@@ -24,7 +24,7 @@ fun createMeal(
         carbohydrates = 10.0
     ),
     steps: List<String> = listOf("step1", "step2"),
-    description: String = "description",
+    description: String? = "description",
     ingredients: List<String> = listOf("ingredient1", "ingredient2")
 ): Meal {
     return Meal(
