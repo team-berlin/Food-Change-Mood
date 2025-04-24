@@ -23,8 +23,8 @@ class SuggestionEasyFoodUI(
             """
                     ${meal.name}
                     Time: ${meal.minutes} minutes
-                    Ingredients: ${meal.nIngredients}
-                    Steps: ${meal.nSteps}
+                    Ingredients: ${meal.numberOfIngredients}
+                    Steps: ${meal.numberOfSteps}
                     ---------------------
                 """.trimIndent()
         )
