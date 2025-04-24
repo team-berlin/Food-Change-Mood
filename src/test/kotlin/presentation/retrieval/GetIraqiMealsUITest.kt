@@ -46,18 +46,24 @@ class GetIraqiMealsUITest {
         //. Then
         verifySequence {
             viewer.display("\n--- Iraqi Meals ---")
+
+            // Details for iraqiMeal1
             viewer.display("Name: ${iraqiMeal1.name}")
             viewer.display("ID: ${iraqiMeal1.id}")
             viewer.display("Description: ${iraqiMeal1.description}")
             viewer.display("Tags: ${iraqiMeal1.tags.joinToString(", ")}")
             viewer.display("Ingredients: ${iraqiMeal1.ingredients.joinToString(", ")}")
             viewer.display("---")
+
+            // Details for iraqiMeal2
             viewer.display("Name: ${iraqiMeal2.name}")
             viewer.display("ID: ${iraqiMeal2.id}")
             viewer.display("Description: ${iraqiMeal2.description}")
             viewer.display("Tags: ${iraqiMeal2.tags.joinToString(", ")}")
             viewer.display("Ingredients: ${iraqiMeal2.ingredients.joinToString(", ")}")
             viewer.display("---")
+
+
             viewer.display("--- End of Iraqi Meals ---")
         }
     }
