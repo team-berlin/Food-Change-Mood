@@ -2,11 +2,11 @@ package org.berlin.dependency_injection
 
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import logic.usecase.game.IngredientGameUseCase
-import org.berlin.logic.IngredientGameMealsMapper
-import org.berlin.logic.search.SelectionOfSearchAlgorithms
+import logic.usecase.helper.KmpSearch
+import logic.usecase.helper.LevenshteinSearch
+import logic.usecase.helper.SelectionOfSearchAlgorithms
+//import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.usecase.helper.IngredientGameMealsMapper
-import org.berlin.logic.search.KmpSearch
-import org.berlin.logic.search.LevenshteinSearch
 import org.berlin.logic.usecase.retrieval.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.retrieval.GetSeafoodMealsUseCase
 import org.berlin.logic.usecase.retrieval.GetIraqiMealsUseCase
