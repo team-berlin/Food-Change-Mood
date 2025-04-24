@@ -6,6 +6,8 @@ import org.berlin.model.Nutrition
 
 class MealsCsvParser {
 
+    private val ALL_SPACES_VALUE = "\\s+".toRegex()
+
     fun parseColumnsToMeal(line: Array<String>): Meal {
 
         if (line.size < 12) {
@@ -23,7 +25,7 @@ class MealsCsvParser {
         val nutritionRaw = line[ColumnIndex.NUTRITION].trim().removeAllSpaces()
         val nSteps = line[ColumnIndex.N_STEPS].trim().removeAllSpaces().toIntOrNull() ?: 0
         val stepsRaw = line[ColumnIndex.STEPS].trim().removeAllSpaces()
-        val description = line.getOrNull(ColumnIndex.DESCRIPTION)?.removeAllSpaces()?.trim()?.takeIf { it.isNotBlank() }
+        val description = if (line[ColumnIndex.DESCRIPTION].isNotBlank()) line[ColumnIndex.DESCRIPTION].trim().removeAllSpaces() else null
         val ingredientsRaw = line[ColumnIndex.INGREDIENTS].trim().removeAllSpaces()
         val nIngredients = line[ColumnIndex.N_INGREDIENTS].trim().removeAllSpaces().toIntOrNull() ?: 0
 
@@ -52,16 +54,24 @@ class MealsCsvParser {
     }
 
     private fun parseStringList(raw: String): List<String> {
-        val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
+        val trimmed = raw
+            .removePrefix("[")
+            .removeSuffix("]")
+            .trim()
         if (trimmed.isEmpty()) {
             return emptyList()
         }
-        return trimmed.split(",").map { it.trim().removeSurrounding("'").removeSurrounding("\"") }
+        return trimmed
+            .split(",")
+            .map { it.trim().removeSurrounding("'").removeSurrounding("\"") }
             .filter { it.isNotBlank() }
     }
 
     private fun parseNutrition(raw: String): Nutrition {
-        val trimmed = raw.removePrefix("[").removeSuffix("]").trim()
+        val trimmed = raw
+            .removePrefix("[")
+            .removeSuffix("]")
+            .trim()
         val parts = trimmed.split(",").map { it.trim().toDoubleOrNull() ?: 0.0 }
 
         val calories = parts[NutritionIndex.CALORIES]
@@ -85,9 +95,5 @@ class MealsCsvParser {
 
     private fun String.removeAllSpaces(): String {
         return this.replace(ALL_SPACES_VALUE, " ")
-    }
-
-    private companion object {
-        val ALL_SPACES_VALUE = "\\s+".toRegex()
     }
 }

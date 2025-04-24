@@ -8,8 +8,7 @@ class SuggestKetoMealUseCase(
 ) {
 
     fun suggestKetoMeal(): List<Meal> =
-        mealsRepository
-            .getAllMeals()
+        mealsRepository.getAllMeals()
             .filter(::onlyKetoFriendly)
             .takeIf { it.isNotEmpty() }
             ?.shuffled()
