@@ -16,10 +16,10 @@ fun showMealDetails(meal: Meal, viewer: Viewer) {
         viewer.display("  Saturated Fat: $saturatedFat g")
         viewer.display("  Carbohydrates: $carbohydrates g")
         viewer.display("  Sugar: $sugar g")
-        viewer.display("  Protein: $protein g")
+        viewer.display("  Protein: $proteinGrams g")
         viewer.display("  Sodium: $sodium mg")
-        viewer.display("  Ingredients: ${meal.nIngredients}")
-        viewer.display("  Steps: ${meal.nSteps}")
+        viewer.display("  Ingredients: ${meal.numberOfIngredients}")
+        viewer.display("  Steps: ${meal.numberOfSteps}")
     }
 
     viewer.display("Steps:")
@@ -27,5 +27,5 @@ fun showMealDetails(meal: Meal, viewer: Viewer) {
         viewer.display("  ${index + 1}. $step")
     }
 
-    viewer.display("\nIngredients (${meal.nIngredients}): ${meal.ingredients.joinToString(", ")}")
+    viewer.display("\nIngredients (${meal.numberOfIngredients}): ${meal.ingredients.joinToString(", ")}")
 }

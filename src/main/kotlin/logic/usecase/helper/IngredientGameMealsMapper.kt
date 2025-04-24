@@ -1,4 +1,4 @@
-package org.berlin.logic
+package org.berlin.logic.usecase.helper
 
 import org.berlin.model.Meal
 import org.berlin.model.MealForIngredientGame
@@ -35,7 +35,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun validateEmptyIngredients(meal: Meal) {
-        if (meal.nIngredients < 1) throw Exception("there is invalid meal ingredients")
+        if (meal.numberOfIngredients < 1) throw Exception("there is invalid meal ingredients")
     }
 
     private fun getRandomIngredient(meal: Meal): String {
@@ -44,7 +44,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun getTwoWrongIngredient(
-        allMealsIngredients: List<String>, meal: Meal
+        allMealsIngredients: List<String>, meal: Meal,
     ): List<String> {
         validateEmptyIngredients(meal)
 
@@ -57,8 +57,7 @@ class IngredientGameMealsMapper {
             }
             counter++
         }
-        if (wrongIngredients.size < 2)
-            throw Exception("failed to find two wrong ingredients after 500 attempts")
+        if (wrongIngredients.size < 2) throw Exception("failed to find two wrong ingredients after 500 attempts")
 
         return wrongIngredients.toList()
 

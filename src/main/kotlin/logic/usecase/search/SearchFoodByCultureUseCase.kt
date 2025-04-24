@@ -4,27 +4,24 @@ import org.berlin.logic.common.extention.getRandomItems
 import org.berlin.logic.repository.MealsRepository
 import org.berlin.model.Meal
 
-class ExploreFoodCultureUseCase(
+class SearchFoodByCultureUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
     fun exploreFoodByCountry(country: String): List<Meal> =
         mealsRepository
             .getAllMeals()
-            .filter { isMealRelatedToCountry(it, country) }
+            .filter { onlyMealRelatedToCountry(it, country) }
             .takeIf { it.isNotEmpty() }
             ?.getRandomItems(MEALS_NUMBER)
             ?: throw NoSuchElementException("No meals found related to country: $country")
 
-    private fun isMealRelatedToCountry(meal: Meal, country: String): Boolean {
+    private fun onlyMealRelatedToCountry(meal: Meal, country: String): Boolean {
         return meal.tags.any { tag ->
             tag.contains(country, ignoreCase = true) }
-                || meal.description?.contains(
-            country,
-            ignoreCase = true
-        ) ?: false
+                || meal.description?.contains(country, ignoreCase = true) ?: false
                 || meal.name.contains(country, ignoreCase = true)
-                || meal.steps.contains(country)
+                || meal.steps.any { it.contains(country) }
     }
 
     private companion object {

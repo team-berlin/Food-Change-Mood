@@ -8,18 +8,17 @@ class SuggestEasyFoodUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun getEasyFoodSuggestion(): List<Meal> =
-        mealsRepository
+    fun getEasyFoodSuggestion(): List<Meal> = mealsRepository
             .getAllMeals()
             .filter(::onlyEasyFood)
             .takeIf { it.isNotEmpty() }
             ?.getRandomItems(RANDOM_N)
-            ?: throw NoSuchElementException("No easy‑food meals found")
+            ?: throw NoSuchElementException("No easy food meals found")
 
     private fun onlyEasyFood(meal: Meal): Boolean {
         return meal.minutes <= MAX_PREP_TIME_MINUTES &&
-                meal.nIngredients <= INGREDIENTS_COUNT &&
-                meal.nSteps <= STEPS_COUNT
+                meal.numberOfIngredients <= INGREDIENTS_COUNT &&
+                meal.numberOfSteps <= STEPS_COUNT
     }
 
     private companion object {

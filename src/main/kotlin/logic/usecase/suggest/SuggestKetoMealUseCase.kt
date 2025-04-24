@@ -17,7 +17,7 @@ class SuggestKetoMealUseCase(
 
     private fun onlyKetoFriendly(meal: Meal): Boolean {
         val carbValue = meal.nutrition.carbohydrates
-        val proteinValue = meal.nutrition.protein
+        val proteinValue = meal.nutrition.proteinGrams
         val fatValue = meal.nutrition.totalFat
 
         val isCarbWithinThreshold = carbValue <= CARB_THRESHOLD

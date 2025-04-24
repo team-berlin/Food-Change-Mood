@@ -6,7 +6,7 @@ import org.berlin.model.Meal
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class GymHelperUseCase(
+class SearchGymFriendlyMealsUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
@@ -22,7 +22,7 @@ class GymHelperUseCase(
 
     private fun Meal.matchesCaloriesAndProtein(input: GymHelperInput): Boolean {
         val calorieDifference = abs(this.nutrition.calories.roundToInt() - input.calories.roundToInt())
-        val proteinDifference = abs(this.nutrition.protein.roundToInt() - input.protein.roundToInt())
+        val proteinDifference = abs(this.nutrition.proteinGrams.roundToInt() - input.protein.roundToInt())
 
         val withinCalorieTolerance = calorieDifference <= input.caloriesAndProteinTolerance.caloriesTolerance
         val withinProteinTolerance = proteinDifference <= input.caloriesAndProteinTolerance.proteinTolerance

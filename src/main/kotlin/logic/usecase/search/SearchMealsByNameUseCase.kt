@@ -14,12 +14,12 @@ class SearchMealsByNameUseCase(
 
         return mealsRepository
             .getAllMeals()
-            .filter { matchesName(it, query) }
+            .filter { onlyMatchesName(it, query) }
             .takeIf { it.isNotEmpty() }
             ?: throw NoSuchElementException("No meals found for \"$inputMealName\"")
     }
 
-    private fun matchesName(meal: Meal, query: String): Boolean =
+    private fun onlyMatchesName(meal: Meal, query: String): Boolean =
         searchByName.search(
             textToSearchIn  = meal.name.lowercase(),
             wordToSearchBy = query
