@@ -1,6 +1,9 @@
 package org.berlin.presentation
 
 import logic.usecase.game.IngredientGameUseCase
+import org.berlin.logic.usecase.helper.EmptyMealsException
+import org.berlin.logic.usecase.helper.InvalidChoiceException
+import org.berlin.logic.usecase.helper.MealsNotEnoughException
 import org.berlin.model.GameState
 import org.berlin.model.MealForIngredientGame
 
@@ -25,9 +28,14 @@ class IngredientGameInteractor(
         return state == GameState.RUNNING
     }
 
-    fun getCurrentMeal() = meals[currentIndex]
+    fun getCurrentMeal():MealForIngredientGame {
+        if (meals.isEmpty())throw EmptyMealsException()
+       return meals[currentIndex]
+    }
     fun submitUserAnswer(answer: Int) {
         validateUserAnswer(answer)
+        if (meals.isEmpty())throw EmptyMealsException()
+        if (!isRunning())throw IndexOutOfBoundsException("max questions $MAX_QUESTIONS")
         updateState(fetchIngredientAnswerChosen(answer), meals[currentIndex])
     }
 
@@ -35,7 +43,7 @@ class IngredientGameInteractor(
 
     private fun validateUserAnswer(answer: Int) {
         if (answer !in MIN_ANSWER..MAX_ANSWER) {
-            throw Exception("Invalid Input: Only $MIN_ANSWER to $MAX_ANSWER are allowed.")
+            throw InvalidChoiceException("Invalid Input: Only $MIN_ANSWER to $MAX_ANSWER are allowed.")
         }
     }
 
@@ -57,7 +65,7 @@ class IngredientGameInteractor(
 
     private fun validateMealsSize() {
         if (meals.size != MAX_QUESTIONS)
-            throw Exception("meals to run game is less $MAX_QUESTIONS")
+            throw MealsNotEnoughException("meals to run game is less $MAX_QUESTIONS")
     }
 
     private companion object {
