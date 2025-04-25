@@ -52,7 +52,7 @@ class GuessPreparationTimeGameUseCase(
         return gameState == GameState.RUNNING
     }
 
-    fun getMeal(): Pair<String, Int> {
+    fun getCurrentMeal(): Pair<String, Int> {
         if (currentMeal == null) throw NoSuchElementException("No such meals found")
         return Pair(currentMeal?.name ?: "", currentMeal?.minutes ?: 0)
     }

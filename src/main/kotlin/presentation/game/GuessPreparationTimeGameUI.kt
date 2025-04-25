@@ -21,8 +21,8 @@ class GuessPreparationTimeGameUI(
 
     private fun playGame() {
         guessPreparationTimeGameUseCase.run()
-        val mealName = guessPreparationTimeGameUseCase.getMeal().first
-        val correctTime = guessPreparationTimeGameUseCase.getMeal().second
+        val mealName = guessPreparationTimeGameUseCase.getCurrentMeal().first
+        val correctTime = guessPreparationTimeGameUseCase.getCurrentMeal().second
 
         viewer.display("Guess the preparation time of $mealName meal")
 
