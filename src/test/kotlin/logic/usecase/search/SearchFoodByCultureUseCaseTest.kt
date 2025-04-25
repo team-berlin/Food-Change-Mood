@@ -100,7 +100,6 @@ class SearchFoodByCultureUseCaseTest {
         assertThat(result).containsExactly(mealWithSteps)
     }
 
-
     @Test
     fun `should return meal when matching country in any field`() {
         //Given
@@ -119,8 +118,9 @@ class SearchFoodByCultureUseCaseTest {
         //Then
         assertThat(result).containsExactly(foodCulture)
     }
+
     @Test
-    fun `should not include meals with null description when filtering by country`() {
+    fun  `should not include meals with null description when filtering by country`() {
         // Given
         val foodCulture = listOf(
             createMeal(

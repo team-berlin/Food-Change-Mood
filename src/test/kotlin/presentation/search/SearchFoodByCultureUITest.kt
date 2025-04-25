@@ -60,7 +60,7 @@ class SearchFoodByCultureUITest {
         //Given
         val countryName = "malysia"
         every { reader.getUserInput() } returns countryName
-        every { exploreFoodCulture.exploreFoodByCountry(countryName) } throws RuntimeException()
+        every { exploreFoodCulture.exploreFoodByCountry(countryName) } throws NoSuchElementException()
 
         //When
         searchFoodByCultureUI.run()
