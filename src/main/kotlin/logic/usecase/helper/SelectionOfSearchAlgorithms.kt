@@ -1,4 +1,4 @@
-package org.berlin.logic.search
+package logic.usecase.helper
 
 class SelectionOfSearchAlgorithms(
     private val algorithms: List<SearchByName>,

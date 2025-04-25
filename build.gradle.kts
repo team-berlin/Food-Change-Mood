@@ -1,7 +1,10 @@
 plugins {
     kotlin("jvm") version "2.1.10"
     id("org.jetbrains.kotlinx.kover") version "0.7.5"
+
 }
+group = "org.berlin"
+version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()

@@ -1,7 +1,7 @@
 package org.berlin.logic.usecase.search
 
+import logic.usecase.helper.SelectionOfSearchAlgorithms
 import org.berlin.logic.repository.MealsRepository
-import org.berlin.logic.search.SelectionOfSearchAlgorithms
 import org.berlin.model.Meal
 
 class SearchMealsByNameUseCase(
