@@ -35,7 +35,7 @@ koverReport {
 
         rule {
             bound {
-                minValue = 0
+                minValue = 90
                 aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
             }
         }

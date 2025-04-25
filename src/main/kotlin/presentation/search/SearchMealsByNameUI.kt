@@ -40,7 +40,7 @@ class SearchMealsByNameUI(
         if (meals.isEmpty()) {
             viewer.display("No meals found for \"$searchWord\".")
         } else {
-           // viewer.display("Found ${meals.size} result(s) for \"$searchWord\":\n")
+            viewer.display("Found ${meals.size} result(s) for \"$searchWord\":\n")
             meals.forEach { meal ->
                 viewer.display(meal.name)
             }
