@@ -33,7 +33,7 @@ val uiModule = module {
     single { GetSeafoodMealsUI(get(), get()) } bind UiRunner::class
     single { SearchMealsByNameUI(get(), get(), get()) } bind UiRunner::class
     single { SearchMealsByDateUI(get(), get(), get()) } bind UiRunner::class
-    single { SearchFoodByCultureUI(get(), get()) } bind UiRunner::class
+    single { SearchFoodByCultureUI(get(), get(), get()) } bind UiRunner::class
     single { SearchGymFriendlyMealsUI(get(), get(), get()) } bind UiRunner::class
     single { SuggestionEasyFoodUI(get(), get()) } bind UiRunner::class
     single { SuggestEggFreeSweetUI(get(), get(), get()) } bind UiRunner::class
