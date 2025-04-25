@@ -34,6 +34,8 @@ fun genarateEasyMeals(
 }
 
 
+
+
 fun generatePotatoMeals(count: Int): List<Meal>{
     return List(count){ index ->
         createMeal(

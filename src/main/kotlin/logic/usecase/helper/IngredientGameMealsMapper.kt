@@ -23,7 +23,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun validateEmptyMeals(meals: List<Meal>) {
-        if (meals.isEmpty()) throw Exception("list of meals is empty")
+        if (meals.isEmpty()) throw EmptyMealsException()
     }
 
     private fun getAllMealsIngredients(meals: List<Meal>): List<String> {
@@ -35,7 +35,7 @@ class IngredientGameMealsMapper {
     }
 
     private fun validateEmptyIngredients(meal: Meal) {
-        if (meal.numberOfIngredients < 1) throw Exception("there is invalid meal ingredients")
+        if (meal.numberOfIngredients < 1) throw EmptyIngredientsException()
     }
 
     private fun getRandomIngredient(meal: Meal): String {
@@ -57,7 +57,7 @@ class IngredientGameMealsMapper {
             }
             counter++
         }
-        if (wrongIngredients.size < 2) throw Exception("failed to find two wrong ingredients after 500 attempts")
+        if (wrongIngredients.size < 2) throw CantFindWrongIngredientException()
 
         return wrongIngredients.toList()
 
