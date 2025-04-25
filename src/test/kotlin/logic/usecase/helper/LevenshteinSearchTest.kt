@@ -6,14 +6,7 @@ import org.junit.jupiter.api.Test
  class LevenshteinSearchTest{
   private val levenshteinSearchTest = LevenshteinSearch()
 
-  private companion object {
-   val textWordInItWithTypoLessThanThreshold = "cheese cake"
-   val wordWithTypoLessThanThreshold = "chedsecake"
-   val textWhichWordTypoEqualThreshold = "goodCheese"
-   val wordWithTypoEqualthreshold = "geedChoese"
-   val textWhichWordTypoGreaterThanThreshold = "goodCheese"
-   val wordWithTypoGreaterThanthreshold = "geedChoose"
-  }
+
 
   @Test
   fun `search should return true when the word is exist in text and the typo is less than threshold`() {
@@ -53,5 +46,14 @@ import org.junit.jupiter.api.Test
 
    //Then
    assertThat(result).isFalse()
+  }
+
+  private companion object {
+   val textWordInItWithTypoLessThanThreshold = "cheese cake"
+   val wordWithTypoLessThanThreshold = "chedsecake"
+   val textWhichWordTypoEqualThreshold = "goodCheese"
+   val wordWithTypoEqualthreshold = "geedChoese"
+   val textWhichWordTypoGreaterThanThreshold = "goodCheese"
+   val wordWithTypoGreaterThanthreshold = "geedChoose"
   }
  }

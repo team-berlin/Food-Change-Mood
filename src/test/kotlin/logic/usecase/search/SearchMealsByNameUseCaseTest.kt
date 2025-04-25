@@ -27,13 +27,12 @@ class SearchMealsByNameUseCaseTest {
     fun `searchMealsByName should return the meals when they matching the search word`() {
         //Given
         val meals = testMeals
-        val searchWord = wordMatch
         every { mealsRepository.getAllMeals() } returns meals
         every { searchAlgorithm.search("cheese pizza", "pizza") } returns true
         every { searchAlgorithm.search("cheese cake", "pizza") } returns false
 
         //when
-        val result = searchMealsByName.searchMealsByName(searchWord)
+        val result = searchMealsByName.searchMealsByName("pizza")
         //Then
         assertThat(result[0].name).isEqualTo("cheese pizza")
     }
@@ -43,23 +42,19 @@ class SearchMealsByNameUseCaseTest {
     fun `searchMealsByName should throw NoSuchElementException when there is no matching with the search word`() {
         //Given
         val meals = testMeals
-        val searchWord = wordNotMatch
         every { mealsRepository.getAllMeals() } returns meals
         every { searchAlgorithm.search(any(), any()) } returns false
 
         //when && Then
         assertThrows<NoSuchElementException> {
-            searchMealsByName.searchMealsByName(searchWord)
+            searchMealsByName.searchMealsByName("pizza")
         }
     }
-
-    private companion object {
-        val testMeals = listOf(
+    private companion object{
+        val testMeals=listOf(
             createMeal(name = "cheese cake"),
             createMeal(name = "cheese pizza"),
         )
-        val wordNotMatch = "burger"
-        val wordMatch = "cheese"
     }
 
 }
