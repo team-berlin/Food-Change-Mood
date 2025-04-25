@@ -22,24 +22,6 @@ dependencies {
     testImplementation("com.google.truth:truth:1.4.4")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
-
-}
-koverReport {
-    verify {
-        filters {
-            includes {
-                packages("data", "logic.usecase", "org.berlin.presentation")
-
-            }
-        }
-
-        rule {
-            bound {
-                minValue = 90
-                aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
-            }
-        }
-    }
 }
 
 tasks.test {
@@ -54,17 +36,22 @@ koverReport {
     verify {
         filters {
             includes {
-                packages("data", "logic.usecase", "org.berlin.presentation")
+                packages(
+                    "data",
+                    "logic.usecase.*",
+                    "org.berlin.presentation*",
+                )
             }
         }
         rule {
             bound {
-                minValue = 90
+                minValue = 100
                 aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
             }
         }
     }
 }
+
 repositories {
     mavenCentral()
 }
