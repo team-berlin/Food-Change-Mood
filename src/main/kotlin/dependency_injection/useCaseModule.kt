@@ -28,8 +28,8 @@ val useCaseModule = module {
     single { SuggestEggFreeSweetUseCase(get()) }
     single { GetIraqiMealsUseCase(get()) }
     single { IngredientGameMealsMapper() }
-    single { IngredientGameUseCase(get(), get()) }
-    single { IngredientGameInteractor(get()) }
+    single { RandomMealsForIngredientGame(get(),get()) }
+    single { IngredientGameUseCase(get()) }
     single { GetQuickHealthyMealsUseCase(get()) }
     single { SuggestItalianFoodForLargeGroupUseCase(get()) }
     single { GetMealsContainsPotatoUseCase(get()) }

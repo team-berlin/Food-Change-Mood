@@ -45,6 +45,30 @@ koverReport {
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(22)
+}
+
+koverReport {
+    verify {
+        filters {
+            includes {
+                packages("data", "logic.usecase", "org.berlin.presentation")
+            }
+        }
+        rule {
+            bound {
+                minValue = 90
+                aggregation = kotlinx.kover.gradle.plugin.dsl.AggregationType.COVERED_PERCENTAGE
+            }
+        }
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+tasks.named("check") {
+    dependsOn(tasks.koverVerify)
 }
