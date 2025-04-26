@@ -1,6 +1,7 @@
 package org.berlin.presentation.game
 
 import logic.usecase.game.GuessPreparationTimeGameUseCase
+import org.berlin.model.GameState
 import org.berlin.presentation.UiRunner
 import org.berlin.presentation.input_output.Reader
 import org.berlin.presentation.input_output.Viewer
@@ -9,26 +10,23 @@ class GuessPreparationTimeGameUI(
     private val guessPreparationTimeGameUseCase: GuessPreparationTimeGameUseCase,
     private val reader: Reader,
     private val viewer: Viewer
-): UiRunner {
+) : UiRunner {
 
     override val id: Int = 5
     override val label: String = "Guess Preparation Time Game"
 
     override fun run() {
-        val randomMeal = guessPreparationTimeGameUseCase.getRandomMeal()
-        val mealName = randomMeal.name
-        val correctPreparationTime = randomMeal.minutes
-
-        playGame(mealName, correctPreparationTime)
+        playGame()
     }
 
-    private fun playGame(mealName: String, correctPreparationTime: Int) {
-        var remainingAttempts = MAX_ATTEMPTS
-        var isCorrect = false
+    private fun playGame() {
+        guessPreparationTimeGameUseCase.run()
+        val mealName = guessPreparationTimeGameUseCase.getCurrentMeal().first
+        val correctTime = guessPreparationTimeGameUseCase.getCurrentMeal().second
 
         viewer.display("Guess the preparation time of $mealName meal")
 
-        while (remainingAttempts > 0) {
+        while (guessPreparationTimeGameUseCase.isRunning()) {
             val userGuess = getUserGuess()
 
             if (userGuess == null) {
@@ -36,46 +34,22 @@ class GuessPreparationTimeGameUI(
                 continue
             }
 
-            isCorrect = processGuess(userGuess, correctPreparationTime)
-            if (isCorrect) break
-            remainingAttempts--
-        }
+            viewer.display(guessPreparationTimeGameUseCase.evaluateGuess(userGuess).toString())
 
-        showFinalResult(isCorrect, mealName, correctPreparationTime)
+        }
+        showFinalResult(guessPreparationTimeGameUseCase.getGameState(), mealName, correctTime)
+
     }
 
-    private fun getUserGuess(): Int? =
-        try {
-            reader.getUserInput()?.toIntOrNull()
-        } catch (_: Exception) {
-            null
-        }
+    private fun getUserGuess(): Int? = reader.getUserInput()?.toIntOrNull()
 
-    private fun processGuess(guess: Int, correctTime: Int): Boolean {
-        return when {
-            guess < correctTime -> {
-                viewer.display("Low..., try again")
-                false
-            }
-            guess > correctTime -> {
-                viewer.display("High..., try again")
-                false
-            }
-            else -> {
-                true
-            }
+    private fun showFinalResult(gameState: GameState, mealName: String, correctTime: Int) {
+        when (gameState) {
+            GameState.LOST -> viewer.display("The time it takes to prepare $mealName meal is $correctTime minutes")
+            GameState.WON -> viewer.display("Great Job! It takes $correctTime minutes")
+            else -> {}
         }
     }
 
-    private fun showFinalResult(isCorrect: Boolean, mealName: String, correctTime: Int) {
-        if (!isCorrect) {
-            viewer.display("The time it takes to prepare $mealName meal is $correctTime minutes")
-        } else {
-            viewer.display("Great Job! It takes $correctTime minutes")
-        }
-    }
 
-    companion object {
-        private const val MAX_ATTEMPTS = 3
-    }
 }
