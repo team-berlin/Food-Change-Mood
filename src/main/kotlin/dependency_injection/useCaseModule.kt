@@ -2,10 +2,12 @@ package org.berlin.dependency_injection
 
 import logic.usecase.game.GuessPreparationTimeGameUseCase
 import logic.usecase.game.IngredientGameUseCase
+import logic.usecase.helper.KmpSearch
+import logic.usecase.helper.LevenshteinSearch
+import logic.usecase.helper.SelectionOfSearchAlgorithms
+//import org.berlin.logic.IngredientGameMealsMapper
 import org.berlin.logic.usecase.helper.IngredientGameMealsMapper
-import org.berlin.logic.search.CombineSearchAlgorithms
-import org.berlin.logic.search.KmpSearch
-import org.berlin.logic.search.LevenshteinSearch
+import org.berlin.logic.usecase.helper.RandomMealsForIngredientGame
 import org.berlin.logic.usecase.retrieval.GetMealsContainsPotatoUseCase
 import org.berlin.logic.usecase.retrieval.GetSeafoodMealsUseCase
 import org.berlin.logic.usecase.retrieval.GetIraqiMealsUseCase
@@ -15,7 +17,7 @@ import org.berlin.logic.usecase.search.SearchGymFriendlyMealsUseCase
 import org.berlin.logic.usecase.search.SearchMealsByDateUseCase
 import org.berlin.logic.usecase.search.SearchMealsByNameUseCase
 import org.berlin.logic.usecase.suggest.*
-import org.berlin.presentation.IngredientGameInteractor
+//import org.berlin.presentation.IngredientGameInteractor
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -27,8 +29,8 @@ val useCaseModule = module {
     single { SuggestEggFreeSweetUseCase(get()) }
     single { GetIraqiMealsUseCase(get()) }
     single { IngredientGameMealsMapper() }
-    single { IngredientGameUseCase(get(), get()) }
-    single { IngredientGameInteractor(get()) }
+    single { RandomMealsForIngredientGame(get(),get()) }
+    single { IngredientGameUseCase(get()) }
     single { GetQuickHealthyMealsUseCase(get()) }
     single { SuggestItalianFoodForLargeGroupUseCase(get()) }
     single { GetMealsContainsPotatoUseCase(get()) }
@@ -38,7 +40,7 @@ val useCaseModule = module {
     single { SearchGymFriendlyMealsUseCase(get()) }
 
     single {
-        CombineSearchAlgorithms(
+        SelectionOfSearchAlgorithms(
             listOf(KmpSearch(), LevenshteinSearch())
         )
     }

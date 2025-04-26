@@ -13,14 +13,14 @@ class GetIraqiMealsUI(
     override val label: String = "Identify Iraqi Meals"
 
     override fun run() {
-        val iraqiMeals = identifyIraqiMealsUseCase.getIraqiMeals()
-        if (iraqiMeals.isNotEmpty()) {
+        try {
+            val iraqiMeals = identifyIraqiMealsUseCase.getIraqiMeals()
             viewer.display("\n--- Iraqi Meals ---")
             iraqiMeals.forEach { meal ->
                 display(meal)
             }
             viewer.display("--- End of Iraqi Meals ---")
-        } else {
+        } catch (e: NoSuchElementException) {
             viewer.display("No Iraqi meals found.")
         }
     }

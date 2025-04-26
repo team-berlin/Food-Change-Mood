@@ -1,6 +1,6 @@
-package org.berlin.logic.search
+package logic.usecase.helper
 
-class CombineSearchAlgorithms(
+class SelectionOfSearchAlgorithms(
     private val algorithms: List<SearchByName>,
 ) : SearchByName {
     override fun search(
