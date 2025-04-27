@@ -7,20 +7,21 @@ class SuggestItalianFoodForLargeGroupUseCase(
     private val mealsRepository: MealsRepository
 ) {
 
-    fun suggestItalianMealsForLargeGroup(): List<Meal> =
-        mealsRepository
+    fun suggestItalianMealsForLargeGroup(): List<Meal> {
+        return mealsRepository
             .getAllMeals()
             .filter(::onlyItalianFoodForLargeGroup)
             .takeIf { it.isNotEmpty() }
             ?: throw NoSuchElementException(
                 "No Italian meals found suitable for a large group"
             )
+    }
 
     private fun onlyItalianFoodForLargeGroup(meal: Meal): Boolean {
         return meal.tags.any { tag ->
-            tag.equals(ITALIAN_FOOD_TAG, ignoreCase = true)
+            tag.trim().equals(ITALIAN_FOOD_TAG, ignoreCase = true)
         } && meal.tags.any { tag ->
-            tag.equals(LARGE_GROUP_TAG, ignoreCase = true)
+            tag.trim().equals(LARGE_GROUP_TAG, ignoreCase = true)
         }
     }
 

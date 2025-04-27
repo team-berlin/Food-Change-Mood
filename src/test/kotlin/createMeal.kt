@@ -12,7 +12,7 @@ fun createMeal(
     numberOfIngredients: Int = 5,
     numberOfStep: Int = 5,
     contributorId: Int = 123,
-    submissionDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date ,
+    submissionDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
     tags: List<String> = listOf("tag1", "tag2"),
     nutrition: Nutrition = Nutrition(
         calories = 100.0,
