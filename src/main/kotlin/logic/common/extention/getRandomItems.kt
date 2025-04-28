@@ -1,16 +1,17 @@
 package org.berlin.logic.common.extention
 
+
 fun <T> List<T>.getRandomItems(count: Int): List<T> {
-    if (this.isEmpty()) return emptyList()
+    val uniqueItems = this.toSet().toList()
+    if (uniqueItems.isEmpty()) return emptyList()
 
-    val limitedCount = count.coerceAtMost(size)
-
-    val availableIndices = indices.toMutableList()
-    val selectedItems = mutableSetOf<T>()
+    val limitedCount = count.coerceAtMost(uniqueItems.size)
+    val selectedItems = mutableListOf<T>()
 
     while (selectedItems.size < limitedCount) {
-        val randomIndex = availableIndices.random()
-        selectedItems.add(this[randomIndex])
+        val randomItem = uniqueItems.random()
+        selectedItems.add(randomItem)
     }
+
     return selectedItems.toList()
 }
